@@ -1,0 +1,363 @@
+{
+  "common": {
+    "appName": "Wattly",
+    "loading": "Laden...",
+    "error": "Ein Fehler ist aufgetreten",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "delete": "Loschen",
+    "edit": "Bearbeiten",
+    "create": "Erstellen",
+    "search": "Suchen",
+    "filter": "Filtern",
+    "export": "Exportieren",
+    "import": "Importieren",
+    "back": "Zuruck",
+    "next": "Weiter",
+    "previous": "Zuruck",
+    "confirm": "Bestatigen",
+    "close": "Schliessen",
+    "yes": "Ja",
+    "no": "Nein",
+    "actions": "Aktionen",
+    "status": "Status",
+    "date": "Datum",
+    "amount": "Betrag",
+    "total": "Total",
+    "subtotal": "Zwischensumme",
+    "vat": "MwSt"
+  },
+  "nav": {
+    "home": "Startseite",
+    "dashboard": "Dashboard",
+    "members": "Mitglieder",
+    "energy": "Energie",
+    "invoices": "Rechnungen",
+    "settings": "Einstellungen",
+    "logout": "Abmelden",
+    "login": "Anmelden",
+    "register": "Registrieren"
+  },
+  "landing": {
+    "hero": {
+      "title": "Verwalten Sie Ihre lokale Energiegemeinschaft einfach",
+      "subtitle": "Die komplette Losung fur die Verwaltung Ihrer ZEV, Verbrauchsverfolgung und automatisierte Abrechnung.",
+      "cta": "Kostenlos starten",
+      "ctaSecondary": "Mehr erfahren"
+    },
+    "problem": {
+      "title": "Die Verwaltung einer ZEV kann komplex sein",
+      "description": "Verbrauchsdatenerfassung, Verteilungsberechnung, monatliche Abrechnung... Zeitaufwendige Aufgaben, die eine angepasste Losung erfordern."
+    },
+    "solution": {
+      "title": "Wattly vereinfacht alles",
+      "subtitle": "Unsere Plattform automatisiert die Verwaltung Ihrer lokalen Energiegemeinschaft, vom Import der Lastgange bis zur Rechnungserstellung."
+    },
+    "features": {
+      "title": "Alles was Sie brauchen",
+      "memberManagement": {
+        "title": "Mitgliederverwaltung",
+        "description": "Fugen Sie einfach Mitglieder Ihrer Gemeinschaft mit ihren Informationen und Zahlern hinzu."
+      },
+      "energyTracking": {
+        "title": "Energieverfolgung",
+        "description": "Importieren Sie Lastgange und visualisieren Sie die Produktion und den Verbrauch der Gemeinschaft."
+      },
+      "autoInvoicing": {
+        "title": "Automatische Abrechnung",
+        "description": "Generieren Sie automatisch monatliche Rechnungen fur jedes Mitglied."
+      },
+      "dashboard": {
+        "title": "Dashboards",
+        "description": "Visualisieren Sie die Leistung Ihrer ZEV und die erzielten Einsparungen."
+      },
+      "distribution": {
+        "title": "Flexible Verteilung",
+        "description": "Wahlen Sie aus 3 Energieverteilungsstrategien: anteilig, gleich oder priorisiert."
+      },
+      "multiLanguage": {
+        "title": "Mehrsprachig",
+        "description": "Oberflache verfugbar auf Franzosisch, Deutsch, Italienisch und Englisch."
+      }
+    },
+    "howItWorks": {
+      "title": "So funktioniert es",
+      "step1": {
+        "title": "Erstellen Sie Ihre ZEV",
+        "description": "Registrieren Sie sich und konfigurieren Sie Ihre lokale Energiegemeinschaft."
+      },
+      "step2": {
+        "title": "Fugen Sie Mitglieder hinzu",
+        "description": "Laden Sie Gemeinschaftsmitglieder ein und registrieren Sie ihre Zahler."
+      },
+      "step3": {
+        "title": "Importieren Sie Daten",
+        "description": "Laden Sie die von Ihrem Verteiler bereitgestellten Lastgange hoch."
+      },
+      "step4": {
+        "title": "Automatische Abrechnung",
+        "description": "Erstellen und versenden Sie Rechnungen mit wenigen Klicks."
+      }
+    },
+    "pricing": {
+      "title": "Einfache und transparente Preise",
+      "starter": {
+        "name": "Starter",
+        "price": "Kostenlos",
+        "description": "Zum Starten mit einer kleinen Gemeinschaft",
+        "features": ["Bis zu 10 Mitglieder", "CSV-Import", "Basis-Abrechnung", "E-Mail-Support"]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "CHF 49/Monat",
+        "description": "Fur etablierte Gemeinschaften",
+        "features": ["Unbegrenzte Mitglieder", "Alle Verteilungsstrategien", "PDF-Export", "Prioritats-Support"]
+      }
+    },
+    "faq": {
+      "title": "Haufig gestellte Fragen",
+      "q1": {
+        "question": "Was ist eine ZEV?",
+        "answer": "Ein Zusammenschluss zum Eigenverbrauch (ZEV) ermoglicht es Haushalten, lokal produzierte Energie, insbesondere durch Solaranlagen, zu teilen."
+      },
+      "q2": {
+        "question": "Wie erhalte ich die Lastgange?",
+        "answer": "Ihr Stromverteiler stellt Ihnen monatlich die Verbrauchsdaten jedes Zahlers zur Verfugung."
+      },
+      "q3": {
+        "question": "Ersetzt Wattly meinen Verteiler?",
+        "answer": "Nein, Wattly ist ein Verwaltungstool. Ihr Verteiler bleibt fur die Stromversorgung und Netzabrechnung verantwortlich."
+      }
+    },
+    "cta": {
+      "title": "Bereit, Ihre ZEV-Verwaltung zu vereinfachen?",
+      "subtitle": "Schliessen Sie sich den Gemeinschaften an, die Wattly vertrauen.",
+      "button": "Jetzt starten"
+    },
+    "footer": {
+      "description": "Die Verwaltungslosung fur lokale Energiegemeinschaften in der Schweiz.",
+      "legal": "Impressum",
+      "privacy": "Datenschutz",
+      "terms": "Nutzungsbedingungen",
+      "contact": "Kontakt"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Anmeldung",
+      "subtitle": "Melden Sie sich bei Ihrem Konto an",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "submit": "Anmelden",
+      "forgotPassword": "Passwort vergessen?",
+      "noAccount": "Noch kein Konto?",
+      "register": "Konto erstellen"
+    },
+    "register": {
+      "title": "Registrierung",
+      "subtitle": "Erstellen Sie Ihr Wattly-Konto",
+      "name": "Vollstandiger Name",
+      "email": "E-Mail",
+      "password": "Passwort",
+      "confirmPassword": "Passwort bestatigen",
+      "submit": "Registrieren",
+      "hasAccount": "Bereits ein Konto?",
+      "login": "Anmelden"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Willkommen, {name}",
+    "overview": "Ubersicht",
+    "stats": {
+      "totalMembers": "Mitglieder",
+      "totalProduction": "Gesamtproduktion",
+      "totalConsumption": "Gesamtverbrauch",
+      "savings": "Erzielte Einsparungen",
+      "pendingInvoices": "Ausstehende Rechnungen"
+    },
+    "charts": {
+      "monthlyEnergy": "Monatliche Energie",
+      "distribution": "Energieverteilung",
+      "consumption": "Verbrauch",
+      "production": "Produktion"
+    },
+    "recentActivity": "Letzte Aktivitat"
+  },
+  "members": {
+    "title": "Mitglieder",
+    "addMember": "Mitglied hinzufugen",
+    "importMembers": "Mitglieder importieren",
+    "exportMembers": "Liste exportieren",
+    "searchPlaceholder": "Mitglied suchen...",
+    "table": {
+      "name": "Name",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "pod": "POD-Nummer",
+      "type": "Typ",
+      "status": "Status",
+      "actions": "Aktionen"
+    },
+    "types": {
+      "consumer": "Verbraucher",
+      "producer": "Produzent",
+      "prosumer": "Prosumer"
+    },
+    "status": {
+      "active": "Aktiv",
+      "inactive": "Inaktiv",
+      "pending": "Ausstehend"
+    },
+    "form": {
+      "title": "Mitgliedsinformationen",
+      "firstname": "Vorname",
+      "lastname": "Nachname",
+      "email": "E-Mail",
+      "phone": "Telefon",
+      "address": "Adresse",
+      "postalCode": "Postleitzahl",
+      "city": "Stadt",
+      "podNumber": "POD-Nummer",
+      "installationType": "Installationstyp",
+      "solarCapacity": "Solarkapazitat (kWp)",
+      "batteryCapacity": "Batteriekapazitat (kWh)",
+      "priority": "Prioritatsstufe"
+    }
+  },
+  "energy": {
+    "title": "Energie",
+    "import": {
+      "title": "Lastgange importieren",
+      "dropzone": "CSV-Dateien hier ablegen oder klicken zum Auswahlen",
+      "processing": "Verarbeitung...",
+      "success": "Import erfolgreich",
+      "error": "Fehler beim Import"
+    },
+    "period": {
+      "select": "Zeitraum auswahlen",
+      "month": "Monat",
+      "year": "Jahr"
+    },
+    "stats": {
+      "totalProduction": "Gesamtproduktion",
+      "totalConsumption": "Gesamtverbrauch",
+      "selfConsumption": "Eigenverbrauch",
+      "communityConsumption": "Gemeinschaftsverbrauch",
+      "gridConsumption": "Netzverbrauch",
+      "exportedToCommunity": "An Gemeinschaft exportiert",
+      "exportedToGrid": "Ans Netz exportiert"
+    },
+    "distribution": {
+      "title": "Verteilungsstrategie",
+      "prorata": "Anteilig",
+      "prorataDesc": "Proportionale Verteilung nach Verbrauch jedes Mitglieds",
+      "equal": "Gleich",
+      "equalDesc": "Gleichmassige Verteilung unter allen Mitgliedern",
+      "priority": "Prioritat",
+      "priorityDesc": "Prioritare Mitglieder erhalten zuerst Energie"
+    }
+  },
+  "invoices": {
+    "title": "Rechnungen",
+    "generate": "Rechnungen erstellen",
+    "generateAll": "Fur alle Mitglieder erstellen",
+    "searchPlaceholder": "Rechnung suchen...",
+    "table": {
+      "number": "Nummer",
+      "member": "Mitglied",
+      "period": "Zeitraum",
+      "amount": "Betrag",
+      "status": "Status",
+      "dueDate": "Falligkeitsdatum",
+      "actions": "Aktionen"
+    },
+    "status": {
+      "draft": "Entwurf",
+      "sent": "Gesendet",
+      "paid": "Bezahlt",
+      "overdue": "Uberffallig",
+      "cancelled": "Storniert"
+    },
+    "actions": {
+      "view": "Ansehen",
+      "download": "Herunterladen",
+      "send": "Senden",
+      "markPaid": "Als bezahlt markieren",
+      "delete": "Loschen"
+    }
+  },
+  "settings": {
+    "title": "Einstellungen",
+    "tabs": {
+      "general": "Allgemein",
+      "billing": "Abrechnung",
+      "tariffs": "Tarife",
+      "distribution": "Verteilung"
+    },
+    "organization": {
+      "title": "Organisationsinformationen",
+      "name": "Name der ZEV",
+      "address": "Adresse",
+      "postalCode": "Postleitzahl",
+      "city": "Stadt",
+      "commune": "Gemeinde",
+      "canton": "Kanton",
+      "contactEmail": "Kontakt-E-Mail",
+      "contactPhone": "Kontakttelefon",
+      "logo": "Logo"
+    },
+    "billing": {
+      "title": "Abrechnungseinstellungen",
+      "currency": "Wahrung",
+      "vatRate": "MwSt-Satz (%)",
+      "paymentTerms": "Zahlungsfrist (Tage)"
+    },
+    "tariffs": {
+      "title": "Tarife",
+      "add": "Tarif hinzufugen",
+      "name": "Tarifname",
+      "communityRate": "Gemeinschaftstarif (CHF/kWh)",
+      "gridRate": "Netztarif (CHF/kWh)",
+      "injectionRate": "Einspeisetarif (CHF/kWh)",
+      "monthlyFee": "Monatsgebuhr (CHF)",
+      "validFrom": "Gultig ab",
+      "validTo": "Gultig bis",
+      "default": "Standardtarif"
+    }
+  },
+  "memberDashboard": {
+    "title": "Mein Dashboard",
+    "welcome": "Willkommen, {name}",
+    "myConsumption": "Mein Verbrauch",
+    "mySavings": "Meine Einsparungen",
+    "savingsDescription": "Im Vergleich zu 100% Netzbezug",
+    "energySources": {
+      "title": "Energiequellen",
+      "selfConsumption": "Eigenverbrauch",
+      "community": "Gemeinschaft",
+      "grid": "Netz"
+    },
+    "myInvoices": "Meine Rechnungen",
+    "noInvoices": "Noch keine Rechnungen vorhanden"
+  },
+  "organizations": {
+    "title": "Meine Organisationen",
+    "create": "ZEV erstellen",
+    "select": "Organisation auswahlen",
+    "noOrganizations": "Sie haben noch keine Organisation",
+    "createFirst": "Erstellen Sie Ihre erste ZEV zum Starten",
+    "form": {
+      "name": "Name der ZEV",
+      "slug": "URL-Kennung",
+      "slugHelp": "Wird in der URL Ihrer ZEV verwendet"
+    }
+  },
+  "validation": {
+    "required": "Dieses Feld ist erforderlich",
+    "email": "Ungultige E-Mail",
+    "minLength": "Mindestens {min} Zeichen",
+    "maxLength": "Maximal {max} Zeichen",
+    "invalidPod": "Ungultige POD-Nummer"
+  }
+}

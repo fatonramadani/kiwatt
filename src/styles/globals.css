@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  /* Pelorous color palette */
+  --color-pelorous-50: #f0f9fb;
+  --color-pelorous-100: #d9f0f4;
+  --color-pelorous-200: #b8e0e9;
+  --color-pelorous-300: #86cada;
+  --color-pelorous-400: #41a3bd;
+  --color-pelorous-500: #328ea8;
+  --color-pelorous-600: #2d748d;
+  --color-pelorous-700: #2a5e74;
+  --color-pelorous-800: #2a4f60;
+  --color-pelorous-900: #274352;
+  --color-pelorous-950: #152a37;
+
+  /* Semantic color aliases */
+  --color-primary: var(--color-pelorous-500);
+  --color-primary-foreground: #ffffff;
+  --color-secondary: var(--color-pelorous-100);
+  --color-secondary-foreground: var(--color-pelorous-900);
+  --color-muted: var(--color-pelorous-100);
+  --color-muted-foreground: var(--color-pelorous-600);
+  --color-accent: var(--color-pelorous-100);
+  --color-accent-foreground: var(--color-pelorous-900);
+  --color-destructive: #ef4444;
+  --color-destructive-foreground: #ffffff;
+  --color-border: var(--color-pelorous-200);
+  --color-input: var(--color-pelorous-200);
+  --color-ring: var(--color-pelorous-500);
+  --color-background: #ffffff;
+  --color-foreground: var(--color-pelorous-950);
+  --color-card: #ffffff;
+  --color-card-foreground: var(--color-pelorous-950);
+  --color-popover: #ffffff;
+  --color-popover-foreground: var(--color-pelorous-950);
+
+  /* Radius */
+  --radius: 0.5rem;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}

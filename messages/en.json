@@ -1,0 +1,363 @@
+{
+  "common": {
+    "appName": "Wattly",
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "export": "Export",
+    "import": "Import",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "confirm": "Confirm",
+    "close": "Close",
+    "yes": "Yes",
+    "no": "No",
+    "actions": "Actions",
+    "status": "Status",
+    "date": "Date",
+    "amount": "Amount",
+    "total": "Total",
+    "subtotal": "Subtotal",
+    "vat": "VAT"
+  },
+  "nav": {
+    "home": "Home",
+    "dashboard": "Dashboard",
+    "members": "Members",
+    "energy": "Energy",
+    "invoices": "Invoices",
+    "settings": "Settings",
+    "logout": "Logout",
+    "login": "Login",
+    "register": "Sign up"
+  },
+  "landing": {
+    "hero": {
+      "title": "Manage your local energy community with ease",
+      "subtitle": "The complete solution to manage your LEC, track consumption and automate billing.",
+      "cta": "Get started free",
+      "ctaSecondary": "Learn more"
+    },
+    "problem": {
+      "title": "Managing a LEC can be complex",
+      "description": "Consumption data collection, distribution calculation, monthly billing... Time-consuming tasks that require an adapted solution."
+    },
+    "solution": {
+      "title": "Wattly simplifies everything",
+      "description": "Our platform automates the management of your local energy community, from load curve import to invoice generation."
+    },
+    "features": {
+      "title": "Everything you need",
+      "memberManagement": {
+        "title": "Member Management",
+        "description": "Easily add and manage community members with their information and meters."
+      },
+      "energyTracking": {
+        "title": "Energy Tracking",
+        "description": "Import load curves and visualize community production and consumption."
+      },
+      "autoInvoicing": {
+        "title": "Automatic Invoicing",
+        "description": "Automatically generate monthly invoices for each member."
+      },
+      "dashboard": {
+        "title": "Dashboards",
+        "description": "Visualize your LEC's performance and achieved savings."
+      },
+      "distribution": {
+        "title": "Flexible Distribution",
+        "description": "Choose from 3 energy distribution strategies: pro-rata, equal, or priority-based."
+      },
+      "multiLanguage": {
+        "title": "Multilingual",
+        "description": "Interface available in French, German, Italian and English."
+      }
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "step1": {
+        "title": "Create your LEC",
+        "description": "Sign up and configure your local energy community."
+      },
+      "step2": {
+        "title": "Add your members",
+        "description": "Invite community members and register their meters."
+      },
+      "step3": {
+        "title": "Import data",
+        "description": "Upload load curves provided by your distributor."
+      },
+      "step4": {
+        "title": "Invoice automatically",
+        "description": "Generate and send invoices in a few clicks."
+      }
+    },
+    "pricing": {
+      "title": "Simple and transparent pricing",
+      "starter": {
+        "name": "Starter",
+        "price": "Free",
+        "description": "To start with a small community",
+        "features": ["Up to 10 members", "CSV import", "Basic invoicing", "Email support"]
+      },
+      "pro": {
+        "name": "Pro",
+        "price": "CHF 49/month",
+        "description": "For established communities",
+        "features": ["Unlimited members", "All distribution strategies", "PDF export", "Priority support"]
+      }
+    },
+    "faq": {
+      "title": "Frequently asked questions",
+      "q1": {
+        "question": "What is a LEC?",
+        "answer": "A Local Energy Community (LEC) allows households in a neighborhood to share locally produced energy, particularly through solar panels."
+      },
+      "q2": {
+        "question": "How do I get load curves?",
+        "answer": "Your electricity distributor provides you monthly with consumption data for each meter."
+      },
+      "q3": {
+        "question": "Does Wattly replace my distributor?",
+        "answer": "No, Wattly is a management tool. Your distributor remains responsible for electricity supply and grid billing."
+      }
+    },
+    "cta": {
+      "title": "Ready to simplify your LEC management?",
+      "subtitle": "Join the communities that trust Wattly.",
+      "button": "Start now"
+    },
+    "footer": {
+      "description": "The management solution for local energy communities in Switzerland.",
+      "legal": "Legal notice",
+      "privacy": "Privacy",
+      "terms": "Terms of use",
+      "contact": "Contact"
+    }
+  },
+  "auth": {
+    "login": {
+      "title": "Login",
+      "subtitle": "Sign in to your account",
+      "email": "Email",
+      "password": "Password",
+      "submit": "Sign in",
+      "forgotPassword": "Forgot password?",
+      "noAccount": "Don't have an account?",
+      "register": "Create an account"
+    },
+    "register": {
+      "title": "Sign up",
+      "subtitle": "Create your Wattly account",
+      "name": "Full name",
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm password",
+      "submit": "Sign up",
+      "hasAccount": "Already have an account?",
+      "login": "Sign in"
+    }
+  },
+  "dashboard": {
+    "title": "Dashboard",
+    "welcome": "Welcome, {name}",
+    "overview": "Overview",
+    "stats": {
+      "totalMembers": "Members",
+      "totalProduction": "Total production",
+      "totalConsumption": "Total consumption",
+      "savings": "Achieved savings",
+      "pendingInvoices": "Pending invoices"
+    },
+    "charts": {
+      "monthlyEnergy": "Monthly energy",
+      "distribution": "Energy distribution",
+      "consumption": "Consumption",
+      "production": "Production"
+    },
+    "recentActivity": "Recent activity"
+  },
+  "members": {
+    "title": "Members",
+    "addMember": "Add member",
+    "importMembers": "Import members",
+    "exportMembers": "Export list",
+    "searchPlaceholder": "Search member...",
+    "table": {
+      "name": "Name",
+      "email": "Email",
+      "phone": "Phone",
+      "pod": "POD number",
+      "type": "Type",
+      "status": "Status",
+      "actions": "Actions"
+    },
+    "types": {
+      "consumer": "Consumer",
+      "producer": "Producer",
+      "prosumer": "Prosumer"
+    },
+    "status": {
+      "active": "Active",
+      "inactive": "Inactive",
+      "pending": "Pending"
+    },
+    "form": {
+      "title": "Member information",
+      "firstname": "First name",
+      "lastname": "Last name",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "postalCode": "Postal code",
+      "city": "City",
+      "podNumber": "POD number",
+      "installationType": "Installation type",
+      "solarCapacity": "Solar capacity (kWp)",
+      "batteryCapacity": "Battery capacity (kWh)",
+      "priority": "Priority level"
+    }
+  },
+  "energy": {
+    "title": "Energy",
+    "import": {
+      "title": "Import load curves",
+      "dropzone": "Drop CSV files here or click to select",
+      "processing": "Processing...",
+      "success": "Import successful",
+      "error": "Import error"
+    },
+    "period": {
+      "select": "Select period",
+      "month": "Month",
+      "year": "Year"
+    },
+    "stats": {
+      "totalProduction": "Total production",
+      "totalConsumption": "Total consumption",
+      "selfConsumption": "Self-consumption",
+      "communityConsumption": "Community consumption",
+      "gridConsumption": "Grid consumption",
+      "exportedToCommunity": "Exported to community",
+      "exportedToGrid": "Exported to grid"
+    },
+    "distribution": {
+      "title": "Distribution strategy",
+      "prorata": "Pro-rata",
+      "prorataDesc": "Proportional distribution based on each member's consumption",
+      "equal": "Equal",
+      "equalDesc": "Equal distribution among all members",
+      "priority": "Priority",
+      "priorityDesc": "Priority members receive energy first"
+    }
+  },
+  "invoices": {
+    "title": "Invoices",
+    "generate": "Generate invoices",
+    "generateAll": "Generate for all members",
+    "searchPlaceholder": "Search invoice...",
+    "table": {
+      "number": "Number",
+      "member": "Member",
+      "period": "Period",
+      "amount": "Amount",
+      "status": "Status",
+      "dueDate": "Due date",
+      "actions": "Actions"
+    },
+    "status": {
+      "draft": "Draft",
+      "sent": "Sent",
+      "paid": "Paid",
+      "overdue": "Overdue",
+      "cancelled": "Cancelled"
+    },
+    "actions": {
+      "view": "View",
+      "download": "Download",
+      "send": "Send",
+      "markPaid": "Mark as paid",
+      "delete": "Delete"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "tabs": {
+      "general": "General",
+      "billing": "Billing",
+      "tariffs": "Tariffs",
+      "distribution": "Distribution"
+    },
+    "organization": {
+      "title": "Organization information",
+      "name": "LEC name",
+      "address": "Address",
+      "postalCode": "Postal code",
+      "city": "City",
+      "commune": "Commune",
+      "canton": "Canton",
+      "contactEmail": "Contact email",
+      "contactPhone": "Contact phone",
+      "logo": "Logo"
+    },
+    "billing": {
+      "title": "Billing settings",
+      "currency": "Currency",
+      "vatRate": "VAT rate (%)",
+      "paymentTerms": "Payment terms (days)"
+    },
+    "tariffs": {
+      "title": "Tariffs",
+      "add": "Add tariff",
+      "name": "Tariff name",
+      "communityRate": "Community rate (CHF/kWh)",
+      "gridRate": "Grid rate (CHF/kWh)",
+      "injectionRate": "Injection rate (CHF/kWh)",
+      "monthlyFee": "Monthly fee (CHF)",
+      "validFrom": "Valid from",
+      "validTo": "Valid until",
+      "default": "Default tariff"
+    }
+  },
+  "memberDashboard": {
+    "title": "My dashboard",
+    "welcome": "Welcome, {name}",
+    "myConsumption": "My consumption",
+    "mySavings": "My savings",
+    "savingsDescription": "Compared to 100% grid consumption",
+    "energySources": {
+      "title": "Energy sources",
+      "selfConsumption": "Self-consumption",
+      "community": "Community",
+      "grid": "Grid"
+    },
+    "myInvoices": "My invoices",
+    "noInvoices": "No invoices yet"
+  },
+  "organizations": {
+    "title": "My organizations",
+    "create": "Create a LEC",
+    "select": "Select organization",
+    "noOrganizations": "You don't have any organization yet",
+    "createFirst": "Create your first LEC to get started",
+    "form": {
+      "name": "LEC name",
+      "slug": "URL identifier",
+      "slugHelp": "Used in your LEC's URL"
+    }
+  },
+  "validation": {
+    "required": "This field is required",
+    "email": "Invalid email",
+    "minLength": "Minimum {min} characters",
+    "maxLength": "Maximum {max} characters",
+    "invalidPod": "Invalid POD number"
+  }
+}
