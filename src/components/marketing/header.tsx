@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "~/i18n/navigation";
 import { Button } from "~/components/ui/button";
@@ -7,9 +8,25 @@ import { LanguageSwitcher } from "~/components/marketing/language-switcher";
 
 export function MarketingHeader() {
   const t = useTranslations("nav");
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   return (
-    <header className="fixed top-0 z-50 w-full">
+    <header
+      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+        scrolled
+          ? "bg-white/95 shadow-sm backdrop-blur-md"
+          : "bg-transparent"
+      }`}
+    >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-12">
         <Link href="/" className="text-2xl font-light tracking-tight text-pelorous-950">
           wattly

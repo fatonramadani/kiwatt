@@ -2,7 +2,7 @@
 
 import { useTranslations } from "next-intl";
 
-const faqs = ["q1", "q2", "q3"];
+const faqs = ["q1", "q2", "q3", "q4"];
 
 export function FAQSection() {
   const t = useTranslations("landing.faq");
@@ -24,12 +24,15 @@ export function FAQSection() {
             {faqs.map((faq, index) => (
               <div
                 key={faq}
-                className="border-b border-pelorous-200 pb-12 last:border-0"
+                className="group border-b border-pelorous-200 pb-12 last:border-0"
               >
-                <h3 className="text-lg font-light text-pelorous-950">
+                <h3 className="flex items-start gap-4 text-lg font-light text-pelorous-950">
+                  <span className="text-sm font-light text-pelorous-500">
+                    0{index + 1}
+                  </span>
                   {t(`${faq}.question`)}
                 </h3>
-                <p className="mt-4 text-sm font-light leading-relaxed text-pelorous-600">
+                <p className="mt-4 pl-8 text-sm font-light leading-relaxed text-pelorous-600">
                   {t(`${faq}.answer`)}
                 </p>
               </div>

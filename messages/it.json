@@ -40,10 +40,11 @@
   },
   "landing": {
     "hero": {
-      "title": "Gestisci la tua comunita elettrica locale con semplicita",
+      "tagline": "Gestione comunità energetica",
+      "title": "Gestisci la tua comunità elettrica locale con semplicità",
       "subtitle": "La soluzione completa per gestire la tua CEL, monitorare i consumi e automatizzare la fatturazione.",
       "cta": "Inizia gratis",
-      "ctaSecondary": "Scopri di piu"
+      "ctaSecondary": "Scopri di più"
     },
     "problem": {
       "title": "La gestione di una CEL puo essere complessa",
@@ -100,38 +101,64 @@
       }
     },
     "pricing": {
-      "title": "Prezzi semplici e trasparenti",
-      "starter": {
-        "name": "Starter",
-        "price": "Gratuito",
-        "description": "Per iniziare con una piccola comunita",
-        "features": ["Fino a 10 membri", "Importazione CSV", "Fatturazione base", "Supporto email"]
+      "label": "Prezzi",
+      "title": "Un prezzo che si adatta al tuo volume",
+      "subtitle": "Tariffazione semplice basata sull'energia gestita dalla tua CEL. Più energia gestisci, più risparmi.",
+      "formula": "CHF 0.005 per kWh gestito (minimo CHF 49/mese)",
+      "cta": "Inizia ora",
+      "calculator": {
+        "title": "Calcola la tua tariffa",
+        "subtitle": "Stima il costo mensile in base al volume di energia della tua CEL",
+        "volume": "Volume mensile",
+        "monthly": "Costo mensile",
+        "annual": "Costo annuale",
+        "minimum": "Tariffa minima applicata per piccoli volumi"
       },
-      "pro": {
-        "name": "Pro",
-        "price": "CHF 49/mese",
-        "description": "Per comunita consolidate",
-        "features": ["Membri illimitati", "Tutte le strategie di distribuzione", "Esportazione PDF", "Supporto prioritario"]
+      "tiers": {
+        "small": "Piccolo quartiere",
+        "medium": "Quartiere medio",
+        "large": "Grande comune",
+        "enterprise": "Distribuzione municipale"
+      },
+      "included": {
+        "title": "Tutto incluso nel tuo abbonamento",
+        "subtitle": "Nessun costo nascosto, tutte le funzionalità disponibili"
+      },
+      "features": [
+        "Membri illimitati",
+        "Importazione curve di carico (CSV)",
+        "3 strategie di distribuzione dell'energia",
+        "Fatturazione automatica con PDF",
+        "Dashboard per ogni membro",
+        "Supporto multilingue (FR, DE, IT, EN)",
+        "Esportazione dati e report"
+      ],
+      "examples": {
+        "title": "Esempi di tariffazione"
       }
     },
     "faq": {
       "title": "Domande frequenti",
       "q1": {
-        "question": "Cos'e una CEL?",
-        "answer": "Una Comunita Elettrica Locale (CEL) permette alle famiglie di un quartiere di condividere l'energia prodotta localmente, in particolare tramite pannelli solari."
+        "question": "Cos'è una CEL?",
+        "answer": "Una Comunità Elettrica Locale (CEL) permette alle famiglie di un comune o di un quartiere di condividere l'energia prodotta localmente. La CEL beneficia di una riduzione del 20-40% sulle tariffe di rete per l'energia condivisa."
       },
       "q2": {
-        "question": "Come ottengo le curve di carico?",
-        "answer": "Il tuo distributore di elettricita ti fornisce mensilmente i dati di consumo di ogni contatore."
+        "question": "Qual è la differenza tra CEL, CA e RCP?",
+        "answer": "Sono tre strutture giuridiche distinte in Svizzera. La CEL (Comunità Elettrica Locale) copre un intero comune con riduzione parziale delle tariffe di rete. La CA (Comunità di Autoconsumo) è limitata a un edificio o a lotti adiacenti con esenzione totale dalle tariffe di rete. L'RCP (Raggruppamento per il Consumo Proprio) funziona con un unico contatore per l'intero gruppo. Wattly è specializzato nella gestione delle CEL."
       },
       "q3": {
+        "question": "Come ottengo le curve di carico?",
+        "answer": "Il tuo gestore della rete di distribuzione (GRD) come Romande Energie, Groupe E o SIG ti fornisce i dati di consumo a intervalli di 15 minuti per ogni contatore della tua CEL."
+      },
+      "q4": {
         "question": "Wattly sostituisce il mio distributore?",
-        "answer": "No, Wattly e uno strumento di gestione. Il tuo distributore resta responsabile della fornitura di elettricita e della fatturazione di rete."
+        "answer": "No, Wattly è uno strumento di gestione per il rappresentante della CEL. Il tuo GRD resta responsabile della fornitura di elettricità e della fatturazione delle tariffe di rete."
       }
     },
     "cta": {
       "title": "Pronto a semplificare la gestione della tua CEL?",
-      "subtitle": "Unisciti alle comunita che si affidano a Wattly.",
+      "subtitle": "Semplifica la gestione della tua CEL oggi stesso.",
       "button": "Inizia ora"
     },
     "footer": {
@@ -182,7 +209,32 @@
       "consumption": "Consumo",
       "production": "Produzione"
     },
-    "recentActivity": "Attivita recente"
+    "recentActivity": "Attivita recente",
+    "emptyState": {
+      "title": "Benvenuto nella tua dashboard CEL",
+      "subtitle": "Completa la configurazione per iniziare a gestire la tua comunita",
+      "noEnergyData": "Nessun dato energetico disponibile",
+      "importHint": "Importa le curve di carico per vedere la distribuzione",
+      "noActivity": "Nessuna attivita recente",
+      "pendingInvoicesHint": "{count} fattura/e in attesa di pagamento"
+    },
+    "energySources": {
+      "community": "Comunita",
+      "grid": "Rete"
+    },
+    "selfSufficiency": {
+      "title": "Tasso di autosufficienza",
+      "description": "Energia dalla comunita vs rete"
+    },
+    "setup": {
+      "title": "Inizia",
+      "subtitle": "Completa questi passaggi per iniziare a usare Wattly",
+      "step1": "Aggiungi membri",
+      "step2": "Configura le tariffe",
+      "step3": "Importa i dati energetici",
+      "step4": "Genera le fatture"
+    },
+    "configureToSee": "Configura le tariffe per vedere i risparmi"
   },
   "members": {
     "title": "Membri",

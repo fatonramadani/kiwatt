@@ -7,14 +7,14 @@
     "cancel": "Annuler",
     "delete": "Supprimer",
     "edit": "Modifier",
-    "create": "Creer",
+    "create": "Créer",
     "search": "Rechercher",
     "filter": "Filtrer",
     "export": "Exporter",
     "import": "Importer",
     "back": "Retour",
     "next": "Suivant",
-    "previous": "Precedent",
+    "previous": "Précédent",
     "confirm": "Confirmer",
     "close": "Fermer",
     "yes": "Oui",
@@ -31,113 +31,140 @@
     "home": "Accueil",
     "dashboard": "Tableau de bord",
     "members": "Membres",
-    "energy": "Energie",
+    "energy": "Énergie",
     "invoices": "Factures",
-    "settings": "Parametres",
-    "logout": "Deconnexion",
+    "settings": "Paramètres",
+    "logout": "Déconnexion",
     "login": "Connexion",
     "register": "Inscription"
   },
   "landing": {
     "hero": {
-      "title": "Gerez votre communaute electrique locale en toute simplicite",
-      "subtitle": "La solution complete pour gerer votre CEL, suivre la consommation et automatiser la facturation.",
+      "tagline": "Gestion de communauté énergétique",
+      "title": "Gérez votre communauté électrique locale en toute simplicité",
+      "subtitle": "La solution complète pour gérer votre CEL, suivre la consommation et automatiser la facturation.",
       "cta": "Commencer gratuitement",
       "ctaSecondary": "En savoir plus"
     },
     "problem": {
-      "title": "La gestion d'une CEL peut etre complexe",
-      "description": "Collecte des donnees de consommation, calcul de la repartition, facturation mensuelle... Autant de taches chronophages qui requierent une solution adaptee."
+      "title": "La gestion d'une CEL peut être complexe",
+      "description": "Collecte des données de consommation, calcul de la répartition, facturation mensuelle... Autant de tâches chronophages qui requièrent une solution adaptée."
     },
     "solution": {
       "title": "Wattly simplifie tout",
-      "description": "Notre plateforme automatise la gestion de votre communaute electrique locale, de l'import des courbes de charge a la generation des factures."
+      "description": "Notre plateforme automatise la gestion de votre communauté électrique locale, de l'import des courbes de charge à la génération des factures."
     },
     "features": {
       "title": "Tout ce dont vous avez besoin",
       "memberManagement": {
         "title": "Gestion des membres",
-        "description": "Ajoutez et gerez facilement les membres de votre communaute avec leurs informations et compteurs."
+        "description": "Ajoutez et gérez facilement les membres de votre communauté avec leurs informations et compteurs."
       },
       "energyTracking": {
-        "title": "Suivi energetique",
-        "description": "Importez les courbes de charge et visualisez la production et consommation de la communaute."
+        "title": "Suivi énergétique",
+        "description": "Importez les courbes de charge et visualisez la production et consommation de la communauté."
       },
       "autoInvoicing": {
         "title": "Facturation automatique",
-        "description": "Generez automatiquement les factures mensuelles pour chaque membre."
+        "description": "Générez automatiquement les factures mensuelles pour chaque membre."
       },
       "dashboard": {
         "title": "Tableaux de bord",
-        "description": "Visualisez les performances de votre CEL et les economies realisees."
+        "description": "Visualisez les performances de votre CEL et les économies réalisées."
       },
       "distribution": {
-        "title": "Repartition flexible",
-        "description": "Choisissez parmi 3 strategies de repartition de l'energie: au prorata, egal, ou prioritaire."
+        "title": "Répartition flexible",
+        "description": "Choisissez parmi 3 stratégies de répartition de l'énergie: au prorata, égal, ou prioritaire."
       },
       "multiLanguage": {
         "title": "Multilingue",
-        "description": "Interface disponible en francais, allemand, italien et anglais."
+        "description": "Interface disponible en français, allemand, italien et anglais."
       }
     },
     "howItWorks": {
-      "title": "Comment ca marche",
+      "title": "Comment ça marche",
       "step1": {
-        "title": "Creez votre CEL",
-        "description": "Inscrivez-vous et configurez votre communaute electrique locale."
+        "title": "Créez votre CEL",
+        "description": "Inscrivez-vous et configurez votre communauté électrique locale."
       },
       "step2": {
         "title": "Ajoutez vos membres",
-        "description": "Invitez les membres de votre communaute et enregistrez leurs compteurs."
+        "description": "Invitez les membres de votre communauté et enregistrez leurs compteurs."
       },
       "step3": {
-        "title": "Importez les donnees",
+        "title": "Importez les données",
         "description": "Uploadez les courbes de charge fournies par votre distributeur."
       },
       "step4": {
         "title": "Facturez automatiquement",
-        "description": "Generez et envoyez les factures en quelques clics."
+        "description": "Générez et envoyez les factures en quelques clics."
       }
     },
     "pricing": {
-      "title": "Tarification simple et transparente",
-      "starter": {
-        "name": "Starter",
-        "price": "Gratuit",
-        "description": "Pour demarrer avec une petite communaute",
-        "features": ["Jusqu'a 10 membres", "Import CSV", "Facturation de base", "Support email"]
+      "label": "Tarification",
+      "title": "Un prix qui s'adapte à votre volume",
+      "subtitle": "Tarification simple basée sur l'énergie gérée par votre CEL. Plus vous gérez d'énergie, plus vous économisez.",
+      "formula": "CHF 0.005 par kWh géré (minimum CHF 49/mois)",
+      "cta": "Commencer maintenant",
+      "calculator": {
+        "title": "Calculez votre tarif",
+        "subtitle": "Estimez le coût mensuel selon le volume d'énergie de votre CEL",
+        "volume": "Volume mensuel",
+        "monthly": "Coût mensuel",
+        "annual": "Coût annuel",
+        "minimum": "Tarif minimum appliqué pour les petits volumes"
       },
-      "pro": {
-        "name": "Pro",
-        "price": "CHF 49/mois",
-        "description": "Pour les communautes etablies",
-        "features": ["Membres illimites", "Toutes les strategies de repartition", "Export PDF", "Support prioritaire"]
+      "tiers": {
+        "small": "Petit quartier",
+        "medium": "Quartier moyen",
+        "large": "Grande commune",
+        "enterprise": "Déploiement municipal"
+      },
+      "included": {
+        "title": "Tout inclus dans votre abonnement",
+        "subtitle": "Pas de frais cachés, toutes les fonctionnalités disponibles"
+      },
+      "features": [
+        "Membres illimités",
+        "Import des courbes de charge (CSV)",
+        "3 stratégies de répartition de l'énergie",
+        "Facturation automatique avec PDF",
+        "Tableau de bord pour chaque membre",
+        "Support multilingue (FR, DE, IT, EN)",
+        "Export des données et rapports"
+      ],
+      "examples": {
+        "title": "Exemples de tarification"
       }
     },
     "faq": {
-      "title": "Questions frequentes",
+      "title": "Questions fréquentes",
       "q1": {
         "question": "Qu'est-ce qu'une CEL?",
-        "answer": "Une Communaute Electrique Locale (CEL) permet aux menages d'un quartier de partager l'energie produite localement, notamment via des panneaux solaires."
+        "answer": "Une Communauté Électrique Locale (CEL) permet aux ménages d'une commune ou d'un quartier de partager l'énergie produite localement. La CEL bénéficie d'une réduction de 20 à 40% sur les frais de réseau pour l'énergie partagée."
       },
       "q2": {
-        "question": "Comment obtenir les courbes de charge?",
-        "answer": "Votre distributeur d'electricite (ex: Romande Energie) vous fournit mensuellement les donnees de consommation de chaque compteur."
+        "question": "Quelle différence entre CEL, CA et RCP?",
+        "answer": "Ce sont trois structures juridiques distinctes en Suisse. La CEL (Communauté Électrique Locale) couvre une commune entière avec réduction partielle des frais réseau. La CA (Communauté d'Autoconsommation) est limitée à un bâtiment ou des parcelles voisines avec exemption totale des frais réseau. Le RCP (Regroupement de Consommation Propre) fonctionne avec un compteur unique pour tout le groupe. Wattly est spécialisé dans la gestion des CEL."
       },
       "q3": {
+        "question": "Comment obtenir les courbes de charge?",
+        "answer": "Votre gestionnaire de réseau de distribution (GRD) comme Romande Énergie, Groupe E ou SIG vous fournit les données de consommation par intervalles de 15 minutes pour chaque compteur de votre CEL."
+      },
+      "q4": {
         "question": "Wattly remplace-t-il mon distributeur?",
-        "answer": "Non, Wattly est un outil de gestion. Votre distributeur reste responsable de la fourniture d'electricite et de la facturation reseau."
+        "answer": "Non, Wattly est un outil de gestion pour le représentant de la CEL. Votre GRD reste responsable de la fourniture d'électricité et de la facturation des frais de réseau."
       }
     },
     "cta": {
-      "title": "Pret a simplifier la gestion de votre CEL?",
-      "subtitle": "Rejoignez les communautes qui font confiance a Wattly.",
+      "title": "Prêt à simplifier la gestion de votre CEL?",
+      "subtitle": "Simplifiez la gestion de votre CEL dès aujourd'hui.",
       "button": "Commencer maintenant"
     },
     "footer": {
-      "description": "La solution de gestion pour les communautes electriques locales en Suisse.",
-      "legal": "Mentions legales",
-      "privacy": "Confidentialite",
+      "description": "La solution de gestion pour les communautés électriques locales en Suisse.",
+      "legal": "Mentions légales",
+      "privacy": "Confidentialité",
       "terms": "Conditions d'utilisation",
       "contact": "Contact"
     }
@@ -145,23 +172,23 @@
   "auth": {
     "login": {
       "title": "Connexion",
-      "subtitle": "Connectez-vous a votre compte",
+      "subtitle": "Connectez-vous à votre compte",
       "email": "Email",
       "password": "Mot de passe",
       "submit": "Se connecter",
-      "forgotPassword": "Mot de passe oublie?",
+      "forgotPassword": "Mot de passe oublié?",
       "noAccount": "Pas encore de compte?",
-      "register": "Creer un compte"
+      "register": "Créer un compte"
     },
     "register": {
       "title": "Inscription",
-      "subtitle": "Creez votre compte Wattly",
+      "subtitle": "Créez votre compte Wattly",
       "name": "Nom complet",
       "email": "Email",
       "password": "Mot de passe",
       "confirmPassword": "Confirmer le mot de passe",
       "submit": "S'inscrire",
-      "hasAccount": "Deja un compte?",
+      "hasAccount": "Déjà un compte?",
       "login": "Se connecter"
     }
   },
@@ -173,16 +200,41 @@
       "totalMembers": "Membres",
       "totalProduction": "Production totale",
       "totalConsumption": "Consommation totale",
-      "savings": "Economies realisees",
+      "savings": "Économies réalisées",
       "pendingInvoices": "Factures en attente"
     },
     "charts": {
-      "monthlyEnergy": "Energie mensuelle",
-      "distribution": "Repartition de l'energie",
+      "monthlyEnergy": "Énergie mensuelle",
+      "distribution": "Répartition de l'énergie",
       "consumption": "Consommation",
       "production": "Production"
     },
-    "recentActivity": "Activite recente"
+    "recentActivity": "Activité récente",
+    "emptyState": {
+      "title": "Bienvenue sur votre tableau de bord CEL",
+      "subtitle": "Complétez la configuration pour commencer à gérer votre communauté",
+      "noEnergyData": "Aucune donnée énergétique disponible",
+      "importHint": "Importez les courbes de charge pour voir la répartition",
+      "noActivity": "Aucune activité récente",
+      "pendingInvoicesHint": "{count} facture(s) en attente de paiement"
+    },
+    "energySources": {
+      "community": "Communauté",
+      "grid": "Réseau"
+    },
+    "selfSufficiency": {
+      "title": "Taux d'autosuffisance",
+      "description": "Énergie de la communauté vs réseau"
+    },
+    "setup": {
+      "title": "Démarrage",
+      "subtitle": "Complétez ces étapes pour commencer à utiliser Wattly",
+      "step1": "Ajouter des membres",
+      "step2": "Configurer les tarifs",
+      "step3": "Importer les données énergétiques",
+      "step4": "Générer les factures"
+    },
+    "configureToSee": "Configurez les tarifs pour voir les économies"
   },
   "members": {
     "title": "Membres",
@@ -193,8 +245,8 @@
     "table": {
       "name": "Nom",
       "email": "Email",
-      "phone": "Telephone",
-      "pod": "Numero POD",
+      "phone": "Téléphone",
+      "pod": "Numéro POD",
       "type": "Type",
       "status": "Statut",
       "actions": "Actions"
@@ -211,89 +263,89 @@
     },
     "form": {
       "title": "Informations du membre",
-      "firstname": "Prenom",
+      "firstname": "Prénom",
       "lastname": "Nom",
       "email": "Email",
-      "phone": "Telephone",
+      "phone": "Téléphone",
       "address": "Adresse",
       "postalCode": "Code postal",
       "city": "Ville",
-      "podNumber": "Numero POD",
+      "podNumber": "Numéro POD",
       "installationType": "Type d'installation",
-      "solarCapacity": "Capacite solaire (kWp)",
-      "batteryCapacity": "Capacite batterie (kWh)",
-      "priority": "Niveau de priorite"
+      "solarCapacity": "Capacité solaire (kWp)",
+      "batteryCapacity": "Capacité batterie (kWh)",
+      "priority": "Niveau de priorité"
     }
   },
   "energy": {
-    "title": "Energie",
+    "title": "Énergie",
     "import": {
       "title": "Importer les courbes de charge",
-      "dropzone": "Deposez vos fichiers CSV ici ou cliquez pour selectionner",
+      "dropzone": "Déposez vos fichiers CSV ici ou cliquez pour sélectionner",
       "processing": "Traitement en cours...",
-      "success": "Import reussi",
+      "success": "Import réussi",
       "error": "Erreur lors de l'import"
     },
     "period": {
-      "select": "Selectionner la periode",
+      "select": "Sélectionner la période",
       "month": "Mois",
-      "year": "Annee"
+      "year": "Année"
     },
     "stats": {
       "totalProduction": "Production totale",
       "totalConsumption": "Consommation totale",
       "selfConsumption": "Autoconsommation",
       "communityConsumption": "Consommation communautaire",
-      "gridConsumption": "Consommation reseau",
-      "exportedToCommunity": "Exporte vers la communaute",
-      "exportedToGrid": "Exporte vers le reseau"
+      "gridConsumption": "Consommation réseau",
+      "exportedToCommunity": "Exporté vers la communauté",
+      "exportedToGrid": "Exporté vers le réseau"
     },
     "distribution": {
-      "title": "Strategie de repartition",
+      "title": "Stratégie de répartition",
       "prorata": "Au prorata",
-      "prorataDesc": "Repartition proportionnelle a la consommation de chaque membre",
-      "equal": "Egal",
-      "equalDesc": "Repartition egale entre tous les membres",
+      "prorataDesc": "Répartition proportionnelle à la consommation de chaque membre",
+      "equal": "Égal",
+      "equalDesc": "Répartition égale entre tous les membres",
       "priority": "Prioritaire",
-      "priorityDesc": "Les membres prioritaires recoivent l'energie en premier"
+      "priorityDesc": "Les membres prioritaires reçoivent l'énergie en premier"
     }
   },
   "invoices": {
     "title": "Factures",
-    "generate": "Generer les factures",
-    "generateAll": "Generer pour tous les membres",
+    "generate": "Générer les factures",
+    "generateAll": "Générer pour tous les membres",
     "searchPlaceholder": "Rechercher une facture...",
     "table": {
-      "number": "Numero",
+      "number": "Numéro",
       "member": "Membre",
-      "period": "Periode",
+      "period": "Période",
       "amount": "Montant",
       "status": "Statut",
-      "dueDate": "Echeance",
+      "dueDate": "Échéance",
       "actions": "Actions"
     },
     "status": {
       "draft": "Brouillon",
-      "sent": "Envoyee",
-      "paid": "Payee",
+      "sent": "Envoyée",
+      "paid": "Payée",
       "overdue": "En retard",
-      "cancelled": "Annulee"
+      "cancelled": "Annulée"
     },
     "actions": {
       "view": "Voir",
-      "download": "Telecharger",
+      "download": "Télécharger",
       "send": "Envoyer",
-      "markPaid": "Marquer payee",
+      "markPaid": "Marquer payée",
       "delete": "Supprimer"
     }
   },
   "settings": {
-    "title": "Parametres",
+    "title": "Paramètres",
     "tabs": {
-      "general": "General",
+      "general": "Général",
       "billing": "Facturation",
       "tariffs": "Tarifs",
-      "distribution": "Repartition"
+      "distribution": "Répartition"
     },
     "organization": {
       "title": "Information de l'organisation",
@@ -304,60 +356,60 @@
       "commune": "Commune",
       "canton": "Canton",
       "contactEmail": "Email de contact",
-      "contactPhone": "Telephone de contact",
+      "contactPhone": "Téléphone de contact",
       "logo": "Logo"
     },
     "billing": {
-      "title": "Parametres de facturation",
+      "title": "Paramètres de facturation",
       "currency": "Devise",
       "vatRate": "Taux TVA (%)",
-      "paymentTerms": "Delai de paiement (jours)"
+      "paymentTerms": "Délai de paiement (jours)"
     },
     "tariffs": {
       "title": "Tarifs",
       "add": "Ajouter un tarif",
       "name": "Nom du tarif",
       "communityRate": "Tarif communautaire (CHF/kWh)",
-      "gridRate": "Tarif reseau (CHF/kWh)",
+      "gridRate": "Tarif réseau (CHF/kWh)",
       "injectionRate": "Tarif injection (CHF/kWh)",
       "monthlyFee": "Frais mensuels (CHF)",
-      "validFrom": "Valide des le",
+      "validFrom": "Valide dès le",
       "validTo": "Valide jusqu'au",
-      "default": "Tarif par defaut"
+      "default": "Tarif par défaut"
     }
   },
   "memberDashboard": {
     "title": "Mon tableau de bord",
     "welcome": "Bienvenue, {name}",
     "myConsumption": "Ma consommation",
-    "mySavings": "Mes economies",
-    "savingsDescription": "Par rapport a une consommation 100% reseau",
+    "mySavings": "Mes économies",
+    "savingsDescription": "Par rapport à une consommation 100% réseau",
     "energySources": {
-      "title": "Sources d'energie",
+      "title": "Sources d'énergie",
       "selfConsumption": "Autoconsommation",
-      "community": "Communaute",
-      "grid": "Reseau"
+      "community": "Communauté",
+      "grid": "Réseau"
     },
     "myInvoices": "Mes factures",
     "noInvoices": "Aucune facture pour le moment"
   },
   "organizations": {
     "title": "Mes organisations",
-    "create": "Creer une CEL",
-    "select": "Selectionner une organisation",
+    "create": "Créer une CEL",
+    "select": "Sélectionner une organisation",
     "noOrganizations": "Vous n'avez pas encore d'organisation",
-    "createFirst": "Creez votre premiere CEL pour commencer",
+    "createFirst": "Créez votre première CEL pour commencer",
     "form": {
       "name": "Nom de la CEL",
       "slug": "Identifiant URL",
-      "slugHelp": "Utilise dans l'URL de votre CEL"
+      "slugHelp": "Utilisé dans l'URL de votre CEL"
     }
   },
   "validation": {
     "required": "Ce champ est requis",
     "email": "Email invalide",
-    "minLength": "Minimum {min} caracteres",
-    "maxLength": "Maximum {max} caracteres",
-    "invalidPod": "Numero POD invalide"
+    "minLength": "Minimum {min} caractères",
+    "maxLength": "Maximum {max} caractères",
+    "invalidPod": "Numéro POD invalide"
   }
 }

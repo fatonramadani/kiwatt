@@ -30,9 +30,12 @@ export function FeaturesSection() {
           {features.map((feature) => (
             <div
               key={feature.key}
-              className="group bg-white p-10 transition-colors hover:bg-pelorous-50/50"
+              className="group relative bg-white p-10 transition-colors hover:bg-pelorous-50/50"
             >
-              <span className="text-xs font-light text-pelorous-400">
+              {/* Accent line on hover */}
+              <div className="absolute left-0 top-0 h-0.5 w-0 bg-pelorous-500 transition-all duration-300 group-hover:w-full" />
+
+              <span className="text-xs font-light text-pelorous-400 transition-colors group-hover:text-pelorous-500">
                 {feature.number}
               </span>
               <h3 className="mt-6 text-xl font-light text-pelorous-950">

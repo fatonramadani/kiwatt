@@ -40,8 +40,9 @@
   },
   "landing": {
     "hero": {
+      "tagline": "Energiegemeinschaft-Verwaltung",
       "title": "Verwalten Sie Ihre lokale Energiegemeinschaft einfach",
-      "subtitle": "Die komplette Losung fur die Verwaltung Ihrer ZEV, Verbrauchsverfolgung und automatisierte Abrechnung.",
+      "subtitle": "Die komplette Lösung für die Verwaltung Ihrer LEG, Verbrauchsverfolgung und automatisierte Abrechnung.",
       "cta": "Kostenlos starten",
       "ctaSecondary": "Mehr erfahren"
     },
@@ -100,38 +101,64 @@
       }
     },
     "pricing": {
-      "title": "Einfache und transparente Preise",
-      "starter": {
-        "name": "Starter",
-        "price": "Kostenlos",
-        "description": "Zum Starten mit einer kleinen Gemeinschaft",
-        "features": ["Bis zu 10 Mitglieder", "CSV-Import", "Basis-Abrechnung", "E-Mail-Support"]
+      "label": "Preise",
+      "title": "Ein Preis, der sich Ihrem Volumen anpasst",
+      "subtitle": "Einfache Preisgestaltung basierend auf der von Ihrer LEG verwalteten Energie. Je mehr Energie Sie verwalten, desto mehr sparen Sie.",
+      "formula": "CHF 0.005 pro kWh verwaltet (Minimum CHF 49/Monat)",
+      "cta": "Jetzt starten",
+      "calculator": {
+        "title": "Berechnen Sie Ihren Tarif",
+        "subtitle": "Schätzen Sie die monatlichen Kosten basierend auf dem Energievolumen Ihrer LEG",
+        "volume": "Monatliches Volumen",
+        "monthly": "Monatliche Kosten",
+        "annual": "Jährliche Kosten",
+        "minimum": "Mindesttarif für kleine Volumen angewendet"
       },
-      "pro": {
-        "name": "Pro",
-        "price": "CHF 49/Monat",
-        "description": "Fur etablierte Gemeinschaften",
-        "features": ["Unbegrenzte Mitglieder", "Alle Verteilungsstrategien", "PDF-Export", "Prioritats-Support"]
+      "tiers": {
+        "small": "Kleine Nachbarschaft",
+        "medium": "Mittlere Nachbarschaft",
+        "large": "Grosse Gemeinde",
+        "enterprise": "Kommunale Bereitstellung"
+      },
+      "included": {
+        "title": "Alles in Ihrem Abonnement enthalten",
+        "subtitle": "Keine versteckten Kosten, alle Funktionen verfügbar"
+      },
+      "features": [
+        "Unbegrenzte Mitglieder",
+        "Import der Lastgänge (CSV)",
+        "3 Strategien zur Energieverteilung",
+        "Automatische Rechnungsstellung mit PDF",
+        "Dashboard für jedes Mitglied",
+        "Mehrsprachiger Support (FR, DE, IT, EN)",
+        "Datenexport und Berichte"
+      ],
+      "examples": {
+        "title": "Preisbeispiele"
       }
     },
     "faq": {
-      "title": "Haufig gestellte Fragen",
+      "title": "Häufig gestellte Fragen",
       "q1": {
-        "question": "Was ist eine ZEV?",
-        "answer": "Ein Zusammenschluss zum Eigenverbrauch (ZEV) ermoglicht es Haushalten, lokal produzierte Energie, insbesondere durch Solaranlagen, zu teilen."
+        "question": "Was ist eine LEG?",
+        "answer": "Eine Lokale Elektrizitätsgemeinschaft (LEG) ermöglicht es Haushalten einer Gemeinde oder eines Quartiers, lokal produzierte Energie zu teilen. Die LEG profitiert von einer Reduktion der Netzgebühren um 20 bis 40% für die geteilte Energie."
       },
       "q2": {
-        "question": "Wie erhalte ich die Lastgange?",
-        "answer": "Ihr Stromverteiler stellt Ihnen monatlich die Verbrauchsdaten jedes Zahlers zur Verfugung."
+        "question": "Was ist der Unterschied zwischen LEG, EVG und ZEV?",
+        "answer": "Das sind drei verschiedene rechtliche Strukturen in der Schweiz. Die LEG (Lokale Elektrizitätsgemeinschaft) umfasst eine ganze Gemeinde mit teilweiser Reduktion der Netzgebühren. Die EVG (Eigenverbrauchsgemeinschaft) ist auf ein Gebäude oder benachbarte Grundstücke beschränkt mit vollständiger Befreiung von Netzgebühren. Der ZEV (Zusammenschluss zum Eigenverbrauch) funktioniert mit einem einzigen Zähler für die gesamte Gruppe. Wattly ist auf die Verwaltung von LEG spezialisiert."
       },
       "q3": {
+        "question": "Wie erhalte ich die Lastgänge?",
+        "answer": "Ihr Verteilnetzbetreiber (VNB) wie Romande Energie, Groupe E oder SIG stellt Ihnen die Verbrauchsdaten in 15-Minuten-Intervallen für jeden Zähler Ihrer LEG zur Verfügung."
+      },
+      "q4": {
         "question": "Ersetzt Wattly meinen Verteiler?",
-        "answer": "Nein, Wattly ist ein Verwaltungstool. Ihr Verteiler bleibt fur die Stromversorgung und Netzabrechnung verantwortlich."
+        "answer": "Nein, Wattly ist ein Verwaltungstool für den Vertreter der LEG. Ihr VNB bleibt verantwortlich für die Stromversorgung und die Abrechnung der Netzgebühren."
       }
     },
     "cta": {
-      "title": "Bereit, Ihre ZEV-Verwaltung zu vereinfachen?",
-      "subtitle": "Schliessen Sie sich den Gemeinschaften an, die Wattly vertrauen.",
+      "title": "Bereit, Ihre LEG-Verwaltung zu vereinfachen?",
+      "subtitle": "Vereinfachen Sie die Verwaltung Ihrer LEG noch heute.",
       "button": "Jetzt starten"
     },
     "footer": {
@@ -182,7 +209,32 @@
       "consumption": "Verbrauch",
       "production": "Produktion"
     },
-    "recentActivity": "Letzte Aktivitat"
+    "recentActivity": "Letzte Aktivitat",
+    "emptyState": {
+      "title": "Willkommen auf Ihrem LEG-Dashboard",
+      "subtitle": "Schliessen Sie die Einrichtung ab, um Ihre Gemeinschaft zu verwalten",
+      "noEnergyData": "Noch keine Energiedaten verfugbar",
+      "importHint": "Importieren Sie Lastgange, um die Verteilung zu sehen",
+      "noActivity": "Keine aktuelle Aktivitat",
+      "pendingInvoicesHint": "{count} Rechnung(en) warten auf Zahlung"
+    },
+    "energySources": {
+      "community": "Gemeinschaft",
+      "grid": "Netz"
+    },
+    "selfSufficiency": {
+      "title": "Autarkierate",
+      "description": "Energie aus der Gemeinschaft vs. Netz"
+    },
+    "setup": {
+      "title": "Erste Schritte",
+      "subtitle": "Fuhren Sie diese Schritte aus, um Wattly zu nutzen",
+      "step1": "Mitglieder hinzufugen",
+      "step2": "Tarife konfigurieren",
+      "step3": "Energiedaten importieren",
+      "step4": "Rechnungen erstellen"
+    },
+    "configureToSee": "Konfigurieren Sie Tarife, um Einsparungen zu sehen"
   },
   "members": {
     "title": "Mitglieder",

@@ -3,37 +3,41 @@
 import { useLocale } from "next-intl";
 import { usePathname, useRouter } from "~/i18n/navigation";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "~/components/ui/select";
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "~/components/ui/dropdown-menu";
 import { locales, localeNames, type Locale } from "~/i18n/config";
-import { Globe } from "lucide-react";
+import { Globe, Check } from "lucide-react";
 
 export function LanguageSwitcher() {
   const locale = useLocale();
   const router = useRouter();
   const pathname = usePathname();
 
-  function onSelectChange(value: string) {
-    router.replace(pathname, { locale: value as Locale });
+  function handleSelect(newLocale: Locale) {
+    router.replace(pathname, { locale: newLocale });
   }
 
   return (
-    <Select defaultValue={locale} onValueChange={onSelectChange}>
-      <SelectTrigger className="w-[130px] border-none bg-transparent">
-        <Globe className="mr-2 h-4 w-4 text-pelorous-500" />
-        <SelectValue placeholder="Language" />
-      </SelectTrigger>
-      <SelectContent>
+    <DropdownMenu modal={false}>
+      <DropdownMenuTrigger className="flex items-center gap-2 text-sm font-light text-pelorous-700 outline-none transition-colors hover:text-pelorous-950">
+        <Globe className="h-4 w-4 text-pelorous-500" />
+        <span>{localeNames[locale as Locale]}</span>
+      </DropdownMenuTrigger>
+      <DropdownMenuContent align="end" className="min-w-[140px]">
         {locales.map((loc) => (
-          <SelectItem key={loc} value={loc}>
+          <DropdownMenuItem
+            key={loc}
+            onClick={() => handleSelect(loc)}
+            className="flex cursor-pointer items-center justify-between text-sm font-light"
+          >
             {localeNames[loc]}
-          </SelectItem>
+            {locale === loc && <Check className="h-4 w-4 text-pelorous-500" />}
+          </DropdownMenuItem>
         ))}
-      </SelectContent>
-    </Select>
+      </DropdownMenuContent>
+    </DropdownMenu>
   );
 }

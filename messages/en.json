@@ -40,6 +40,7 @@
   },
   "landing": {
     "hero": {
+      "tagline": "Energy Community Management",
       "title": "Manage your local energy community with ease",
       "subtitle": "The complete solution to manage your LEC, track consumption and automate billing.",
       "cta": "Get started free",
@@ -100,38 +101,64 @@
       }
     },
     "pricing": {
-      "title": "Simple and transparent pricing",
-      "starter": {
-        "name": "Starter",
-        "price": "Free",
-        "description": "To start with a small community",
-        "features": ["Up to 10 members", "CSV import", "Basic invoicing", "Email support"]
+      "label": "Pricing",
+      "title": "A price that scales with your volume",
+      "subtitle": "Simple pricing based on energy managed by your LEC. The more energy you manage, the more you save.",
+      "formula": "CHF 0.005 per kWh managed (minimum CHF 49/month)",
+      "cta": "Start now",
+      "calculator": {
+        "title": "Calculate your rate",
+        "subtitle": "Estimate the monthly cost based on your LEC's energy volume",
+        "volume": "Monthly volume",
+        "monthly": "Monthly cost",
+        "annual": "Annual cost",
+        "minimum": "Minimum rate applied for small volumes"
       },
-      "pro": {
-        "name": "Pro",
-        "price": "CHF 49/month",
-        "description": "For established communities",
-        "features": ["Unlimited members", "All distribution strategies", "PDF export", "Priority support"]
+      "tiers": {
+        "small": "Small neighborhood",
+        "medium": "Medium neighborhood",
+        "large": "Large municipality",
+        "enterprise": "Municipal deployment"
+      },
+      "included": {
+        "title": "Everything included in your subscription",
+        "subtitle": "No hidden fees, all features available"
+      },
+      "features": [
+        "Unlimited members",
+        "Load curve import (CSV)",
+        "3 energy distribution strategies",
+        "Automatic invoicing with PDF",
+        "Dashboard for each member",
+        "Multilingual support (FR, DE, IT, EN)",
+        "Data export and reports"
+      ],
+      "examples": {
+        "title": "Pricing examples"
       }
     },
     "faq": {
       "title": "Frequently asked questions",
       "q1": {
         "question": "What is a LEC?",
-        "answer": "A Local Energy Community (LEC) allows households in a neighborhood to share locally produced energy, particularly through solar panels."
+        "answer": "A Local Energy Community (LEC) allows households in a municipality or neighborhood to share locally produced energy. The LEC benefits from a 20-40% reduction in network fees for shared energy."
       },
       "q2": {
-        "question": "How do I get load curves?",
-        "answer": "Your electricity distributor provides you monthly with consumption data for each meter."
+        "question": "What's the difference between LEC, SC and SCP?",
+        "answer": "These are three distinct legal structures in Switzerland. The LEC (Local Energy Community) covers an entire municipality with partial network fee reduction. The SC (Self-Consumption Community) is limited to a building or adjacent plots with full network fee exemption. The SCP (Self-Consumption Pool) operates with a single meter for the entire group. Wattly specializes in LEC management."
       },
       "q3": {
+        "question": "How do I get load curves?",
+        "answer": "Your distribution network operator (DNO) such as Romande Energie, Groupe E or SIG provides you with consumption data at 15-minute intervals for each meter in your LEC."
+      },
+      "q4": {
         "question": "Does Wattly replace my distributor?",
-        "answer": "No, Wattly is a management tool. Your distributor remains responsible for electricity supply and grid billing."
+        "answer": "No, Wattly is a management tool for the LEC representative. Your DNO remains responsible for electricity supply and network fee billing."
       }
     },
     "cta": {
       "title": "Ready to simplify your LEC management?",
-      "subtitle": "Join the communities that trust Wattly.",
+      "subtitle": "Simplify your LEC management today.",
       "button": "Start now"
     },
     "footer": {
@@ -182,7 +209,32 @@
       "consumption": "Consumption",
       "production": "Production"
     },
-    "recentActivity": "Recent activity"
+    "recentActivity": "Recent activity",
+    "emptyState": {
+      "title": "Welcome to your LEC dashboard",
+      "subtitle": "Complete the setup to start managing your community",
+      "noEnergyData": "No energy data available yet",
+      "importHint": "Import load curves to see energy distribution",
+      "noActivity": "No recent activity",
+      "pendingInvoicesHint": "{count} invoice(s) waiting to be paid"
+    },
+    "energySources": {
+      "community": "Community",
+      "grid": "Grid"
+    },
+    "selfSufficiency": {
+      "title": "Self-sufficiency rate",
+      "description": "Energy from community vs grid"
+    },
+    "setup": {
+      "title": "Getting started",
+      "subtitle": "Complete these steps to start using Wattly",
+      "step1": "Add community members",
+      "step2": "Configure tariffs",
+      "step3": "Import energy data",
+      "step4": "Generate invoices"
+    },
+    "configureToSee": "Configure tariffs to see savings"
   },
   "members": {
     "title": "Members",

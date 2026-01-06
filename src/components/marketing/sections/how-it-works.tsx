@@ -25,11 +25,19 @@ export function HowItWorksSection() {
         </div>
 
         <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-4">
-          {steps.map((step) => (
+          {steps.map((step, index) => (
             <div key={step.key} className="relative">
-              <span className="text-6xl font-extralight text-pelorous-700">
-                {step.number}
-              </span>
+              {/* Connector line - positioned to the right of the number */}
+              {index < steps.length - 1 && (
+                <div className="absolute left-20 top-8 hidden h-px w-[calc(100%-5rem)] bg-gradient-to-r from-pelorous-500 to-transparent lg:block" />
+              )}
+
+              <div className="relative inline-block">
+                <span className="text-6xl font-extralight text-pelorous-700">
+                  {step.number}
+                </span>
+                <span className="absolute -bottom-1 left-0 h-0.5 w-8 bg-pelorous-500" />
+              </div>
               <h3 className="mt-6 text-xl font-light">
                 {t(`${step.key}.title`)}
               </h3>
