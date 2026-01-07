@@ -6,12 +6,15 @@ import { Link } from "~/i18n/navigation";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { authClient } from "~/server/better-auth/client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 export default function LoginPage() {
   const t = useTranslations("auth.login");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get("returnUrl");
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -31,7 +34,8 @@ export default function LoginPage() {
       if (result.error) {
         setError(result.error.message ?? "Login failed");
       } else {
-        router.push("/app");
+        // Redirect to returnUrl if provided, otherwise go to app
+        router.push(returnUrl ?? "/app");
         router.refresh();
       }
     } catch {
@@ -44,7 +48,7 @@ export default function LoginPage() {
   return (
     <div>
       <p className="text-sm font-light uppercase tracking-[0.3em] text-pelorous-500">
-        Welcome back
+        {t("tagline")}
       </p>
       <h2 className="mt-4 text-3xl font-light tracking-tight text-pelorous-950">
         {t("title")}
@@ -114,7 +118,7 @@ export default function LoginPage() {
       <p className="mt-12 text-center text-sm font-light text-pelorous-600">
         {t("noAccount")}{" "}
         <Link
-          href="/register"
+          href={returnUrl ? `/register?returnUrl=${encodeURIComponent(returnUrl)}` : "/register"}
           className="text-pelorous-700 underline underline-offset-4 hover:text-pelorous-950"
         >
           {t("register")}

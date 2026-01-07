@@ -6,14 +6,18 @@ import { Link } from "~/i18n/navigation";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { authClient } from "~/server/better-auth/client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 export default function RegisterPage() {
   const t = useTranslations("auth.register");
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const returnUrl = searchParams.get("returnUrl");
+  const prefillEmail = searchParams.get("email");
+
   const [name, setName] = useState("");
-  const [email, setEmail] = useState("");
+  const [email, setEmail] = useState(prefillEmail ?? "");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -33,7 +37,8 @@ export default function RegisterPage() {
       if (result.error) {
         setError(result.error.message ?? "Registration failed");
       } else {
-        router.push("/app");
+        // Redirect to returnUrl if provided, otherwise go to app
+        router.push(returnUrl ?? "/app");
         router.refresh();
       }
     } catch {
@@ -46,7 +51,7 @@ export default function RegisterPage() {
   return (
     <div>
       <p className="text-sm font-light uppercase tracking-[0.3em] text-pelorous-500">
-        Get started
+        {t("tagline")}
       </p>
       <h2 className="mt-4 text-3xl font-light tracking-tight text-pelorous-950">
         {t("title")}
@@ -126,7 +131,7 @@ export default function RegisterPage() {
       <p className="mt-12 text-center text-sm font-light text-pelorous-600">
         {t("hasAccount")}{" "}
         <Link
-          href="/login"
+          href={returnUrl ? `/login?returnUrl=${encodeURIComponent(returnUrl)}` : "/login"}
           className="text-pelorous-700 underline underline-offset-4 hover:text-pelorous-950"
         >
           {t("login")}

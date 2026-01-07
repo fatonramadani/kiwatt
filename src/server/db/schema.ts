@@ -67,6 +67,7 @@ export const invoiceLineTypeEnum = pgEnum("invoice_line_type", [
   "fee",
   "adjustment",
 ]);
+export const timbreReductionEnum = pgEnum("timbre_reduction", ["20", "40"]);
 
 export const user = pgTable("user", {
   id: text("id").primaryKey(),
@@ -178,6 +179,9 @@ export const organization = pgTable(
     }>(),
     distributionStrategy: distributionStrategyEnum("distribution_strategy")
       .default("prorata")
+      .notNull(),
+    timbreReduction: timbreReductionEnum("timbre_reduction")
+      .default("20")
       .notNull(),
     logoUrl: text("logo_url"),
     createdAt: timestamp("created_at")

@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "~/i18n/navigation";
 import { api } from "~/trpc/react";
 import {
@@ -24,6 +24,7 @@ import {
 export default function PortalDashboardPage() {
   const params = useParams<{ orgSlug: string }>();
   const t = useTranslations("portal");
+  const locale = useLocale();
 
   const { data: memberData } = api.member.getMyMembership.useQuery({
     orgSlug: params.orgSlug,
@@ -35,20 +36,20 @@ export default function PortalDashboardPage() {
   );
 
   const formatKwh = (kwh: number) => {
-    return new Intl.NumberFormat("fr-CH", {
+    return new Intl.NumberFormat(`${locale}-CH`, {
       maximumFractionDigits: 1,
     }).format(kwh) + " kWh";
   };
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("fr-CH", {
+    return new Intl.NumberFormat(`${locale}-CH`, {
       style: "currency",
       currency: "CHF",
     }).format(amount);
   };
 
   const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString("fr-CH");
+    return new Date(date).toLocaleDateString(`${locale}-CH`);
   };
 
   // Prepare pie chart data

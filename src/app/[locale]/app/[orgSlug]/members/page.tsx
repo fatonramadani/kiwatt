@@ -16,6 +16,7 @@ import {
   CheckCircle,
   Clock,
 } from "lucide-react";
+import { AddressAutocomplete, type AddressData } from "~/components/app/address-autocomplete";
 
 export default function MembersPage() {
   const params = useParams<{ orgSlug: string }>();
@@ -58,7 +59,7 @@ export default function MembersPage() {
   const [invitingMemberId, setInvitingMemberId] = useState<string | null>(null);
 
   const handleDelete = (memberId: string) => {
-    if (confirm("Are you sure you want to delete this member?")) {
+    if (confirm(t("confirmDelete"))) {
       deleteMutation.mutate({ memberId });
     }
   };
@@ -75,7 +76,7 @@ export default function MembersPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-light tracking-tight text-gray-900">{t("title")}</h1>
-          <p className="mt-3 text-gray-400">Manage your community members</p>
+          <p className="mt-3 text-gray-400">{t("description")}</p>
         </div>
         <div className="flex items-center gap-4">
           <button
@@ -199,7 +200,7 @@ export default function MembersPage() {
             ) : membersData?.members.length === 0 ? (
               <tr>
                 <td colSpan={7} className="px-6 py-12 text-center text-sm text-gray-400">
-                  No members found
+                  {t("noMembers")}
                 </td>
               </tr>
             ) : (
@@ -340,6 +341,14 @@ function MemberForm({
   const createMutation = api.member.create.useMutation({ onSuccess });
   const updateMutation = api.member.update.useMutation({ onSuccess });
 
+  const handleAddressSelect = (addressData: AddressData) => {
+    setFormData((prev) => ({
+      ...prev,
+      postalCode: addressData.postalCode,
+      city: addressData.city,
+    }));
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (member) {
@@ -416,11 +425,11 @@ function MemberForm({
             </div>
             <div>
               <label className="block text-sm text-gray-500">{t("address")}</label>
-              <input
-                type="text"
+              <AddressAutocomplete
                 value={formData.address}
-                onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+                onChange={(value) => setFormData({ ...formData, address: value })}
+                onAddressSelect={handleAddressSelect}
+                className="mt-2"
               />
             </div>
             <div className="grid grid-cols-2 gap-3">
@@ -654,7 +663,7 @@ function ImportModal({
               htmlFor="csv-upload"
               className="cursor-pointer text-sm text-gray-400 hover:text-gray-600"
             >
-              {file ? file.name : "Click to select CSV file"}
+              {file ? file.name : t("import.selectFile")}
             </label>
           </div>
 

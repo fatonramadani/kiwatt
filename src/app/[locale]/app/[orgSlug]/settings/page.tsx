@@ -1,10 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { api } from "~/trpc/react";
-import { Settings, CreditCard, Tag, Share2, Check, Plus, Trash2, Receipt, Download, ExternalLink } from "lucide-react";
+import { Settings, CreditCard, Tag, Share2, Check, Plus, Trash2, Receipt, Download, ExternalLink, Info } from "lucide-react";
+import { AddressAutocomplete, type AddressData } from "~/components/app/address-autocomplete";
+import { PricingGuide } from "~/components/app/pricing-guide";
+import { cn } from "~/lib/utils";
 
 type TabId = "general" | "billing" | "tariffs" | "distribution";
 
@@ -29,7 +32,7 @@ export default function SettingsPage() {
     <div className="space-y-10">
       <div>
         <h1 className="text-3xl font-light tracking-tight text-gray-900">{t("title")}</h1>
-        <p className="mt-3 text-gray-400">Configure your community settings</p>
+        <p className="mt-3 text-gray-400">{t("description")}</p>
       </div>
 
       <div className="flex gap-10">
@@ -61,7 +64,7 @@ export default function SettingsPage() {
           {activeTab === "billing" && org && (
             <BillingTab org={org} onUpdate={refetchOrg} />
           )}
-          {activeTab === "tariffs" && org && <TariffsTab orgId={org.id} />}
+          {activeTab === "tariffs" && org && <TariffsTab orgId={org.id} timbreReduction={(org.timbreReduction ?? "20") as "20" | "40"} />}
           {activeTab === "distribution" && org && (
             <DistributionTab org={org} onUpdate={refetchOrg} />
           )}
@@ -80,6 +83,7 @@ function GeneralTab({
   onUpdate: () => void;
 }) {
   const t = useTranslations("settings.organization");
+  const tOrg = useTranslations("organizations.form");
   const tCommon = useTranslations("common");
   const [formData, setFormData] = useState({
     name: org.name ?? "",
@@ -90,11 +94,22 @@ function GeneralTab({
     canton: org.canton ?? "",
     contactEmail: org.contactEmail ?? "",
     contactPhone: org.contactPhone ?? "",
+    timbreReduction: (org.timbreReduction ?? "20") as "20" | "40",
   });
 
   const updateMutation = api.organization.update.useMutation({
     onSuccess: () => onUpdate(),
   });
+
+  const handleAddressSelect = (addressData: AddressData) => {
+    setFormData((prev) => ({
+      ...prev,
+      postalCode: addressData.postalCode,
+      city: addressData.city,
+      commune: addressData.commune ?? prev.commune,
+      canton: addressData.canton ?? prev.canton,
+    }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -102,99 +117,198 @@ function GeneralTab({
   };
 
   return (
-    <div className="rounded-2xl border border-gray-100 bg-white p-8">
-      <h2 className="text-xl font-light text-gray-900">{t("title")}</h2>
-      <form onSubmit={handleSubmit} className="mt-8 space-y-5">
-        <div className="grid gap-5 sm:grid-cols-2">
-          <div>
-            <label className="block text-sm text-gray-500">{t("name")}</label>
-            <input
-              type="text"
-              value={formData.name}
-              onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
-            />
+    <div className="space-y-8">
+      <div className="rounded-2xl border border-gray-100 bg-white p-8">
+        <h2 className="text-xl font-light text-gray-900">{t("title")}</h2>
+        <form onSubmit={handleSubmit} className="mt-8 space-y-6">
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div className="sm:col-span-2">
+              <label className="block text-sm text-gray-500">{t("name")}</label>
+              <input
+                type="text"
+                value={formData.name}
+                onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+              />
+            </div>
           </div>
-          <div>
-            <label className="block text-sm text-gray-500">{t("address")}</label>
-            <input
-              type="text"
-              value={formData.address}
-              onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
-            />
+
+          {/* Address Section */}
+          <div className="rounded-xl bg-gray-50 p-5 space-y-4">
+            <h3 className="text-sm font-medium text-gray-700">{t("addressSection")}</h3>
+            <div>
+              <label className="block text-sm text-gray-500">{t("address")}</label>
+              <AddressAutocomplete
+                value={formData.address}
+                onChange={(value) => setFormData({ ...formData, address: value })}
+                onAddressSelect={handleAddressSelect}
+                className="mt-2"
+              />
+            </div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm text-gray-500">{t("postalCode")}</label>
+                <input
+                  type="text"
+                  value={formData.postalCode}
+                  onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500">{t("city")}</label>
+                <input
+                  type="text"
+                  value={formData.city}
+                  onChange={(e) => setFormData({ ...formData, city: e.target.value })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500">{t("commune")}</label>
+                <input
+                  type="text"
+                  value={formData.commune}
+                  onChange={(e) => setFormData({ ...formData, commune: e.target.value })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500">{t("canton")}</label>
+                <input
+                  type="text"
+                  value={formData.canton}
+                  onChange={(e) => setFormData({ ...formData, canton: e.target.value })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
+            </div>
           </div>
-          <div>
-            <label className="block text-sm text-gray-500">{t("postalCode")}</label>
-            <input
-              type="text"
-              value={formData.postalCode}
-              onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
-            />
+
+          {/* Contact Info */}
+          <div className="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label className="block text-sm text-gray-500">{t("contactEmail")}</label>
+              <input
+                type="email"
+                value={formData.contactEmail}
+                onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-500">{t("contactPhone")}</label>
+              <input
+                type="tel"
+                value={formData.contactPhone}
+                onChange={(e) => setFormData({ ...formData, contactPhone: e.target.value })}
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+              />
+            </div>
           </div>
-          <div>
-            <label className="block text-sm text-gray-500">{t("city")}</label>
-            <input
-              type="text"
-              value={formData.city}
-              onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
-            />
+
+          {/* Timbre Reduction Section */}
+          <div className="border-t border-gray-100 pt-6 space-y-3">
+            <div>
+              <label className="block text-sm font-medium text-gray-700">{tOrg("timbreReduction")}</label>
+              <p className="mt-1 text-xs text-gray-400">{tOrg("timbreReductionHelp")}</p>
+            </div>
+            <div className="grid gap-3 sm:grid-cols-2">
+              <label
+                className={cn(
+                  "relative cursor-pointer rounded-xl border-2 p-4 transition-all",
+                  formData.timbreReduction === "20"
+                    ? "border-pelorous-500 bg-pelorous-50"
+                    : "border-gray-200 bg-white hover:border-gray-300"
+                )}
+              >
+                <input
+                  type="radio"
+                  name="timbreReduction"
+                  value="20"
+                  checked={formData.timbreReduction === "20"}
+                  onChange={() => setFormData({ ...formData, timbreReduction: "20" })}
+                  className="sr-only"
+                />
+                <div className="flex items-start gap-3">
+                  <div
+                    className={cn(
+                      "mt-0.5 h-4 w-4 rounded-full border-2",
+                      formData.timbreReduction === "20"
+                        ? "border-pelorous-500 bg-pelorous-500"
+                        : "border-gray-300"
+                    )}
+                  >
+                    {formData.timbreReduction === "20" && (
+                      <div className="flex h-full w-full items-center justify-center">
+                        <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">20%</p>
+                    <p className="text-sm text-gray-500">{tOrg("timbre20")}</p>
+                  </div>
+                </div>
+              </label>
+              <label
+                className={cn(
+                  "relative cursor-pointer rounded-xl border-2 p-4 transition-all",
+                  formData.timbreReduction === "40"
+                    ? "border-pelorous-500 bg-pelorous-50"
+                    : "border-gray-200 bg-white hover:border-gray-300"
+                )}
+              >
+                <input
+                  type="radio"
+                  name="timbreReduction"
+                  value="40"
+                  checked={formData.timbreReduction === "40"}
+                  onChange={() => setFormData({ ...formData, timbreReduction: "40" })}
+                  className="sr-only"
+                />
+                <div className="flex items-start gap-3">
+                  <div
+                    className={cn(
+                      "mt-0.5 h-4 w-4 rounded-full border-2",
+                      formData.timbreReduction === "40"
+                        ? "border-pelorous-500 bg-pelorous-500"
+                        : "border-gray-300"
+                    )}
+                  >
+                    {formData.timbreReduction === "40" && (
+                      <div className="flex h-full w-full items-center justify-center">
+                        <div className="h-1.5 w-1.5 rounded-full bg-white" />
+                      </div>
+                    )}
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">40%</p>
+                    <p className="text-sm text-gray-500">{tOrg("timbre40")}</p>
+                  </div>
+                </div>
+              </label>
+            </div>
           </div>
-          <div>
-            <label className="block text-sm text-gray-500">{t("commune")}</label>
-            <input
-              type="text"
-              value={formData.commune}
-              onChange={(e) => setFormData({ ...formData, commune: e.target.value })}
-              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
-            />
+
+          <div className="pt-6">
+            <button
+              type="submit"
+              disabled={updateMutation.isPending}
+              className="rounded-xl bg-gray-900 px-6 py-3 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
+            >
+              {updateMutation.isPending ? tCommon("loading") : tCommon("save")}
+            </button>
           </div>
-          <div>
-            <label className="block text-sm text-gray-500">{t("canton")}</label>
-            <input
-              type="text"
-              value={formData.canton}
-              onChange={(e) => setFormData({ ...formData, canton: e.target.value })}
-              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-sm text-gray-500">{t("contactEmail")}</label>
-            <input
-              type="email"
-              value={formData.contactEmail}
-              onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
-              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
-            />
-          </div>
-          <div>
-            <label className="block text-sm text-gray-500">{t("contactPhone")}</label>
-            <input
-              type="tel"
-              value={formData.contactPhone}
-              onChange={(e) => setFormData({ ...formData, contactPhone: e.target.value })}
-              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
-            />
-          </div>
-        </div>
-        <div className="pt-6">
-          <button
-            type="submit"
-            disabled={updateMutation.isPending}
-            className="rounded-xl bg-gray-900 px-6 py-3 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
-          >
-            {updateMutation.isPending ? tCommon("loading") : tCommon("save")}
-          </button>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
   );
 }
 
 // Platform Subscription Section (Wattly billing)
 function PlatformSubscriptionSection({ orgId }: { orgId: string }) {
+  const t = useTranslations("settings.billing.subscription");
   const { data: summary, isLoading } = api.platformBilling.getBillingSummary.useQuery({ orgId });
   const { data: invoicesData } = api.platformBilling.getMyPlatformInvoices.useQuery({ orgId, limit: 5 });
 
@@ -236,9 +350,9 @@ function PlatformSubscriptionSection({ orgId }: { orgId: string }) {
     <div className="rounded-2xl border border-gray-100 bg-white p-8">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-light text-gray-900">Wattly Subscription</h2>
+          <h2 className="text-xl font-light text-gray-900">{t("title")}</h2>
           <p className="mt-1 text-sm text-gray-400">
-            Platform usage billing from Wattly
+            {t("description")}
           </p>
         </div>
         <div className="rounded-xl bg-pelorous-50 px-4 py-2">
@@ -255,19 +369,19 @@ function PlatformSubscriptionSection({ orgId }: { orgId: string }) {
       {/* Summary Cards */}
       <div className="mt-6 grid grid-cols-3 gap-4">
         <div className="rounded-xl bg-gray-50 p-4">
-          <p className="text-xs text-gray-400">Total Paid</p>
+          <p className="text-xs text-gray-400">{t("totalPaid")}</p>
           <p className="mt-1 text-xl font-light text-gray-900">
             CHF {(summary?.totalPaid ?? 0).toFixed(2)}
           </p>
         </div>
         <div className="rounded-xl bg-gray-50 p-4">
-          <p className="text-xs text-gray-400">Outstanding</p>
+          <p className="text-xs text-gray-400">{t("outstanding")}</p>
           <p className="mt-1 text-xl font-light text-gray-900">
             CHF {(summary?.totalOutstanding ?? 0).toFixed(2)}
           </p>
         </div>
         <div className="rounded-xl bg-gray-50 p-4">
-          <p className="text-xs text-gray-400">Total Invoices</p>
+          <p className="text-xs text-gray-400">{t("totalInvoices")}</p>
           <p className="mt-1 text-xl font-light text-gray-900">
             {summary?.invoiceCount ?? 0}
           </p>
@@ -277,7 +391,7 @@ function PlatformSubscriptionSection({ orgId }: { orgId: string }) {
       {/* Recent Invoices */}
       {invoicesData && invoicesData.invoices.length > 0 && (
         <div className="mt-8">
-          <h3 className="text-sm font-medium text-gray-900">Recent Invoices</h3>
+          <h3 className="text-sm font-medium text-gray-900">{t("recentInvoices")}</h3>
           <div className="mt-4 space-y-3">
             {invoicesData.invoices.map((invoice) => (
               <div
@@ -301,7 +415,7 @@ function PlatformSubscriptionSection({ orgId }: { orgId: string }) {
                       CHF {invoice.totalAmount.toFixed(2)}
                     </p>
                     <p className="text-xs text-gray-400">
-                      Due {formatDate(invoice.dueDate)}
+                      {t("due", { date: formatDate(invoice.dueDate) })}
                     </p>
                   </div>
                   <span className={`rounded-lg px-2.5 py-1 text-xs ${getStatusColor(invoice.status)}`}>
@@ -329,7 +443,7 @@ function PlatformSubscriptionSection({ orgId }: { orgId: string }) {
         <div className="mt-8 rounded-xl bg-gray-50 p-6 text-center">
           <Receipt className="mx-auto h-8 w-8 text-gray-300" />
           <p className="mt-2 text-sm text-gray-400">
-            No invoices yet. Your first invoice will appear here after your first billing period.
+            {t("noInvoices")}
           </p>
         </div>
       )}
@@ -340,10 +454,10 @@ function PlatformSubscriptionSection({ orgId }: { orgId: string }) {
           <ExternalLink className="mt-0.5 h-4 w-4 text-pelorous-500" />
           <div>
             <p className="text-sm text-pelorous-700">
-              Wattly charges CHF 0.005 per kWh managed through your community, with a minimum of CHF 49/month.
+              {t("pricingInfo")}
             </p>
             <p className="mt-1 text-xs text-pelorous-600">
-              VAT ({summary?.vatRate ?? 8.1}%) is added to all invoices.
+              {t("vatInfo", { rate: summary?.vatRate ?? 8.1 })}
             </p>
           </div>
         </div>
@@ -361,6 +475,7 @@ function BillingTab({
   onUpdate: () => void;
 }) {
   const t = useTranslations("settings.billing");
+  const tQr = useTranslations("settings.billing.qrBill");
   const tCommon = useTranslations("common");
   const [formData, setFormData] = useState({
     vatRate: org.billingSettings?.vatRate ?? 7.7,
@@ -376,6 +491,14 @@ function BillingTab({
   const updateMutation = api.organization.updateBillingSettings.useMutation({
     onSuccess: () => onUpdate(),
   });
+
+  const handlePayeeAddressSelect = (addressData: AddressData) => {
+    setFormData((prev) => ({
+      ...prev,
+      payeeZip: addressData.postalCode,
+      payeeCity: addressData.city,
+    }));
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -429,25 +552,25 @@ function BillingTab({
           <div className="border-t border-gray-100 pt-6">
             <div className="flex items-center justify-between">
               <div>
-                <h3 className="text-sm font-medium text-gray-900">Swiss QR-bill</h3>
+                <h3 className="text-sm font-medium text-gray-900">{tQr("title")}</h3>
                 <p className="mt-1 text-xs text-gray-400">
-                  Configure payment information for invoices with QR code
+                  {tQr("description")}
                 </p>
               </div>
               {qrBillConfigured ? (
                 <span className="rounded-lg bg-emerald-50 px-3 py-1.5 text-xs text-emerald-600">
-                  Configured
+                  {tQr("configured")}
                 </span>
               ) : (
                 <span className="rounded-lg bg-amber-50 px-3 py-1.5 text-xs text-amber-600">
-                  Not configured
+                  {tQr("notConfigured")}
                 </span>
               )}
             </div>
 
             <div className="mt-6 grid gap-5 sm:grid-cols-2">
               <div className="sm:col-span-2">
-                <label className="block text-sm text-gray-500">IBAN</label>
+                <label className="block text-sm text-gray-500">{tQr("iban")}</label>
                 <input
                   type="text"
                   placeholder="CH93 0076 2011 6238 5295 7"
@@ -458,7 +581,7 @@ function BillingTab({
               </div>
               <div className="sm:col-span-2">
                 <label className="block text-sm text-gray-500">
-                  QR-IBAN <span className="text-gray-300">(optional)</span>
+                  {tQr("qrIban")} <span className="text-gray-300">({tQr("optional")})</span>
                 </label>
                 <input
                   type="text"
@@ -469,7 +592,7 @@ function BillingTab({
                 />
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-sm text-gray-500">Payee Name</label>
+                <label className="block text-sm text-gray-500">{tQr("payeeName")}</label>
                 <input
                   type="text"
                   placeholder="My Energy Community"
@@ -479,17 +602,16 @@ function BillingTab({
                 />
               </div>
               <div className="sm:col-span-2">
-                <label className="block text-sm text-gray-500">Payee Address</label>
-                <input
-                  type="text"
-                  placeholder="Rue de l'Energie 1"
+                <label className="block text-sm text-gray-500">{tQr("payeeAddress")}</label>
+                <AddressAutocomplete
                   value={formData.payeeAddress}
-                  onChange={(e) => setFormData({ ...formData, payeeAddress: e.target.value })}
-                  className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+                  onChange={(value) => setFormData({ ...formData, payeeAddress: value })}
+                  onAddressSelect={handlePayeeAddressSelect}
+                  className="mt-2"
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500">ZIP Code</label>
+                <label className="block text-sm text-gray-500">{tQr("zipCode")}</label>
                 <input
                   type="text"
                   placeholder="1700"
@@ -499,7 +621,7 @@ function BillingTab({
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-500">City</label>
+                <label className="block text-sm text-gray-500">{tQr("city")}</label>
                 <input
                   type="text"
                   placeholder="Fribourg"
@@ -527,7 +649,7 @@ function BillingTab({
 }
 
 // Tariffs Tab
-function TariffsTab({ orgId }: { orgId: string }) {
+function TariffsTab({ orgId, timbreReduction }: { orgId: string; timbreReduction: "20" | "40" }) {
   const t = useTranslations("settings.tariffs");
   const tCommon = useTranslations("common");
   const [showForm, setShowForm] = useState(false);
@@ -543,6 +665,9 @@ function TariffsTab({ orgId }: { orgId: string }) {
 
   return (
     <div className="space-y-6">
+      {/* Pricing Guide */}
+      <PricingGuide timbreReduction={timbreReduction} />
+
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-light text-gray-900">{t("title")}</h2>
         <button
@@ -561,6 +686,7 @@ function TariffsTab({ orgId }: { orgId: string }) {
         <TariffForm
           orgId={orgId}
           tariffId={editingId}
+          timbreReduction={timbreReduction}
           onClose={() => {
             setShowForm(false);
             setEditingId(null);
@@ -609,7 +735,7 @@ function TariffsTab({ orgId }: { orgId: string }) {
                   <button
                     onClick={() => setDefaultMutation.mutate({ tariffId: tariff.id })}
                     className="rounded-lg p-2 text-gray-400 hover:bg-gray-50 hover:text-pelorous-600"
-                    title="Set as default"
+                    title={t("setAsDefault")}
                   >
                     <Check className="h-4 w-4" />
                   </button>
@@ -625,7 +751,7 @@ function TariffsTab({ orgId }: { orgId: string }) {
                 </button>
                 <button
                   onClick={() => {
-                    if (confirm("Delete this tariff?")) {
+                    if (confirm(t("confirmDelete"))) {
                       deleteMutation.mutate({ tariffId: tariff.id });
                     }
                   }}
@@ -640,7 +766,7 @@ function TariffsTab({ orgId }: { orgId: string }) {
 
         {(!tariffs || tariffs.length === 0) && (
           <div className="rounded-2xl border border-gray-100 bg-white p-12 text-center">
-            <p className="text-sm text-gray-400">No tariffs configured yet</p>
+            <p className="text-sm text-gray-400">{t("noTariffs")}</p>
           </div>
         )}
       </div>
@@ -652,11 +778,13 @@ function TariffsTab({ orgId }: { orgId: string }) {
 function TariffForm({
   orgId,
   tariffId,
+  timbreReduction,
   onClose,
   onSuccess,
 }: {
   orgId: string;
   tariffId: string | null;
+  timbreReduction: "20" | "40";
   onClose: () => void;
   onSuccess: () => void;
 }) {
@@ -681,7 +809,7 @@ function TariffForm({
   });
 
   // Update form when editing existing tariff
-  useState(() => {
+  useEffect(() => {
     if (existingTariff) {
       setFormData({
         name: existingTariff.name,
@@ -695,7 +823,7 @@ function TariffForm({
         isDefault: existingTariff.isDefault,
       });
     }
-  });
+  }, [existingTariff]);
 
   const createMutation = api.tariff.create.useMutation({ onSuccess });
   const updateMutation = api.tariff.update.useMutation({ onSuccess });
@@ -876,7 +1004,7 @@ function DistributionTab({
     <div className="rounded-2xl border border-gray-100 bg-white p-8">
       <h2 className="text-lg font-light text-gray-900">{t("title")}</h2>
       <p className="mt-2 text-sm text-gray-400">
-        Choose how excess solar production is distributed among members
+        {t("description")}
       </p>
       <div className="mt-8 space-y-4">
         {strategies.map((strategy) => (

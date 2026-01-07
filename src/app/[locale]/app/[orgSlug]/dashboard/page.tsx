@@ -1,7 +1,7 @@
 "use client";
 
 import { useParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { api } from "~/trpc/react";
 import { Link } from "~/i18n/navigation";
 import {
@@ -20,6 +20,7 @@ export default function DashboardPage() {
   const params = useParams<{ orgSlug: string }>();
   const t = useTranslations("dashboard");
   const tNav = useTranslations("nav");
+  const locale = useLocale();
 
   const { data: org } = api.organization.getBySlug.useQuery({
     slug: params.orgSlug,
@@ -51,7 +52,7 @@ export default function DashboardPage() {
 
   const formatCurrency = (amount: number | null | undefined) => {
     if (amount === null || amount === undefined) return "-";
-    return new Intl.NumberFormat("fr-CH", {
+    return new Intl.NumberFormat(`${locale}-CH`, {
       style: "currency",
       currency: "CHF",
     }).format(amount);
@@ -89,10 +90,10 @@ export default function DashboardPage() {
             </div>
             <div>
               <p className="font-medium text-red-800">
-                {overdueData.overdueCount} facture{overdueData.overdueCount > 1 ? "s" : ""} en retard
+                {t("overdueAlert.title", { count: overdueData.overdueCount })}
               </p>
               <p className="mt-0.5 text-sm text-red-600">
-                Certaines factures ont dépassé leur date d'échéance
+                {t("overdueAlert.description")}
               </p>
             </div>
           </div>
@@ -100,16 +101,16 @@ export default function DashboardPage() {
             href={`/app/${params.orgSlug}/invoices?status=overdue`}
             className="flex items-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 text-sm text-white transition-colors hover:bg-red-700"
           >
-            Voir les factures
+            {t("viewInvoices")}
             <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       )}
 
       {/* Stats grid */}
-      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-4 sm:gap-6 md:gap-8 sm:grid-cols-2 lg:grid-cols-4">
         {/* Members */}
-        <div className="rounded-2xl border border-gray-100 bg-white p-8">
+        <div className="rounded-2xl border border-gray-100 bg-white p-5 sm:p-6 lg:p-8">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-400">{t("stats.totalMembers")}</span>
             <Users className="h-5 w-5 text-gray-300" />
@@ -120,7 +121,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Production */}
-        <div className="rounded-2xl border border-gray-100 bg-white p-8">
+        <div className="rounded-2xl border border-gray-100 bg-white p-5 sm:p-6 lg:p-8">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-400">{t("stats.totalProduction")}</span>
             <ArrowUpRight className="h-5 w-5 text-emerald-400" />
@@ -139,7 +140,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Consumption */}
-        <div className="rounded-2xl border border-gray-100 bg-white p-8">
+        <div className="rounded-2xl border border-gray-100 bg-white p-5 sm:p-6 lg:p-8">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-400">{t("stats.totalConsumption")}</span>
             <ArrowDownRight className="h-5 w-5 text-gray-300" />
@@ -158,7 +159,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Savings */}
-        <div className="rounded-2xl border border-gray-100 bg-white p-8">
+        <div className="rounded-2xl border border-gray-100 bg-white p-5 sm:p-6 lg:p-8">
           <div className="flex items-center justify-between">
             <span className="text-sm text-gray-400">{t("stats.savings")}</span>
             <TrendingUp className="h-5 w-5 text-pelorous-400" />
@@ -180,9 +181,9 @@ export default function DashboardPage() {
       </div>
 
       {/* Main content */}
-      <div className="grid gap-10 lg:grid-cols-3">
+      <div className="grid gap-6 md:gap-8 lg:gap-10 lg:grid-cols-3">
         {/* Energy distribution */}
-        <div className="rounded-2xl border border-gray-100 bg-white p-10 lg:col-span-2">
+        <div className="rounded-2xl border border-gray-100 bg-white p-5 sm:p-6 lg:p-10 lg:col-span-2">
           <div className="flex items-center justify-between">
             <div>
               <h2 className="text-xl font-light text-gray-900">
@@ -197,7 +198,7 @@ export default function DashboardPage() {
                 href={`/app/${params.orgSlug}/energy`}
                 className="text-sm text-gray-400 underline decoration-gray-200 underline-offset-4 hover:text-gray-600"
               >
-                View details
+                {t("viewDetails")}
               </Link>
             )}
           </div>
@@ -284,7 +285,7 @@ export default function DashboardPage() {
         </div>
 
         {/* Recent activity */}
-        <div className="rounded-2xl border border-gray-100 bg-white p-10">
+        <div className="rounded-2xl border border-gray-100 bg-white p-5 sm:p-6 lg:p-10">
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-light text-gray-900">{t("recentActivity")}</h2>
             {activity?.recentInvoices && activity.recentInvoices.length > 0 && (
@@ -292,7 +293,7 @@ export default function DashboardPage() {
                 href={`/app/${params.orgSlug}/invoices`}
                 className="text-sm text-gray-400 underline decoration-gray-200 underline-offset-4 hover:text-gray-600"
               >
-                View all
+                {t("viewAll")}
               </Link>
             )}
           </div>
@@ -308,7 +309,7 @@ export default function DashboardPage() {
                     <div>
                       <p className="text-sm text-gray-600">{item.description}</p>
                       <p className="mt-1.5 text-xs text-gray-400">
-                        {new Date(item.date).toLocaleDateString("fr-CH")}
+                        {new Date(item.date).toLocaleDateString(`${locale}-CH`)}
                       </p>
                     </div>
                     <span

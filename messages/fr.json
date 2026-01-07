@@ -40,6 +40,11 @@
     "register": "Inscription"
   },
   "landing": {
+    "nav": {
+      "features": "Fonctionnalités",
+      "pricing": "Tarifs",
+      "faq": "FAQ"
+    },
     "hero": {
       "tagline": "Gestion de communauté énergétique",
       "title": "Gérez votre communauté électrique locale en toute simplicité",
@@ -171,7 +176,12 @@
     }
   },
   "auth": {
+    "branding": {
+      "title": "Gérez votre communauté électrique locale avec élégance",
+      "subtitle": "La solution complète pour votre CEL - suivez la consommation, automatisez la facturation et renforcez votre communauté."
+    },
     "login": {
+      "tagline": "Bon retour",
       "title": "Connexion",
       "subtitle": "Connectez-vous à votre compte",
       "email": "Email",
@@ -182,6 +192,7 @@
       "register": "Créer un compte"
     },
     "register": {
+      "tagline": "Commencez",
       "title": "Inscription",
       "subtitle": "Créez votre compte Wattly",
       "name": "Nom complet",
@@ -197,6 +208,13 @@
     "title": "Tableau de bord",
     "welcome": "Bienvenue, {name}",
     "overview": "Vue d'ensemble",
+    "viewDetails": "Voir les détails",
+    "viewAll": "Voir tout",
+    "viewInvoices": "Voir les factures",
+    "overdueAlert": {
+      "title": "{count} facture(s) en retard",
+      "description": "Certaines factures ont dépassé leur date d'échéance"
+    },
     "stats": {
       "totalMembers": "Membres",
       "totalProduction": "Production totale",
@@ -239,6 +257,7 @@
   },
   "members": {
     "title": "Membres",
+    "description": "Gérer les membres de votre communauté",
     "addMember": "Ajouter un membre",
     "importMembers": "Importer des membres",
     "exportMembers": "Exporter la liste",
@@ -276,10 +295,19 @@
       "solarCapacity": "Capacité solaire (kWp)",
       "batteryCapacity": "Capacité batterie (kWh)",
       "priority": "Niveau de priorité"
+    },
+    "noMembers": "Aucun membre trouvé",
+    "confirmDelete": "Êtes-vous sûr de vouloir supprimer ce membre ?",
+    "import": {
+      "selectFile": "Cliquez pour sélectionner un fichier CSV"
     }
   },
   "energy": {
     "title": "Énergie",
+    "description": "Suivez la production et la consommation d'énergie",
+    "communityEnergy": "Énergie de la communauté",
+    "noData": "Aucune donnée pour cette période",
+    "noDataAvailable": "Aucune donnée disponible",
     "import": {
       "title": "Importer les courbes de charge",
       "dropzone": "Déposez vos fichiers CSV ici ou cliquez pour sélectionner",
@@ -303,6 +331,7 @@
     },
     "distribution": {
       "title": "Stratégie de répartition",
+      "description": "Choisissez comment la production solaire excédentaire est répartie entre les membres",
       "prorata": "Au prorata",
       "prorataDesc": "Répartition proportionnelle à la consommation de chaque membre",
       "equal": "Égal",
@@ -313,8 +342,10 @@
   },
   "invoices": {
     "title": "Factures",
+    "description": "Gérer et générer les factures",
     "generate": "Générer les factures",
     "generateAll": "Générer pour tous les membres",
+    "generateDescription": "Générer les factures pour tous les membres en fonction de leur consommation d'énergie pour la période sélectionnée.",
     "searchPlaceholder": "Rechercher une facture...",
     "table": {
       "number": "Numéro",
@@ -338,10 +369,22 @@
       "send": "Envoyer",
       "markPaid": "Marquer payée",
       "delete": "Supprimer"
-    }
+    },
+    "noInvoices": "Aucune facture trouvée",
+    "confirmDelete": "Supprimer cette facture ?",
+    "markSelectedPaid": "Marquer {count} factures comme payées",
+    "notFound": "Facture non trouvée",
+    "backToInvoices": "Retour aux factures"
+  },
+  "reports": {
+    "title": "Rapports",
+    "description": "Consulter les rapports financiers et énergétiques",
+    "noFinancialData": "Aucune donnée financière disponible",
+    "noEnergyData": "Aucune donnée énergétique disponible"
   },
   "settings": {
     "title": "Paramètres",
+    "description": "Configurez les paramètres de votre communauté",
     "tabs": {
       "general": "Général",
       "billing": "Facturation",
@@ -351,6 +394,7 @@
     "organization": {
       "title": "Information de l'organisation",
       "name": "Nom de la CEL",
+      "addressSection": "Adresse",
       "address": "Adresse",
       "postalCode": "Code postal",
       "city": "Ville",
@@ -358,13 +402,40 @@
       "canton": "Canton",
       "contactEmail": "Email de contact",
       "contactPhone": "Téléphone de contact",
-      "logo": "Logo"
+      "logo": "Logo",
+      "timbreReduction": "Réduction timbre",
+      "timbreReductionHelp": "Utilisé pour calculer les économies des membres"
     },
     "billing": {
       "title": "Paramètres de facturation",
       "currency": "Devise",
       "vatRate": "Taux TVA (%)",
-      "paymentTerms": "Délai de paiement (jours)"
+      "paymentTerms": "Délai de paiement (jours)",
+      "qrBill": {
+        "title": "QR-facture suisse",
+        "description": "Configurer les informations de paiement pour les factures avec code QR",
+        "configured": "Configuré",
+        "notConfigured": "Non configuré",
+        "iban": "IBAN",
+        "qrIban": "QR-IBAN",
+        "optional": "optionnel",
+        "payeeName": "Nom du bénéficiaire",
+        "payeeAddress": "Adresse du bénéficiaire",
+        "zipCode": "Code postal",
+        "city": "Ville"
+      },
+      "subscription": {
+        "title": "Abonnement Wattly",
+        "description": "Facturation de l'utilisation de la plateforme Wattly",
+        "totalPaid": "Total payé",
+        "outstanding": "En attente",
+        "totalInvoices": "Total factures",
+        "recentInvoices": "Factures récentes",
+        "noInvoices": "Pas encore de factures. Votre première facture apparaîtra ici après votre première période de facturation.",
+        "pricingInfo": "Wattly facture CHF 0.005 par kWh géré via votre communauté, avec un minimum de CHF 49/mois.",
+        "vatInfo": "TVA ({rate}%) ajoutée à toutes les factures.",
+        "due": "Échéance {date}"
+      }
     },
     "tariffs": {
       "title": "Tarifs",
@@ -376,7 +447,29 @@
       "monthlyFee": "Frais mensuels (CHF)",
       "validFrom": "Valide dès le",
       "validTo": "Valide jusqu'au",
-      "default": "Tarif par défaut"
+      "default": "Tarif par défaut",
+      "noTariffs": "Aucun tarif configuré",
+      "setAsDefault": "Définir par défaut",
+      "confirmDelete": "Supprimer ce tarif ?",
+      "pricingGuide": {
+        "title": "Guide de tarification",
+        "formulaTitle": "Formule du tarif communautaire",
+        "formula": "Communautaire = Tarif réseau - Économie timbre + Marge",
+        "formulaHelp": "Le tarif communautaire doit être inférieur au tarif réseau pour bénéficier aux membres, tout en couvrant vos coûts opérationnels.",
+        "calculator": "Calculateur de tarif",
+        "gridRate": "Votre tarif réseau (CHF/kWh)",
+        "margin": "Votre marge (CHF/kWh)",
+        "timbreReduction": "Réduction timbre",
+        "timbreSavings": "Économie timbre",
+        "suggestedRate": "Tarif communautaire suggéré",
+        "suggestedInjection": "Tarif injection suggéré",
+        "memberSavings": "Économie membre par kWh",
+        "applyRates": "Appliquer les tarifs suggérés",
+        "marginInfoTitle": "À propos de la marge",
+        "marginInfo1": "• Frais plateforme Wattly: 0.005 CHF/kWh",
+        "marginInfo2": "• Coûts administratifs et facturation",
+        "marginInfo3": "• Réserve pour dépenses imprévues"
+      }
     }
   },
   "memberDashboard": {
@@ -397,13 +490,25 @@
   "organizations": {
     "title": "Mes organisations",
     "create": "Créer une CEL",
+    "createDescription": "Configurez les paramètres de votre communauté électrique locale.",
     "select": "Sélectionner une organisation",
     "noOrganizations": "Vous n'avez pas encore d'organisation",
     "createFirst": "Créez votre première CEL pour commencer",
     "form": {
       "name": "Nom de la CEL",
       "slug": "Identifiant URL",
-      "slugHelp": "Utilisé dans l'URL de votre CEL"
+      "slugHelp": "Utilisé dans l'URL de votre CEL",
+      "addressSection": "Adresse",
+      "address": "Adresse",
+      "postalCode": "Code postal",
+      "city": "Ville",
+      "commune": "Commune",
+      "canton": "Canton",
+      "timbreReduction": "Réduction timbre",
+      "timbreReductionHelp": "Utilisé pour calculer et afficher les économies réalisées par les membres de votre CEL.",
+      "timbre20": "CEL standard",
+      "timbre40": "CEL haute autoconsommation",
+      "timbreInfo": "La réduction de 40% s'applique aux CEL où la majorité de l'énergie est consommée localement au sein de la communauté."
     }
   },
   "validation": {
@@ -498,6 +603,13 @@
       "paid": "Payée",
       "overdue": "En retard",
       "cancelled": "Annulée"
+    }
+  },
+  "components": {
+    "addressAutocomplete": {
+      "placeholder": "Rechercher une adresse...",
+      "noResults": "Aucune adresse trouvée",
+      "searching": "Recherche en cours..."
     }
   }
 }

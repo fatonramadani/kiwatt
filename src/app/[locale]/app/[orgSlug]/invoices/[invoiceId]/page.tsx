@@ -69,12 +69,12 @@ export default function InvoiceDetailPage() {
     return (
       <div className="flex h-64 flex-col items-center justify-center">
         <FileText className="h-12 w-12 text-gray-300" />
-        <p className="mt-4 text-gray-500">Invoice not found</p>
+        <p className="mt-4 text-gray-500">{t("notFound")}</p>
         <Link
           href={`/app/${params.orgSlug}/invoices`}
           className="mt-4 text-sm text-gray-900 underline"
         >
-          Back to invoices
+          {t("backToInvoices")}
         </Link>
       </div>
     );

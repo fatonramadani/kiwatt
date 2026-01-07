@@ -114,7 +114,7 @@ export default function ReportsPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-light tracking-tight text-gray-900">{t("title")}</h1>
-          <p className="mt-3 text-gray-400">View financial and energy reports</p>
+          <p className="mt-3 text-gray-400">{t("description")}</p>
         </div>
         <div className="flex items-center gap-4">
           <select
@@ -193,6 +193,8 @@ function FinancialReport({
   isLoading: boolean;
   formatCurrency: (n: number) => string;
 }) {
+  const t = useTranslations("reports");
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-20">
@@ -204,7 +206,7 @@ function FinancialReport({
   if (!report) {
     return (
       <div className="text-center text-gray-400 py-20">
-        No financial data available
+        {t("noFinancialData")}
       </div>
     );
   }
@@ -351,6 +353,8 @@ function EnergyReport({
   formatKwh: (n: number) => string;
   colors: string[];
 }) {
+  const t = useTranslations("reports");
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center py-20">
@@ -362,7 +366,7 @@ function EnergyReport({
   if (!report) {
     return (
       <div className="text-center text-gray-400 py-20">
-        No energy data available
+        {t("noEnergyData")}
       </div>
     );
   }

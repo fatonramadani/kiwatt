@@ -32,7 +32,7 @@ export default async function OrgLayout({ children, params }: OrgLayoutProps) {
   return (
     <div className="min-h-screen bg-gray-50">
       <Sidebar orgSlug={orgSlug} orgName={organization.name} />
-      <div className="pl-72">
+      <div className="lg:pl-72">
         <AppHeader
           user={{
             name: session.user.name,
@@ -40,8 +40,9 @@ export default async function OrgLayout({ children, params }: OrgLayoutProps) {
             image: session.user.image,
           }}
           orgSlug={orgSlug}
+          orgName={organization.name}
         />
-        <main className="px-10 py-8">{children}</main>
+        <main className="px-4 py-6 sm:px-6 lg:px-10 lg:py-8">{children}</main>
       </div>
     </div>
   );

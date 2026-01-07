@@ -1,10 +1,14 @@
 import { Link } from "~/i18n/navigation";
+import { LanguageSwitcher } from "~/components/marketing/language-switcher";
+import { getTranslations } from "next-intl/server";
 
-export default function AuthLayout({
+export default async function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const t = await getTranslations("auth.branding");
+
   return (
     <div className="flex min-h-screen">
       {/* Left side - branding */}
@@ -18,11 +22,10 @@ export default function AuthLayout({
 
         <div className="max-w-lg">
           <h1 className="text-4xl font-light leading-tight tracking-tight text-white lg:text-5xl">
-            Manage your local energy community with elegance
+            {t("title")}
           </h1>
           <p className="mt-8 text-lg font-light leading-relaxed text-pelorous-300">
-            The complete solution for your CEL - track consumption, automate
-            billing, and empower your community.
+            {t("subtitle")}
           </p>
         </div>
 
@@ -32,7 +35,12 @@ export default function AuthLayout({
       </div>
 
       {/* Right side - form */}
-      <div className="flex w-full items-center justify-center bg-pelorous-50/30 p-8 lg:w-1/2">
+      <div className="relative flex w-full items-center justify-center bg-pelorous-50/30 p-8 lg:w-1/2">
+        {/* Language Switcher */}
+        <div className="absolute right-6 top-6">
+          <LanguageSwitcher />
+        </div>
+
         <div className="w-full max-w-md">
           <div className="mb-12 lg:hidden">
             <Link

@@ -33,12 +33,18 @@
     "members": "Mitglieder",
     "energy": "Energie",
     "invoices": "Rechnungen",
+    "reports": "Berichte",
     "settings": "Einstellungen",
     "logout": "Abmelden",
     "login": "Anmelden",
     "register": "Registrieren"
   },
   "landing": {
+    "nav": {
+      "features": "Funktionen",
+      "pricing": "Preise",
+      "faq": "FAQ"
+    },
     "hero": {
       "tagline": "Energiegemeinschaft-Verwaltung",
       "title": "Verwalten Sie Ihre lokale Energiegemeinschaft einfach",
@@ -170,7 +176,12 @@
     }
   },
   "auth": {
+    "branding": {
+      "title": "Verwalten Sie Ihre lokale Energiegemeinschaft mit Eleganz",
+      "subtitle": "Die komplette Lösung für Ihre LEG - Verbrauch verfolgen, Abrechnung automatisieren und Ihre Gemeinschaft stärken."
+    },
     "login": {
+      "tagline": "Willkommen zurück",
       "title": "Anmeldung",
       "subtitle": "Melden Sie sich bei Ihrem Konto an",
       "email": "E-Mail",
@@ -181,6 +192,7 @@
       "register": "Konto erstellen"
     },
     "register": {
+      "tagline": "Loslegen",
       "title": "Registrierung",
       "subtitle": "Erstellen Sie Ihr Wattly-Konto",
       "name": "Vollstandiger Name",
@@ -195,7 +207,14 @@
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Willkommen, {name}",
-    "overview": "Ubersicht",
+    "overview": "Übersicht",
+    "viewDetails": "Details anzeigen",
+    "viewAll": "Alle anzeigen",
+    "viewInvoices": "Rechnungen ansehen",
+    "overdueAlert": {
+      "title": "{count} Rechnung(en) überfällig",
+      "description": "Einige Rechnungen haben ihr Fälligkeitsdatum überschritten"
+    },
     "stats": {
       "totalMembers": "Mitglieder",
       "totalProduction": "Gesamtproduktion",
@@ -238,6 +257,7 @@
   },
   "members": {
     "title": "Mitglieder",
+    "description": "Verwalten Sie Ihre Gemeinschaftsmitglieder",
     "addMember": "Mitglied hinzufugen",
     "importMembers": "Mitglieder importieren",
     "exportMembers": "Liste exportieren",
@@ -275,10 +295,19 @@
       "solarCapacity": "Solarkapazitat (kWp)",
       "batteryCapacity": "Batteriekapazitat (kWh)",
       "priority": "Prioritatsstufe"
+    },
+    "noMembers": "Keine Mitglieder gefunden",
+    "confirmDelete": "Möchten Sie dieses Mitglied wirklich löschen?",
+    "import": {
+      "selectFile": "Klicken Sie, um eine CSV-Datei auszuwählen"
     }
   },
   "energy": {
     "title": "Energie",
+    "description": "Verfolgen Sie Energieproduktion und -verbrauch",
+    "communityEnergy": "Energie aus der Gemeinschaft",
+    "noData": "Keine Energiedaten für diesen Zeitraum",
+    "noDataAvailable": "Keine Daten verfügbar",
     "import": {
       "title": "Lastgange importieren",
       "dropzone": "CSV-Dateien hier ablegen oder klicken zum Auswahlen",
@@ -302,18 +331,21 @@
     },
     "distribution": {
       "title": "Verteilungsstrategie",
+      "description": "Wählen Sie, wie überschüssige Solarproduktion unter den Mitgliedern verteilt wird",
       "prorata": "Anteilig",
       "prorataDesc": "Proportionale Verteilung nach Verbrauch jedes Mitglieds",
       "equal": "Gleich",
-      "equalDesc": "Gleichmassige Verteilung unter allen Mitgliedern",
-      "priority": "Prioritat",
-      "priorityDesc": "Prioritare Mitglieder erhalten zuerst Energie"
+      "equalDesc": "Gleichmässige Verteilung unter allen Mitgliedern",
+      "priority": "Priorität",
+      "priorityDesc": "Prioritäre Mitglieder erhalten zuerst Energie"
     }
   },
   "invoices": {
     "title": "Rechnungen",
+    "description": "Rechnungen verwalten und erstellen",
     "generate": "Rechnungen erstellen",
     "generateAll": "Fur alle Mitglieder erstellen",
+    "generateDescription": "Rechnungen für alle Mitglieder basierend auf ihrem Energieverbrauch für den ausgewählten Zeitraum erstellen.",
     "searchPlaceholder": "Rechnung suchen...",
     "table": {
       "number": "Nummer",
@@ -337,10 +369,22 @@
       "send": "Senden",
       "markPaid": "Als bezahlt markieren",
       "delete": "Loschen"
-    }
+    },
+    "noInvoices": "Keine Rechnungen gefunden",
+    "confirmDelete": "Diese Rechnung löschen?",
+    "markSelectedPaid": "{count} Rechnungen als bezahlt markieren",
+    "notFound": "Rechnung nicht gefunden",
+    "backToInvoices": "Zurück zu Rechnungen"
+  },
+  "reports": {
+    "title": "Berichte",
+    "description": "Finanz- und Energieberichte anzeigen",
+    "noFinancialData": "Keine Finanzdaten verfügbar",
+    "noEnergyData": "Keine Energiedaten verfügbar"
   },
   "settings": {
     "title": "Einstellungen",
+    "description": "Konfigurieren Sie die Einstellungen Ihrer Gemeinschaft",
     "tabs": {
       "general": "Allgemein",
       "billing": "Abrechnung",
@@ -350,6 +394,7 @@
     "organization": {
       "title": "Organisationsinformationen",
       "name": "Name der ZEV",
+      "addressSection": "Adresse",
       "address": "Adresse",
       "postalCode": "Postleitzahl",
       "city": "Stadt",
@@ -357,25 +402,74 @@
       "canton": "Kanton",
       "contactEmail": "Kontakt-E-Mail",
       "contactPhone": "Kontakttelefon",
-      "logo": "Logo"
+      "logo": "Logo",
+      "timbreReduction": "Netzgebührenreduktion",
+      "timbreReductionHelp": "Wird zur Berechnung der Mitgliedereinsparungen verwendet"
     },
     "billing": {
       "title": "Abrechnungseinstellungen",
-      "currency": "Wahrung",
+      "currency": "Währung",
       "vatRate": "MwSt-Satz (%)",
-      "paymentTerms": "Zahlungsfrist (Tage)"
+      "paymentTerms": "Zahlungsfrist (Tage)",
+      "qrBill": {
+        "title": "Schweizer QR-Rechnung",
+        "description": "Zahlungsinformationen für Rechnungen mit QR-Code konfigurieren",
+        "configured": "Konfiguriert",
+        "notConfigured": "Nicht konfiguriert",
+        "iban": "IBAN",
+        "qrIban": "QR-IBAN",
+        "optional": "optional",
+        "payeeName": "Name des Empfängers",
+        "payeeAddress": "Adresse des Empfängers",
+        "zipCode": "PLZ",
+        "city": "Stadt"
+      },
+      "subscription": {
+        "title": "Wattly-Abonnement",
+        "description": "Plattformnutzungsabrechnung von Wattly",
+        "totalPaid": "Gesamt bezahlt",
+        "outstanding": "Ausstehend",
+        "totalInvoices": "Gesamtrechnungen",
+        "recentInvoices": "Letzte Rechnungen",
+        "noInvoices": "Noch keine Rechnungen. Ihre erste Rechnung erscheint hier nach Ihrer ersten Abrechnungsperiode.",
+        "pricingInfo": "Wattly berechnet CHF 0.005 pro kWh, die über Ihre Gemeinschaft verwaltet werden, mit einem Minimum von CHF 49/Monat.",
+        "vatInfo": "MwSt ({rate}%) wird allen Rechnungen hinzugefügt.",
+        "due": "Fällig {date}"
+      }
     },
     "tariffs": {
       "title": "Tarife",
-      "add": "Tarif hinzufugen",
+      "add": "Tarif hinzufügen",
       "name": "Tarifname",
       "communityRate": "Gemeinschaftstarif (CHF/kWh)",
       "gridRate": "Netztarif (CHF/kWh)",
       "injectionRate": "Einspeisetarif (CHF/kWh)",
-      "monthlyFee": "Monatsgebuhr (CHF)",
-      "validFrom": "Gultig ab",
-      "validTo": "Gultig bis",
-      "default": "Standardtarif"
+      "monthlyFee": "Monatsgebühr (CHF)",
+      "validFrom": "Gültig ab",
+      "validTo": "Gültig bis",
+      "default": "Standardtarif",
+      "noTariffs": "Noch keine Tarife konfiguriert",
+      "setAsDefault": "Als Standard festlegen",
+      "confirmDelete": "Diesen Tarif löschen?",
+      "pricingGuide": {
+        "title": "Preisführer",
+        "formulaTitle": "Formel für Gemeinschaftstarif",
+        "formula": "Gemeinschaft = Netztarif - Netzgebühreneinsparung + Marge",
+        "formulaHelp": "Der Gemeinschaftstarif sollte niedriger als der Netztarif sein, um den Mitgliedern zu nutzen, und gleichzeitig Ihre Betriebskosten decken.",
+        "calculator": "Tarifrechner",
+        "gridRate": "Ihr Netztarif (CHF/kWh)",
+        "margin": "Ihre Marge (CHF/kWh)",
+        "timbreReduction": "Netzgebührenreduktion",
+        "timbreSavings": "Netzgebühreneinsparung",
+        "suggestedRate": "Empfohlener Gemeinschaftstarif",
+        "suggestedInjection": "Empfohlener Einspeisetarif",
+        "memberSavings": "Einsparung pro Mitglied pro kWh",
+        "applyRates": "Empfohlene Tarife anwenden",
+        "marginInfoTitle": "Über die Marge",
+        "marginInfo1": "• Wattly-Plattformgebühr: 0.005 CHF/kWh",
+        "marginInfo2": "• Verwaltungskosten und Abrechnung",
+        "marginInfo3": "• Reserve für unvorhergesehene Ausgaben"
+      }
     }
   },
   "memberDashboard": {
@@ -395,21 +489,127 @@
   },
   "organizations": {
     "title": "Meine Organisationen",
-    "create": "ZEV erstellen",
-    "select": "Organisation auswahlen",
+    "create": "LEG erstellen",
+    "createDescription": "Konfigurieren Sie die Einstellungen Ihrer lokalen Energiegemeinschaft.",
+    "select": "Organisation auswählen",
     "noOrganizations": "Sie haben noch keine Organisation",
-    "createFirst": "Erstellen Sie Ihre erste ZEV zum Starten",
+    "createFirst": "Erstellen Sie Ihre erste LEG zum Starten",
     "form": {
-      "name": "Name der ZEV",
+      "name": "Name der LEG",
       "slug": "URL-Kennung",
-      "slugHelp": "Wird in der URL Ihrer ZEV verwendet"
+      "slugHelp": "Wird in der URL Ihrer LEG verwendet",
+      "addressSection": "Adresse",
+      "address": "Adresse",
+      "postalCode": "Postleitzahl",
+      "city": "Stadt",
+      "commune": "Gemeinde",
+      "canton": "Kanton",
+      "timbreReduction": "Netzgebührenreduktion",
+      "timbreReductionHelp": "Wird verwendet, um die Einsparungen Ihrer LEG-Mitglieder zu berechnen und anzuzeigen.",
+      "timbre20": "Standard-LEG",
+      "timbre40": "LEG mit hohem Eigenverbrauch",
+      "timbreInfo": "Die 40%-Reduktion gilt für LEGs, bei denen der Grossteil der Energie lokal innerhalb der Gemeinschaft verbraucht wird."
     }
   },
   "validation": {
     "required": "Dieses Feld ist erforderlich",
-    "email": "Ungultige E-Mail",
+    "email": "Ungültige E-Mail",
     "minLength": "Mindestens {min} Zeichen",
     "maxLength": "Maximal {max} Zeichen",
-    "invalidPod": "Ungultige POD-Nummer"
+    "invalidPod": "Ungültige POD-Nummer"
+  },
+  "reports": {
+    "title": "Berichte",
+    "financial": "Finanzen",
+    "energy": "Energie",
+    "export": "CSV exportieren",
+    "totalBilled": "Gesamt fakturiert",
+    "totalPaid": "Gesamt bezahlt",
+    "outstanding": "Ausstehend",
+    "collectionRate": "Einzugsquote",
+    "selfSufficiency": "Autarkie",
+    "monthlyBilling": "Monatliche Abrechnung",
+    "invoiceStatus": "Verteilung nach Status",
+    "monthlyBreakdown": "Monatliche Aufschlüsselung",
+    "productionVsConsumption": "Produktion vs Verbrauch",
+    "consumptionBreakdown": "Verbrauchsaufteilung",
+    "energySources": "Monatliche Energiequellen",
+    "memberSummary": "Zusammenfassung pro Mitglied"
+  },
+  "portal": {
+    "dashboard": "Dashboard",
+    "invoices": "Meine Rechnungen",
+    "consumption": "Verbrauch",
+    "profile": "Profil",
+    "logout": "Abmelden",
+    "welcome": "Willkommen",
+    "dashboardSubtitle": "Übersicht über Ihren Energieverbrauch und Rechnungen",
+    "unpaidInvoices": "unbezahlte Rechnung(en)",
+    "unpaidInvoicesHint": "Bitte bezahlen Sie Ihre ausstehenden Rechnungen",
+    "viewInvoices": "Rechnungen ansehen",
+    "noData": "Keine Daten verfügbar",
+    "energySources": "Energiequellen diesen Monat",
+    "self": "Eigen",
+    "community": "Gemeinschaft",
+    "grid": "Netz",
+    "recentInvoices": "Aktuelle Rechnungen",
+    "viewAll": "Alle anzeigen",
+    "noInvoices": "Noch keine Rechnungen",
+    "due": "Fällig:",
+    "myInvoices": "Meine Rechnungen",
+    "invoicesSubtitle": "Rechnungen einsehen und herunterladen",
+    "invoiceNumber": "Rechnungsnummer",
+    "period": "Zeitraum",
+    "amount": "Betrag",
+    "statusLabel": "Status",
+    "dueDate": "Fälligkeitsdatum",
+    "actions": "Aktionen",
+    "paidOn": "Bezahlt am",
+    "view": "Ansehen",
+    "download": "Herunterladen",
+    "invoiceCount": "Rechnung(en)",
+    "myConsumption": "Mein Verbrauch",
+    "consumptionSubtitle": "Verfolgen Sie Ihren Energieverbrauch im Zeitverlauf",
+    "totalConsumption": "Gesamtverbrauch",
+    "totalProduction": "Gesamtproduktion",
+    "communityShare": "Gemeinschaftsanteil",
+    "productionVsConsumption": "Produktion vs Verbrauch",
+    "energySourcesMonthly": "Energiequellen pro Monat",
+    "month": "Monat",
+    "production": "Produktion",
+    "myProfile": "Mein Profil",
+    "profileSubtitle": "Informationen zu Ihrer Mitgliedschaft",
+    "memberOf": "Mitglied von",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "address": "Adresse",
+    "podNumber": "POD-Nummer",
+    "installationInfo": "Installationsinformationen",
+    "installationType": "Installationstyp",
+    "solarCapacity": "Solarkapazität",
+    "batteryCapacity": "Batteriekapazität",
+    "organizationInfo": "Organisation",
+    "organizationName": "Name",
+    "contactEmail": "Kontakt-E-Mail",
+    "contactPhone": "Kontakttelefon",
+    "types": {
+      "consumer": "Verbraucher",
+      "producer": "Produzent",
+      "prosumer": "Prosumer"
+    },
+    "status": {
+      "draft": "Entwurf",
+      "sent": "Gesendet",
+      "paid": "Bezahlt",
+      "overdue": "Überfällig",
+      "cancelled": "Storniert"
+    }
+  },
+  "components": {
+    "addressAutocomplete": {
+      "placeholder": "Adresse suchen...",
+      "noResults": "Keine Adressen gefunden",
+      "searching": "Suche läuft..."
+    }
   }
 }

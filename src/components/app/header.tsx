@@ -1,15 +1,17 @@
 "use client";
 
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "~/components/ui/dropdown-menu";
-import { useRouter } from "~/i18n/navigation";
+import { usePathname, useRouter } from "~/i18n/navigation";
 import { authClient } from "~/server/better-auth/client";
-import { LogOut, Settings, ChevronDown } from "lucide-react";
+import { LogOut, Settings, ChevronDown, Globe, Check } from "lucide-react";
+import { locales, localeNames, type Locale } from "~/i18n/config";
+import { MobileSidebar } from "~/components/app/sidebar";
 
 interface HeaderProps {
   user: {
@@ -18,15 +20,22 @@ interface HeaderProps {
     image?: string | null;
   };
   orgSlug: string;
+  orgName?: string;
 }
 
-export function AppHeader({ user, orgSlug }: HeaderProps) {
+export function AppHeader({ user, orgSlug, orgName }: HeaderProps) {
   const t = useTranslations("nav");
   const router = useRouter();
+  const locale = useLocale();
+  const pathname = usePathname();
 
   const handleLogout = async () => {
     await authClient.signOut();
     router.push("/login");
+  };
+
+  const handleLocaleChange = (newLocale: Locale) => {
+    router.replace(pathname, { locale: newLocale });
   };
 
   const initials = user.name
@@ -37,7 +46,33 @@ export function AppHeader({ user, orgSlug }: HeaderProps) {
     .slice(0, 2);
 
   return (
-    <header className="sticky top-0 z-30 flex h-16 items-center justify-end bg-gray-50 px-10">
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-between gap-4 bg-gray-50 px-4 sm:px-6 lg:justify-end lg:px-10">
+      {/* Mobile menu */}
+      <MobileSidebar orgSlug={orgSlug} orgName={orgName ?? ""} />
+
+      {/* Right side items */}
+      <div className="flex items-center gap-4">
+        {/* Language Switcher */}
+        <DropdownMenu modal={false}>
+        <DropdownMenuTrigger className="flex items-center gap-2 text-sm text-gray-500 outline-none transition-colors hover:text-gray-900">
+          <Globe className="h-4 w-4" />
+          <span className="hidden sm:inline">{localeNames[locale as Locale]}</span>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent align="end" className="min-w-[140px]">
+          {locales.map((loc) => (
+            <DropdownMenuItem
+              key={loc}
+              onClick={() => handleLocaleChange(loc)}
+              className="flex cursor-pointer items-center justify-between text-sm"
+            >
+              {localeNames[loc]}
+              {locale === loc && <Check className="h-4 w-4 text-pelorous-500" />}
+            </DropdownMenuItem>
+          ))}
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      {/* User Menu */}
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
@@ -66,6 +101,7 @@ export function AppHeader({ user, orgSlug }: HeaderProps) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
+      </div>
     </header>
   );
 }

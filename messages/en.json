@@ -40,6 +40,11 @@
     "register": "Sign up"
   },
   "landing": {
+    "nav": {
+      "features": "Features",
+      "pricing": "Pricing",
+      "faq": "FAQ"
+    },
     "hero": {
       "tagline": "Energy Community Management",
       "title": "Manage your local energy community with ease",
@@ -171,7 +176,12 @@
     }
   },
   "auth": {
+    "branding": {
+      "title": "Manage your local energy community with elegance",
+      "subtitle": "The complete solution for your LEC - track consumption, automate billing, and empower your community."
+    },
     "login": {
+      "tagline": "Welcome back",
       "title": "Login",
       "subtitle": "Sign in to your account",
       "email": "Email",
@@ -182,6 +192,7 @@
       "register": "Create an account"
     },
     "register": {
+      "tagline": "Get started",
       "title": "Sign up",
       "subtitle": "Create your Wattly account",
       "name": "Full name",
@@ -197,6 +208,13 @@
     "title": "Dashboard",
     "welcome": "Welcome, {name}",
     "overview": "Overview",
+    "viewDetails": "View details",
+    "viewAll": "View all",
+    "viewInvoices": "View invoices",
+    "overdueAlert": {
+      "title": "{count} invoice(s) overdue",
+      "description": "Some invoices have passed their due date"
+    },
     "stats": {
       "totalMembers": "Members",
       "totalProduction": "Total production",
@@ -239,6 +257,7 @@
   },
   "members": {
     "title": "Members",
+    "description": "Manage your community members",
     "addMember": "Add member",
     "importMembers": "Import members",
     "exportMembers": "Export list",
@@ -276,10 +295,19 @@
       "solarCapacity": "Solar capacity (kWp)",
       "batteryCapacity": "Battery capacity (kWh)",
       "priority": "Priority level"
+    },
+    "noMembers": "No members found",
+    "confirmDelete": "Are you sure you want to delete this member?",
+    "import": {
+      "selectFile": "Click to select CSV file"
     }
   },
   "energy": {
     "title": "Energy",
+    "description": "Track energy production and consumption",
+    "communityEnergy": "Energy from the community",
+    "noData": "No energy data for this period",
+    "noDataAvailable": "No data available",
     "import": {
       "title": "Import load curves",
       "dropzone": "Drop CSV files here or click to select",
@@ -303,6 +331,7 @@
     },
     "distribution": {
       "title": "Distribution strategy",
+      "description": "Choose how excess solar production is distributed among members",
       "prorata": "Pro-rata",
       "prorataDesc": "Proportional distribution based on each member's consumption",
       "equal": "Equal",
@@ -313,8 +342,10 @@
   },
   "invoices": {
     "title": "Invoices",
+    "description": "Manage and generate invoices",
     "generate": "Generate invoices",
     "generateAll": "Generate for all members",
+    "generateDescription": "Generate invoices for all members based on their energy consumption for the selected period.",
     "searchPlaceholder": "Search invoice...",
     "table": {
       "number": "Number",
@@ -338,10 +369,22 @@
       "send": "Send",
       "markPaid": "Mark as paid",
       "delete": "Delete"
-    }
+    },
+    "noInvoices": "No invoices found",
+    "confirmDelete": "Delete this invoice?",
+    "markSelectedPaid": "Mark {count} invoices as paid",
+    "notFound": "Invoice not found",
+    "backToInvoices": "Back to invoices"
+  },
+  "reports": {
+    "title": "Reports",
+    "description": "View financial and energy reports",
+    "noFinancialData": "No financial data available",
+    "noEnergyData": "No energy data available"
   },
   "settings": {
     "title": "Settings",
+    "description": "Configure your community settings",
     "tabs": {
       "general": "General",
       "billing": "Billing",
@@ -351,6 +394,7 @@
     "organization": {
       "title": "Organization information",
       "name": "LEC name",
+      "addressSection": "Address",
       "address": "Address",
       "postalCode": "Postal code",
       "city": "City",
@@ -358,13 +402,40 @@
       "canton": "Canton",
       "contactEmail": "Contact email",
       "contactPhone": "Contact phone",
-      "logo": "Logo"
+      "logo": "Logo",
+      "timbreReduction": "Timbre Reduction",
+      "timbreReductionHelp": "Used to calculate member savings"
     },
     "billing": {
       "title": "Billing settings",
       "currency": "Currency",
       "vatRate": "VAT rate (%)",
-      "paymentTerms": "Payment terms (days)"
+      "paymentTerms": "Payment terms (days)",
+      "qrBill": {
+        "title": "Swiss QR-bill",
+        "description": "Configure payment information for invoices with QR code",
+        "configured": "Configured",
+        "notConfigured": "Not configured",
+        "iban": "IBAN",
+        "qrIban": "QR-IBAN",
+        "optional": "optional",
+        "payeeName": "Payee Name",
+        "payeeAddress": "Payee Address",
+        "zipCode": "ZIP Code",
+        "city": "City"
+      },
+      "subscription": {
+        "title": "Wattly Subscription",
+        "description": "Platform usage billing from Wattly",
+        "totalPaid": "Total Paid",
+        "outstanding": "Outstanding",
+        "totalInvoices": "Total Invoices",
+        "recentInvoices": "Recent Invoices",
+        "noInvoices": "No invoices yet. Your first invoice will appear here after your first billing period.",
+        "pricingInfo": "Wattly charges CHF 0.005 per kWh managed through your community, with a minimum of CHF 49/month.",
+        "vatInfo": "VAT ({rate}%) is added to all invoices.",
+        "due": "Due {date}"
+      }
     },
     "tariffs": {
       "title": "Tariffs",
@@ -376,7 +447,29 @@
       "monthlyFee": "Monthly fee (CHF)",
       "validFrom": "Valid from",
       "validTo": "Valid until",
-      "default": "Default tariff"
+      "default": "Default tariff",
+      "noTariffs": "No tariffs configured yet",
+      "setAsDefault": "Set as default",
+      "confirmDelete": "Delete this tariff?",
+      "pricingGuide": {
+        "title": "Pricing Guide",
+        "formulaTitle": "Community Rate Formula",
+        "formula": "Community = Grid Rate - Timbre Savings + Margin",
+        "formulaHelp": "The community rate should be lower than the grid rate to benefit members, while covering your operational costs.",
+        "calculator": "Rate Calculator",
+        "gridRate": "Your grid rate (CHF/kWh)",
+        "margin": "Your margin (CHF/kWh)",
+        "timbreReduction": "Timbre reduction",
+        "timbreSavings": "Timbre savings",
+        "suggestedRate": "Suggested community rate",
+        "suggestedInjection": "Suggested injection rate",
+        "memberSavings": "Member savings per kWh",
+        "applyRates": "Apply suggested rates",
+        "marginInfoTitle": "About the margin",
+        "marginInfo1": "• Wattly platform fee: 0.005 CHF/kWh",
+        "marginInfo2": "• Administrative costs and billing",
+        "marginInfo3": "• Reserve fund for unexpected expenses"
+      }
     }
   },
   "memberDashboard": {
@@ -397,13 +490,25 @@
   "organizations": {
     "title": "My organizations",
     "create": "Create a LEC",
+    "createDescription": "Configure your local energy community settings.",
     "select": "Select organization",
     "noOrganizations": "You don't have any organization yet",
     "createFirst": "Create your first LEC to get started",
     "form": {
       "name": "LEC name",
       "slug": "URL identifier",
-      "slugHelp": "Used in your LEC's URL"
+      "slugHelp": "Used in your LEC's URL",
+      "addressSection": "Address",
+      "address": "Address",
+      "postalCode": "Postal code",
+      "city": "City",
+      "commune": "Commune",
+      "canton": "Canton",
+      "timbreReduction": "Timbre Reduction",
+      "timbreReductionHelp": "Used to calculate and display the savings achieved by your CEL members.",
+      "timbre20": "Standard CEL",
+      "timbre40": "High self-consumption CEL",
+      "timbreInfo": "The 40% reduction applies to CELs where most energy is consumed locally within the community."
     }
   },
   "validation": {
@@ -498,6 +603,13 @@
       "paid": "Paid",
       "overdue": "Overdue",
       "cancelled": "Cancelled"
+    }
+  },
+  "components": {
+    "addressAutocomplete": {
+      "placeholder": "Search for an address...",
+      "noResults": "No addresses found",
+      "searching": "Searching..."
     }
   }
 }

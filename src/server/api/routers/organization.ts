@@ -82,6 +82,10 @@ export const organizationRouter = createTRPCRouter({
           }),
         commune: z.string().optional(),
         canton: z.string().optional(),
+        address: z.string().optional(),
+        postalCode: z.string().optional(),
+        city: z.string().optional(),
+        timbreReduction: z.enum(["20", "40"]).default("20"),
       })
     )
     .mutation(async ({ ctx, input }) => {
@@ -104,8 +108,12 @@ export const organizationRouter = createTRPCRouter({
         id: orgId,
         name: input.name,
         slug: input.slug,
+        address: input.address,
+        postalCode: input.postalCode,
+        city: input.city,
         commune: input.commune,
         canton: input.canton,
+        timbreReduction: input.timbreReduction,
         billingSettings: {
           currency: "CHF",
           vatRate: 7.7,
@@ -331,6 +339,7 @@ export const organizationRouter = createTRPCRouter({
         contactEmail: z.string().email().optional(),
         contactPhone: z.string().optional(),
         distributionStrategy: z.enum(["prorata", "equal", "priority"]).optional(),
+        timbreReduction: z.enum(["20", "40"]).optional(),
       })
     )
     .mutation(async ({ ctx, input }) => {

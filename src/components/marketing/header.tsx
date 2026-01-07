@@ -8,6 +8,7 @@ import { LanguageSwitcher } from "~/components/marketing/language-switcher";
 
 export function MarketingHeader() {
   const t = useTranslations("nav");
+  const tLanding = useTranslations("landing.nav");
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -34,13 +35,13 @@ export function MarketingHeader() {
 
         <nav className="hidden items-center gap-12 md:flex">
           <a href="#features" className="text-sm font-light text-pelorous-700 transition-colors hover:text-pelorous-950">
-            Features
+            {tLanding("features")}
           </a>
           <a href="#pricing" className="text-sm font-light text-pelorous-700 transition-colors hover:text-pelorous-950">
-            Pricing
+            {tLanding("pricing")}
           </a>
           <a href="#faq" className="text-sm font-light text-pelorous-700 transition-colors hover:text-pelorous-950">
-            FAQ
+            {tLanding("faq")}
           </a>
         </nav>
 

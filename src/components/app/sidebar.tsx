@@ -11,16 +11,20 @@ import {
   BarChart3,
   Settings,
   LogOut,
+  Menu,
+  X,
 } from "lucide-react";
 import { authClient } from "~/server/better-auth/client";
 import { useRouter } from "~/i18n/navigation";
+import { useState } from "react";
+import { OrganizationSwitcher } from "./organization-switcher";
 
 interface SidebarProps {
   orgSlug: string;
   orgName: string;
 }
 
-export function Sidebar({ orgSlug, orgName }: SidebarProps) {
+function SidebarContent({ orgSlug, orgName, onNavigate }: SidebarProps & { onNavigate?: () => void }) {
   const t = useTranslations("nav");
   const pathname = usePathname();
   const router = useRouter();
@@ -40,7 +44,7 @@ export function Sidebar({ orgSlug, orgName }: SidebarProps) {
   ];
 
   return (
-    <aside className="fixed left-0 top-0 z-40 flex h-screen w-72 flex-col border-r border-gray-100 bg-white">
+    <>
       {/* Logo */}
       <div className="flex h-16 items-center px-8">
         <Link href="/app" className="text-xl font-normal tracking-tight text-gray-900">
@@ -48,14 +52,13 @@ export function Sidebar({ orgSlug, orgName }: SidebarProps) {
         </Link>
       </div>
 
-      {/* Organization */}
-      <div className="px-8 pb-6">
-        <Link
-          href="/app"
-          className="block truncate text-sm text-gray-400 transition-colors hover:text-pelorous-600"
-        >
-          {orgName}
-        </Link>
+      {/* Organization Switcher */}
+      <div className="px-4 pb-6">
+        <OrganizationSwitcher
+          currentOrgSlug={orgSlug}
+          currentOrgName={orgName}
+          onNavigate={onNavigate}
+        />
       </div>
 
       {/* Navigation */}
@@ -66,6 +69,7 @@ export function Sidebar({ orgSlug, orgName }: SidebarProps) {
             <Link
               key={item.href}
               href={item.href}
+              onClick={onNavigate}
               className={cn(
                 "group relative flex items-center gap-3 rounded-xl px-4 py-3 text-sm transition-all",
                 isActive
@@ -96,6 +100,60 @@ export function Sidebar({ orgSlug, orgName }: SidebarProps) {
           {t("logout")}
         </button>
       </div>
+    </>
+  );
+}
+
+export function Sidebar({ orgSlug, orgName }: SidebarProps) {
+  return (
+    <aside className="fixed left-0 top-0 z-40 hidden h-screen w-72 flex-col border-r border-gray-100 bg-white lg:flex">
+      <SidebarContent orgSlug={orgSlug} orgName={orgName} />
     </aside>
+  );
+}
+
+export function MobileSidebar({ orgSlug, orgName }: SidebarProps) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    <>
+      {/* Hamburger button */}
+      <button
+        onClick={() => setIsOpen(true)}
+        className="flex h-10 w-10 items-center justify-center rounded-xl text-gray-600 transition-colors hover:bg-gray-100 lg:hidden"
+        aria-label="Open menu"
+      >
+        <Menu className="h-5 w-5" />
+      </button>
+
+      {/* Mobile drawer */}
+      {isOpen && (
+        <>
+          {/* Backdrop */}
+          <div
+            className="fixed inset-0 z-50 bg-black/50 lg:hidden"
+            onClick={() => setIsOpen(false)}
+          />
+
+          {/* Drawer */}
+          <aside className="fixed left-0 top-0 z-50 flex h-screen w-72 flex-col border-r border-gray-100 bg-white lg:hidden">
+            {/* Close button */}
+            <button
+              onClick={() => setIsOpen(false)}
+              className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+              aria-label="Close menu"
+            >
+              <X className="h-5 w-5" />
+            </button>
+
+            <SidebarContent
+              orgSlug={orgSlug}
+              orgName={orgName}
+              onNavigate={() => setIsOpen(false)}
+            />
+          </aside>
+        </>
+      )}
+    </>
   );
 }

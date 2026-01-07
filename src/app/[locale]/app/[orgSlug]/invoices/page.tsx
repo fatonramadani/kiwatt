@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useParams } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "~/i18n/navigation";
 import { api } from "~/trpc/react";
 import {
@@ -24,6 +24,7 @@ export default function InvoicesPage() {
   const params = useParams<{ orgSlug: string }>();
   const t = useTranslations("invoices");
   const tCommon = useTranslations("common");
+  const locale = useLocale();
 
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [search, setSearch] = useState("");
@@ -81,14 +82,14 @@ export default function InvoicesPage() {
   });
 
   const formatCurrency = (amount: number) => {
-    return new Intl.NumberFormat("fr-CH", {
+    return new Intl.NumberFormat(`${locale}-CH`, {
       style: "currency",
       currency: "CHF",
     }).format(amount);
   };
 
   const formatDate = (date: Date) => {
-    return new Date(date).toLocaleDateString("fr-CH");
+    return new Date(date).toLocaleDateString(`${locale}-CH`);
   };
 
   const statusTabs: { id: StatusFilter; label: string; count?: number }[] = [
@@ -109,7 +110,7 @@ export default function InvoicesPage() {
   };
 
   const handleDelete = (invoiceId: string) => {
-    if (confirm("Delete this invoice?")) {
+    if (confirm(t("confirmDelete"))) {
       deleteMutation.mutate({ invoiceId });
     }
   };
@@ -160,7 +161,7 @@ export default function InvoicesPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-light tracking-tight text-gray-900">{t("title")}</h1>
-          <p className="mt-3 text-gray-400">Manage and generate invoices</p>
+          <p className="mt-3 text-gray-400">{t("description")}</p>
         </div>
         <button
           onClick={() => setShowGenerate(true)}
@@ -289,7 +290,7 @@ export default function InvoicesPage() {
               <tr>
                 <td colSpan={8} className="px-6 py-12 text-center">
                   <FileText className="mx-auto h-10 w-10 text-gray-200" />
-                  <p className="mt-4 text-sm text-gray-400">No invoices found</p>
+                  <p className="mt-4 text-sm text-gray-400">{t("noInvoices")}</p>
                 </td>
               </tr>
             ) : (
@@ -435,7 +436,7 @@ export default function InvoicesPage() {
                   className="flex items-center gap-2 rounded-xl bg-emerald-600 px-4 py-2 text-sm text-white hover:bg-emerald-700"
                 >
                   <CreditCard className="h-4 w-4" />
-                  Mark {sendableSelected.length} as paid
+                  {t("markSelectedPaid", { count: sendableSelected.length })}
                 </button>
               )}
             </div>
@@ -491,7 +492,7 @@ function GenerateModal({
 
         <div className="mt-8 space-y-6">
           <p className="text-sm text-gray-400">
-            Generate invoices for all members based on their energy consumption for the selected period.
+            {t("generateDescription")}
           </p>
 
           <div className="grid grid-cols-2 gap-4">
@@ -617,7 +618,7 @@ function PaymentModal({
       <div className="w-full max-w-md rounded-2xl bg-white p-8">
         <div className="flex items-center justify-between">
           <h2 className="text-xl font-light text-gray-900">
-            {count > 1 ? `Mark ${count} invoices as paid` : "Mark as paid"}
+            {count > 1 ? t("markSelectedPaid", { count }) : t("actions.markPaid")}
           </h2>
           <button onClick={onClose} className="rounded-lg p-1 text-gray-400 hover:bg-gray-50 hover:text-gray-600">
             <X className="h-5 w-5" />

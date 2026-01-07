@@ -64,7 +64,7 @@ export default function EnergyPage() {
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-3xl font-light tracking-tight text-gray-900">{t("title")}</h1>
-          <p className="mt-3 text-gray-400">Track energy production and consumption</p>
+          <p className="mt-3 text-gray-400">{t("description")}</p>
         </div>
         <div className="flex items-center gap-4">
           <select
@@ -189,7 +189,7 @@ export default function EnergyPage() {
             <div className="flex items-center justify-between border-t border-gray-100 pt-10">
               <div>
                 <p className="text-gray-900">Self-sufficiency rate</p>
-                <p className="mt-1 text-sm text-gray-400">Energy from the community</p>
+                <p className="mt-1 text-sm text-gray-400">{t("communityEnergy")}</p>
               </div>
               <p className="text-6xl font-light text-gray-900">
                 {Math.round(
@@ -204,7 +204,7 @@ export default function EnergyPage() {
         ) : (
           <div className="flex h-56 flex-col items-center justify-center text-center">
             <Zap className="h-10 w-10 text-gray-200" />
-            <p className="mt-6 text-gray-400">No energy data for this period</p>
+            <p className="mt-6 text-gray-400">{t("noData")}</p>
           </div>
         )}
       </div>
@@ -241,7 +241,7 @@ export default function EnergyPage() {
             {!aggregations || aggregations.length === 0 ? (
               <tr>
                 <td colSpan={6} className="px-6 py-12 text-center text-sm text-gray-400">
-                  No data available
+                  {t("noDataAvailable")}
                 </td>
               </tr>
             ) : (
