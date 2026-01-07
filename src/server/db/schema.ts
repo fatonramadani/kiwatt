@@ -167,6 +167,14 @@ export const organization = pgTable(
       currency: string;
       vatRate: number;
       paymentTermDays: number;
+      // QR-bill payment information
+      iban?: string;
+      qrIban?: string;
+      payeeName?: string;
+      payeeAddress?: string;
+      payeeZip?: string;
+      payeeCity?: string;
+      payeeCountry?: string;
     }>(),
     distributionStrategy: distributionStrategyEnum("distribution_strategy")
       .default("prorata")
@@ -375,6 +383,13 @@ export const tariffPlan = pgTable(
   ],
 );
 
+// Payment method enum
+export const paymentMethodEnum = pgEnum("payment_method", [
+  "bank_transfer",
+  "cash",
+  "other",
+]);
+
 // Invoice table
 export const invoice = pgTable(
   "invoice",
@@ -400,6 +415,10 @@ export const invoice = pgTable(
     pdfUrl: text("pdf_url"),
     sentAt: timestamp("sent_at"),
     paidAt: timestamp("paid_at"),
+    // Payment details
+    paymentMethod: paymentMethodEnum("payment_method"),
+    paymentReference: text("payment_reference"),
+    paymentNotes: text("payment_notes"),
     createdAt: timestamp("created_at")
       .$defaultFn(() => new Date())
       .notNull(),

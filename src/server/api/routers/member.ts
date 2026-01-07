@@ -1,12 +1,13 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { eq, and, or, ilike, count, desc, sql, ne } from "drizzle-orm";
+import { eq, and, or, ilike, count, desc, ne } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { organizationMember } from "~/server/db/schema";
+import { organizationMember, organization, invoice, monthlyAggregation } from "~/server/db/schema";
 
 // Helper to verify org membership
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 async function verifyMembership(
   ctx: { db: any; session: { user: { id: string } } },
   orgId: string,
@@ -35,6 +36,7 @@ async function verifyMembership(
 
   return membership;
 }
+/* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 
 export const memberRouter = createTRPCRouter({
   // List members with search/filter/pagination
@@ -352,7 +354,7 @@ export const memberRouter = createTRPCRouter({
           postalCode: member.postalCode,
           city: member.city,
           podNumber: member.podNumber,
-          installationType: member.installationType as "consumer" | "producer" | "prosumer",
+          installationType: member.installationType,
           solarCapacityKwp: member.solarCapacityKwp?.toString(),
           batteryCapacityKwh: member.batteryCapacityKwh?.toString(),
           status: "pending" as const,
@@ -368,6 +370,275 @@ export const memberRouter = createTRPCRouter({
         created: validMembers.length,
         errors,
         total: input.members.length,
+      };
+    }),
+
+  // ============================================================================
+  // Member Self-Service Queries (for Portal)
+  // ============================================================================
+
+  // Get current user's membership in an organization
+  getMyMembership: protectedProcedure
+    .input(z.object({ orgSlug: z.string() }))
+    .query(async ({ ctx, input }) => {
+      // Find organization by slug
+      const org = await ctx.db.query.organization.findFirst({
+        where: eq(organization.slug, input.orgSlug),
+      });
+
+      if (!org) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Organization not found",
+        });
+      }
+
+      // Find membership for current user
+      const membership = await ctx.db.query.organizationMember.findFirst({
+        where: and(
+          eq(organizationMember.organizationId, org.id),
+          eq(organizationMember.userId, ctx.session.user.id)
+        ),
+      });
+
+      if (!membership) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You are not a member of this organization",
+        });
+      }
+
+      return {
+        membership,
+        organization: org,
+      };
+    }),
+
+  // Get member's own invoices
+  getMyInvoices: protectedProcedure
+    .input(
+      z.object({
+        orgId: z.string(),
+        limit: z.number().min(1).max(100).default(20),
+        offset: z.number().min(0).default(0),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      // Find membership for current user
+      const membership = await ctx.db.query.organizationMember.findFirst({
+        where: and(
+          eq(organizationMember.organizationId, input.orgId),
+          eq(organizationMember.userId, ctx.session.user.id)
+        ),
+      });
+
+      if (!membership) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You are not a member of this organization",
+        });
+      }
+
+      // Get invoices for this member
+      const [countResult] = await ctx.db
+        .select({ count: count() })
+        .from(invoice)
+        .where(eq(invoice.memberId, membership.id));
+
+      const invoices = await ctx.db.query.invoice.findMany({
+        where: eq(invoice.memberId, membership.id),
+        orderBy: [desc(invoice.createdAt)],
+        limit: input.limit,
+        offset: input.offset,
+      });
+
+      return {
+        invoices: invoices.map((inv) => ({
+          id: inv.id,
+          invoiceNumber: inv.invoiceNumber,
+          periodStart: inv.periodStart,
+          periodEnd: inv.periodEnd,
+          status: inv.status,
+          totalChf: parseFloat(inv.totalChf),
+          dueDate: inv.dueDate,
+          paidAt: inv.paidAt,
+          createdAt: inv.createdAt,
+          pdfUrl: inv.pdfUrl,
+        })),
+        total: countResult?.count ?? 0,
+        hasMore: input.offset + invoices.length < (countResult?.count ?? 0),
+      };
+    }),
+
+  // Get member's consumption data
+  getMyConsumption: protectedProcedure
+    .input(
+      z.object({
+        orgId: z.string(),
+        year: z.number(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      // Find membership for current user
+      const membership = await ctx.db.query.organizationMember.findFirst({
+        where: and(
+          eq(organizationMember.organizationId, input.orgId),
+          eq(organizationMember.userId, ctx.session.user.id)
+        ),
+      });
+
+      if (!membership) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You are not a member of this organization",
+        });
+      }
+
+      // Get monthly aggregations for this member
+      const aggregations = await ctx.db.query.monthlyAggregation.findMany({
+        where: and(
+          eq(monthlyAggregation.memberId, membership.id),
+          eq(monthlyAggregation.year, input.year)
+        ),
+        orderBy: [monthlyAggregation.month],
+      });
+
+      // Calculate totals
+      let totalConsumption = 0;
+      let totalProduction = 0;
+      let totalSelfConsumption = 0;
+      let totalCommunityConsumption = 0;
+      let totalGridConsumption = 0;
+
+      const monthNames = [
+        "", "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec",
+      ];
+
+      const byMonth = aggregations.map((agg) => {
+        const consumption = parseFloat(agg.totalConsumptionKwh);
+        const production = parseFloat(agg.totalProductionKwh);
+        const selfConsumption = parseFloat(agg.selfConsumptionKwh);
+        const communityConsumption = parseFloat(agg.communityConsumptionKwh);
+        const gridConsumption = parseFloat(agg.gridConsumptionKwh);
+
+        totalConsumption += consumption;
+        totalProduction += production;
+        totalSelfConsumption += selfConsumption;
+        totalCommunityConsumption += communityConsumption;
+        totalGridConsumption += gridConsumption;
+
+        return {
+          month: agg.month,
+          monthName: monthNames[agg.month] ?? "",
+          consumption,
+          production,
+          selfConsumption,
+          communityConsumption,
+          gridConsumption,
+        };
+      });
+
+      // Fill missing months
+      const fullYear = [];
+      for (let m = 1; m <= 12; m++) {
+        const existing = byMonth.find((d) => d.month === m);
+        fullYear.push(
+          existing ?? {
+            month: m,
+            monthName: monthNames[m] ?? "",
+            consumption: 0,
+            production: 0,
+            selfConsumption: 0,
+            communityConsumption: 0,
+            gridConsumption: 0,
+          }
+        );
+      }
+
+      return {
+        totalConsumption,
+        totalProduction,
+        totalSelfConsumption,
+        totalCommunityConsumption,
+        totalGridConsumption,
+        selfSufficiency:
+          totalConsumption > 0
+            ? ((totalSelfConsumption + totalCommunityConsumption) / totalConsumption) * 100
+            : 0,
+        byMonth: fullYear,
+      };
+    }),
+
+  // Get member's summary for portal dashboard
+  getMyPortalSummary: protectedProcedure
+    .input(z.object({ orgId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      // Find membership for current user
+      const membership = await ctx.db.query.organizationMember.findFirst({
+        where: and(
+          eq(organizationMember.organizationId, input.orgId),
+          eq(organizationMember.userId, ctx.session.user.id)
+        ),
+      });
+
+      if (!membership) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You are not a member of this organization",
+        });
+      }
+
+      // Get current month's data
+      const now = new Date();
+      const currentYear = now.getFullYear();
+      const currentMonth = now.getMonth() + 1;
+
+      const currentAggregation = await ctx.db.query.monthlyAggregation.findFirst({
+        where: and(
+          eq(monthlyAggregation.memberId, membership.id),
+          eq(monthlyAggregation.year, currentYear),
+          eq(monthlyAggregation.month, currentMonth)
+        ),
+      });
+
+      // Get recent invoices
+      const recentInvoices = await ctx.db.query.invoice.findMany({
+        where: eq(invoice.memberId, membership.id),
+        orderBy: [desc(invoice.createdAt)],
+        limit: 5,
+      });
+
+      // Get unpaid invoices
+      const [unpaidCount] = await ctx.db
+        .select({ count: count() })
+        .from(invoice)
+        .where(
+          and(
+            eq(invoice.memberId, membership.id),
+            or(eq(invoice.status, "sent"), eq(invoice.status, "overdue"))
+          )
+        );
+
+      return {
+        currentMonth: currentAggregation
+          ? {
+              consumption: parseFloat(currentAggregation.totalConsumptionKwh),
+              production: parseFloat(currentAggregation.totalProductionKwh),
+              selfConsumption: parseFloat(currentAggregation.selfConsumptionKwh),
+              communityConsumption: parseFloat(currentAggregation.communityConsumptionKwh),
+              gridConsumption: parseFloat(currentAggregation.gridConsumptionKwh),
+            }
+          : null,
+        recentInvoices: recentInvoices.map((inv) => ({
+          id: inv.id,
+          invoiceNumber: inv.invoiceNumber,
+          totalChf: parseFloat(inv.totalChf),
+          status: inv.status,
+          dueDate: inv.dueDate,
+          pdfUrl: inv.pdfUrl,
+        })),
+        unpaidCount: unpaidCount?.count ?? 0,
       };
     }),
 });

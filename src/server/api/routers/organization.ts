@@ -362,4 +362,73 @@ export const organizationRouter = createTRPCRouter({
 
       return { success: true };
     }),
+
+  // Update billing settings
+  updateBillingSettings: protectedProcedure
+    .input(
+      z.object({
+        orgId: z.string(),
+        vatRate: z.number().min(0).max(100).optional(),
+        paymentTermDays: z.number().min(1).max(365).optional(),
+        iban: z.string().optional(),
+        qrIban: z.string().optional(),
+        payeeName: z.string().optional(),
+        payeeAddress: z.string().optional(),
+        payeeZip: z.string().optional(),
+        payeeCity: z.string().optional(),
+        payeeCountry: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      // Verify admin membership
+      const membership = await ctx.db.query.organizationMember.findFirst({
+        where: and(
+          eq(organizationMember.organizationId, input.orgId),
+          eq(organizationMember.userId, ctx.session.user.id),
+          eq(organizationMember.role, "admin")
+        ),
+      });
+
+      if (!membership) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "Only admins can update billing settings",
+        });
+      }
+
+      // Get current org to merge billing settings
+      const org = await ctx.db.query.organization.findFirst({
+        where: eq(organization.id, input.orgId),
+      });
+
+      if (!org) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Organization not found",
+        });
+      }
+
+      const currentSettings = org.billingSettings ?? {
+        currency: "CHF",
+        vatRate: 7.7,
+        paymentTermDays: 30,
+      };
+
+      const { orgId, ...updates } = input;
+
+      const newSettings = {
+        ...currentSettings,
+        ...updates,
+      };
+
+      await ctx.db
+        .update(organization)
+        .set({
+          billingSettings: newSettings,
+          updatedAt: new Date(),
+        })
+        .where(eq(organization.id, orgId));
+
+      return { success: true };
+    }),
 });

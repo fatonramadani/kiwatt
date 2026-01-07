@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { eq, and, desc, count, or, ilike, sql, max } from "drizzle-orm";
+import { eq, and, desc, count, or, sql, lt } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -12,8 +12,12 @@ import {
   tariffPlan,
   organization,
 } from "~/server/db/schema";
+import { generateInvoicePdf } from "~/lib/pdf/generate-invoice-pdf";
+import type { InvoiceData } from "~/lib/pdf/invoice-template";
+import { sendInvoiceEmail, sendPaymentReminderEmail } from "~/lib/email/send-email";
 
 // Helper to verify org membership
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 async function verifyMembership(
   ctx: { db: any; session: { user: { id: string } } },
   orgId: string,
@@ -42,6 +46,7 @@ async function verifyMembership(
 
   return membership;
 }
+/* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 
 export const invoiceRouter = createTRPCRouter({
   // List invoices with filtering
@@ -117,6 +122,9 @@ export const invoiceRouter = createTRPCRouter({
           createdAt: inv.createdAt,
           sentAt: inv.sentAt,
           paidAt: inv.paidAt,
+          paymentMethod: inv.paymentMethod,
+          paymentReference: inv.paymentReference,
+          paymentNotes: inv.paymentNotes,
         })),
         total: countResult?.count ?? 0,
         hasMore: input.offset + invoices.length < (countResult?.count ?? 0),
@@ -263,8 +271,8 @@ export const invoiceRouter = createTRPCRouter({
 
       let nextNumber = 1;
       if (lastInvoice?.invoiceNumber) {
-        const match = lastInvoice.invoiceNumber.match(/(\d+)$/);
-        if (match) {
+        const match = /(\d+)$/.exec(lastInvoice.invoiceNumber);
+        if (match?.[1]) {
           nextNumber = parseInt(match[1], 10) + 1;
         }
       }
@@ -435,6 +443,7 @@ export const invoiceRouter = createTRPCRouter({
 
       await verifyMembership(ctx, inv.organizationId, true);
 
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const updates: Record<string, any> = {
         status: input.status,
         updatedAt: new Date(),
@@ -454,6 +463,248 @@ export const invoiceRouter = createTRPCRouter({
         .where(eq(invoice.id, input.invoiceId));
 
       return { success: true };
+    }),
+
+  // Mark invoice as paid with payment details
+  markAsPaid: protectedProcedure
+    .input(
+      z.object({
+        invoiceId: z.string(),
+        paidAt: z.date().optional(),
+        paymentMethod: z.enum(["bank_transfer", "cash", "other"]).optional(),
+        paymentReference: z.string().optional(),
+        paymentNotes: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      const inv = await ctx.db.query.invoice.findFirst({
+        where: eq(invoice.id, input.invoiceId),
+      });
+
+      if (!inv) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Invoice not found",
+        });
+      }
+
+      await verifyMembership(ctx, inv.organizationId, true);
+
+      await ctx.db
+        .update(invoice)
+        .set({
+          status: "paid",
+          paidAt: input.paidAt ?? new Date(),
+          paymentMethod: input.paymentMethod,
+          paymentReference: input.paymentReference,
+          paymentNotes: input.paymentNotes,
+          updatedAt: new Date(),
+        })
+        .where(eq(invoice.id, input.invoiceId));
+
+      return { success: true };
+    }),
+
+  // Get payment history for an organization
+  getPaymentHistory: protectedProcedure
+    .input(
+      z.object({
+        orgId: z.string(),
+        year: z.number().optional(),
+        month: z.number().min(1).max(12).optional(),
+        limit: z.number().min(1).max(100).default(50),
+        offset: z.number().min(0).default(0),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      await verifyMembership(ctx, input.orgId);
+
+      const conditions = [
+        eq(invoice.organizationId, input.orgId),
+        eq(invoice.status, "paid"),
+      ];
+
+      if (input.year) {
+        conditions.push(sql`EXTRACT(YEAR FROM ${invoice.paidAt}) = ${input.year}`);
+      }
+
+      if (input.month) {
+        conditions.push(sql`EXTRACT(MONTH FROM ${invoice.paidAt}) = ${input.month}`);
+      }
+
+      // Get total count
+      const [countResult] = await ctx.db
+        .select({ count: count() })
+        .from(invoice)
+        .where(and(...conditions));
+
+      // Get paid invoices with member info
+      const paidInvoices = await ctx.db.query.invoice.findMany({
+        where: and(...conditions),
+        orderBy: [desc(invoice.paidAt)],
+        limit: input.limit,
+        offset: input.offset,
+        with: {
+          member: true,
+        },
+      });
+
+      // Calculate totals
+      const [totals] = await ctx.db
+        .select({
+          totalAmount: sql<string>`SUM(${invoice.totalChf})`,
+          invoiceCount: count(),
+        })
+        .from(invoice)
+        .where(and(...conditions));
+
+      return {
+        payments: paidInvoices.map((inv) => ({
+          id: inv.id,
+          invoiceNumber: inv.invoiceNumber,
+          memberName: `${inv.member.firstname} ${inv.member.lastname}`,
+          memberEmail: inv.member.email,
+          totalChf: parseFloat(inv.totalChf),
+          paidAt: inv.paidAt,
+          paymentMethod: inv.paymentMethod,
+          paymentReference: inv.paymentReference,
+          paymentNotes: inv.paymentNotes,
+          periodStart: inv.periodStart,
+          periodEnd: inv.periodEnd,
+        })),
+        totalCount: countResult?.count ?? 0,
+        totalAmount: parseFloat(totals?.totalAmount ?? "0"),
+        hasMore: input.offset + paidInvoices.length < (countResult?.count ?? 0),
+      };
+    }),
+
+  // Send batch of invoices by email
+  sendBatch: protectedProcedure
+    .input(
+      z.object({
+        orgId: z.string(),
+        invoiceIds: z.array(z.string()),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await verifyMembership(ctx, input.orgId, true);
+
+      const results: { sent: number; errors: Array<{ invoiceId: string; error: string }> } = {
+        sent: 0,
+        errors: [],
+      };
+
+      for (const invoiceId of input.invoiceIds) {
+        try {
+          const inv = await ctx.db.query.invoice.findFirst({
+            where: and(
+              eq(invoice.id, invoiceId),
+              eq(invoice.organizationId, input.orgId)
+            ),
+            with: {
+              organization: true,
+              member: true,
+            },
+          });
+
+          if (!inv) {
+            results.errors.push({ invoiceId, error: "Invoice not found" });
+            continue;
+          }
+
+          if (inv.status !== "draft") {
+            results.errors.push({ invoiceId, error: "Invoice is not a draft" });
+            continue;
+          }
+
+          // Format dates
+          const formatDate = (date: Date) => new Date(date).toLocaleDateString("fr-CH");
+
+          // Send the email
+          const emailResult = await sendInvoiceEmail({
+            to: inv.member.email,
+            organizationName: inv.organization.name,
+            memberName: `${inv.member.firstname} ${inv.member.lastname}`,
+            invoiceNumber: inv.invoiceNumber,
+            totalChf: parseFloat(inv.totalChf),
+            dueDate: formatDate(inv.dueDate),
+            periodStart: formatDate(inv.periodStart),
+            periodEnd: formatDate(inv.periodEnd),
+            pdfUrl: inv.pdfUrl ?? undefined,
+            locale: "fr",
+          });
+
+          if (!emailResult.success) {
+            results.errors.push({ invoiceId, error: emailResult.error ?? "Failed to send email" });
+            continue;
+          }
+
+          // Update invoice status
+          await ctx.db
+            .update(invoice)
+            .set({
+              status: "sent",
+              sentAt: new Date(),
+              updatedAt: new Date(),
+            })
+            .where(eq(invoice.id, invoiceId));
+
+          results.sent++;
+        } catch (error) {
+          results.errors.push({
+            invoiceId,
+            error: error instanceof Error ? error.message : "Unknown error"
+          });
+        }
+      }
+
+      return results;
+    }),
+
+  // Mark batch of invoices as paid
+  markPaidBatch: protectedProcedure
+    .input(
+      z.object({
+        orgId: z.string(),
+        invoiceIds: z.array(z.string()),
+        paidAt: z.date().optional(),
+        paymentMethod: z.enum(["bank_transfer", "cash", "other"]).optional(),
+        paymentNotes: z.string().optional(),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await verifyMembership(ctx, input.orgId, true);
+
+      const paidAt = input.paidAt ?? new Date();
+
+      // Update all invoices at once
+      const result = await ctx.db
+        .update(invoice)
+        .set({
+          status: "paid",
+          paidAt,
+          paymentMethod: input.paymentMethod,
+          paymentNotes: input.paymentNotes,
+          updatedAt: new Date(),
+        })
+        .where(
+          and(
+            eq(invoice.organizationId, input.orgId),
+            sql`${invoice.id} IN (${sql.join(
+              input.invoiceIds.map((id) => sql`${id}`),
+              sql`, `
+            )})`,
+            or(
+              eq(invoice.status, "sent"),
+              eq(invoice.status, "overdue")
+            )
+          )
+        )
+        .returning({ id: invoice.id });
+
+      return {
+        marked: result.length,
+      };
     }),
 
   // Delete invoice (only drafts)
@@ -519,5 +770,263 @@ export const invoiceRouter = createTRPCRouter({
       }
 
       return result;
+    }),
+
+  // Generate PDF for invoice
+  generatePdf: protectedProcedure
+    .input(z.object({ invoiceId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const inv = await ctx.db.query.invoice.findFirst({
+        where: eq(invoice.id, input.invoiceId),
+        with: {
+          organization: true,
+          member: true,
+          lines: {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access
+            orderBy: (lines: any, { asc }: any) => [asc(lines.sortOrder)],
+          },
+        },
+      });
+
+      if (!inv) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Invoice not found",
+        });
+      }
+
+      await verifyMembership(ctx, inv.organizationId);
+
+      // Transform to InvoiceData format
+      const invoiceData: InvoiceData = {
+        invoiceNumber: inv.invoiceNumber,
+        createdAt: inv.createdAt,
+        dueDate: inv.dueDate,
+        periodStart: inv.periodStart,
+        periodEnd: inv.periodEnd,
+        status: inv.status,
+        subtotalChf: parseFloat(inv.subtotalChf),
+        vatAmountChf: parseFloat(inv.vatAmountChf),
+        totalChf: parseFloat(inv.totalChf),
+        organization: {
+          name: inv.organization.name,
+          address: inv.organization.address,
+          postalCode: inv.organization.postalCode,
+          city: inv.organization.city,
+          contactEmail: inv.organization.contactEmail,
+          contactPhone: inv.organization.contactPhone,
+          billingSettings: inv.organization.billingSettings,
+        },
+        member: {
+          firstname: inv.member.firstname,
+          lastname: inv.member.lastname,
+          address: inv.member.address,
+          postalCode: inv.member.postalCode,
+          city: inv.member.city,
+          email: inv.member.email,
+          podNumber: inv.member.podNumber,
+        },
+        /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access */
+        lines: inv.lines.map((line: any) => ({
+          id: line.id as string,
+          description: line.description as string,
+          quantity: parseFloat(String(line.quantity)),
+          unit: line.unit as string,
+          unitPriceChf: parseFloat(String(line.unitPriceChf)),
+          totalChf: parseFloat(String(line.totalChf)),
+          lineType: line.lineType as string,
+        })),
+        /* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-member-access */
+      };
+
+      // Generate PDF and upload to blob
+      // QR-bill is automatically included if IBAN is configured
+      const result = await generateInvoicePdf({
+        invoice: invoiceData,
+        uploadToBlob: true,
+      });
+
+      // Update invoice with PDF URL if upload succeeded
+      if (result.url) {
+        await ctx.db
+          .update(invoice)
+          .set({ pdfUrl: result.url, updatedAt: new Date() })
+          .where(eq(invoice.id, input.invoiceId));
+      }
+
+      return {
+        success: true,
+        pdfUrl: result.url,
+      };
+    }),
+
+  // Get overdue count for dashboard
+  getOverdueCount: protectedProcedure
+    .input(z.object({ orgId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      await verifyMembership(ctx, input.orgId);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const [result] = await ctx.db
+        .select({ count: count() })
+        .from(invoice)
+        .where(
+          and(
+            eq(invoice.organizationId, input.orgId),
+            eq(invoice.status, "sent"),
+            lt(invoice.dueDate, today)
+          )
+        );
+
+      return {
+        overdueCount: result?.count ?? 0,
+      };
+    }),
+
+  // Mark overdue invoices (for cron job)
+  markOverdue: protectedProcedure
+    .input(z.object({ orgId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await verifyMembership(ctx, input.orgId, true);
+
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      const result = await ctx.db
+        .update(invoice)
+        .set({ status: "overdue", updatedAt: new Date() })
+        .where(
+          and(
+            eq(invoice.organizationId, input.orgId),
+            eq(invoice.status, "sent"),
+            lt(invoice.dueDate, today)
+          )
+        )
+        .returning({ id: invoice.id });
+
+      return {
+        markedOverdue: result.length,
+      };
+    }),
+
+  // Send invoice email to member
+  sendInvoiceEmail: protectedProcedure
+    .input(z.object({ invoiceId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const inv = await ctx.db.query.invoice.findFirst({
+        where: eq(invoice.id, input.invoiceId),
+        with: {
+          organization: true,
+          member: true,
+        },
+      });
+
+      if (!inv) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Invoice not found",
+        });
+      }
+
+      await verifyMembership(ctx, inv.organizationId, true);
+
+      // Format dates
+      const formatDate = (date: Date) => new Date(date).toLocaleDateString("fr-CH");
+
+      // Send the email
+      const result = await sendInvoiceEmail({
+        to: inv.member.email,
+        organizationName: inv.organization.name,
+        memberName: `${inv.member.firstname} ${inv.member.lastname}`,
+        invoiceNumber: inv.invoiceNumber,
+        totalChf: parseFloat(inv.totalChf),
+        dueDate: formatDate(inv.dueDate),
+        periodStart: formatDate(inv.periodStart),
+        periodEnd: formatDate(inv.periodEnd),
+        pdfUrl: inv.pdfUrl ?? undefined,
+        locale: "fr",
+      });
+
+      if (!result.success) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: `Failed to send email: ${result.error}`,
+        });
+      }
+
+      // Update invoice status to sent if it was draft
+      if (inv.status === "draft") {
+        await ctx.db
+          .update(invoice)
+          .set({
+            status: "sent",
+            sentAt: new Date(),
+            updatedAt: new Date(),
+          })
+          .where(eq(invoice.id, input.invoiceId));
+      }
+
+      return { success: true, emailId: result.id };
+    }),
+
+  // Send payment reminder email
+  sendReminderEmail: protectedProcedure
+    .input(z.object({ invoiceId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const inv = await ctx.db.query.invoice.findFirst({
+        where: eq(invoice.id, input.invoiceId),
+        with: {
+          organization: true,
+          member: true,
+        },
+      });
+
+      if (!inv) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Invoice not found",
+        });
+      }
+
+      await verifyMembership(ctx, inv.organizationId, true);
+
+      // Calculate days overdue
+      const today = new Date();
+      const dueDate = new Date(inv.dueDate);
+      const daysOverdue = Math.floor((today.getTime() - dueDate.getTime()) / (1000 * 60 * 60 * 24));
+
+      if (daysOverdue <= 0) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invoice is not overdue",
+        });
+      }
+
+      // Format date
+      const formatDate = (date: Date) => new Date(date).toLocaleDateString("fr-CH");
+
+      // Send the reminder email
+      const result = await sendPaymentReminderEmail({
+        to: inv.member.email,
+        organizationName: inv.organization.name,
+        memberName: `${inv.member.firstname} ${inv.member.lastname}`,
+        invoiceNumber: inv.invoiceNumber,
+        totalChf: parseFloat(inv.totalChf),
+        dueDate: formatDate(inv.dueDate),
+        daysOverdue,
+        pdfUrl: inv.pdfUrl ?? undefined,
+        locale: "fr",
+      });
+
+      if (!result.success) {
+        throw new TRPCError({
+          code: "INTERNAL_SERVER_ERROR",
+          message: `Failed to send reminder: ${result.error}`,
+        });
+      }
+
+      return { success: true, emailId: result.id };
     }),
 });

@@ -55,15 +55,16 @@ export default function MembersPage() {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-8">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-2xl font-normal text-gray-900">{t("title")}</h1>
+          <h1 className="text-3xl font-light tracking-tight text-gray-900">{t("title")}</h1>
+          <p className="mt-3 text-gray-400">Manage your community members</p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-4">
           <button
             onClick={() => setShowImport(true)}
-            className="flex items-center gap-2 rounded-lg border border-gray-200 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50"
+            className="flex items-center gap-2 rounded-xl border border-gray-200 px-4 py-2.5 text-sm text-gray-500 hover:bg-gray-50 hover:text-gray-700"
           >
             <Upload className="h-4 w-4" />
             {t("importMembers")}
@@ -73,7 +74,7 @@ export default function MembersPage() {
               setEditingMember(null);
               setShowAddForm(true);
             }}
-            className="flex items-center gap-2 rounded-lg bg-gray-900 px-3 py-2 text-sm text-white hover:bg-gray-800"
+            className="flex items-center gap-2 rounded-xl bg-gray-900 px-5 py-2.5 text-sm text-white hover:bg-gray-800"
           >
             <Plus className="h-4 w-4" />
             {t("addMember")}
@@ -83,20 +84,20 @@ export default function MembersPage() {
 
       {/* Filters */}
       <div className="flex items-center gap-4">
-        <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
+        <div className="relative flex-1 max-w-md">
+          <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-300" />
           <input
             type="text"
             placeholder={t("searchPlaceholder")}
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            className="w-full rounded-lg border border-gray-200 py-2 pl-10 pr-4 text-sm focus:border-gray-400 focus:outline-none"
+            className="w-full rounded-xl border border-gray-100 bg-white py-3 pl-11 pr-4 text-sm focus:border-gray-200 focus:outline-none"
           />
         </div>
         <select
           value={statusFilter}
           onChange={(e) => setStatusFilter(e.target.value)}
-          className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+          className="rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm text-gray-500 focus:border-gray-200 focus:outline-none"
         >
           <option value="">{t("table.status")}</option>
           <option value="active">{t("status.active")}</option>
@@ -106,7 +107,7 @@ export default function MembersPage() {
         <select
           value={typeFilter}
           onChange={(e) => setTypeFilter(e.target.value)}
-          className="rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+          className="rounded-xl border border-gray-100 bg-white px-4 py-3 text-sm text-gray-500 focus:border-gray-200 focus:outline-none"
         >
           <option value="">{t("table.type")}</option>
           <option value="consumer">{t("types.consumer")}</option>
@@ -145,26 +146,26 @@ export default function MembersPage() {
       )}
 
       {/* Table */}
-      <div className="rounded-lg border border-gray-200 bg-white">
+      <div className="rounded-2xl border border-gray-100 bg-white">
         <table className="w-full">
           <thead>
-            <tr className="border-b border-gray-200">
-              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">
+            <tr className="border-b border-gray-100">
+              <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">
                 {t("table.name")}
               </th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">
+              <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">
                 {t("table.email")}
               </th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">
+              <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">
                 {t("table.pod")}
               </th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">
+              <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">
                 {t("table.type")}
               </th>
-              <th className="px-4 py-3 text-left text-sm font-medium text-gray-500">
+              <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">
                 {t("table.status")}
               </th>
-              <th className="px-4 py-3 text-right text-sm font-medium text-gray-500">
+              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">
                 {t("table.actions")}
               </th>
             </tr>
@@ -172,63 +173,63 @@ export default function MembersPage() {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-sm text-gray-500">
+                <td colSpan={6} className="px-6 py-12 text-center text-sm text-gray-400">
                   {tCommon("loading")}
                 </td>
               </tr>
             ) : membersData?.members.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-4 py-8 text-center text-sm text-gray-500">
+                <td colSpan={6} className="px-6 py-12 text-center text-sm text-gray-400">
                   No members found
                 </td>
               </tr>
             ) : (
               membersData?.members.map((member) => (
-                <tr key={member.id} className="border-b border-gray-100 last:border-0">
-                  <td className="px-4 py-3 text-sm text-gray-900">
+                <tr key={member.id} className="border-b border-gray-50 last:border-0">
+                  <td className="px-6 py-4 text-sm text-gray-900">
                     {member.firstname} {member.lastname}
                   </td>
-                  <td className="px-4 py-3 text-sm text-gray-500">{member.email}</td>
-                  <td className="px-4 py-3 text-sm font-mono text-gray-500">
+                  <td className="px-6 py-4 text-sm text-gray-500">{member.email}</td>
+                  <td className="px-6 py-4 text-sm font-mono text-gray-400">
                     {member.podNumber}
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-6 py-4">
                     <span
-                      className={`inline-block rounded px-2 py-0.5 text-xs ${
+                      className={`inline-block rounded-lg px-2.5 py-1 text-xs ${
                         member.installationType === "prosumer"
-                          ? "bg-green-50 text-green-700"
+                          ? "bg-emerald-50 text-emerald-600"
                           : member.installationType === "producer"
-                            ? "bg-blue-50 text-blue-700"
-                            : "bg-gray-100 text-gray-600"
+                            ? "bg-pelorous-50 text-pelorous-600"
+                            : "bg-gray-50 text-gray-500"
                       }`}
                     >
                       {t(`types.${member.installationType}`)}
                     </span>
                   </td>
-                  <td className="px-4 py-3">
+                  <td className="px-6 py-4">
                     <span
-                      className={`inline-block rounded px-2 py-0.5 text-xs ${
+                      className={`inline-block rounded-lg px-2.5 py-1 text-xs ${
                         member.status === "active"
-                          ? "bg-green-50 text-green-700"
+                          ? "bg-emerald-50 text-emerald-600"
                           : member.status === "pending"
-                            ? "bg-amber-50 text-amber-700"
-                            : "bg-gray-100 text-gray-600"
+                            ? "bg-amber-50 text-amber-600"
+                            : "bg-gray-50 text-gray-500"
                       }`}
                     >
                       {t(`status.${member.status}`)}
                     </span>
                   </td>
-                  <td className="px-4 py-3">
-                    <div className="flex items-center justify-end gap-2">
+                  <td className="px-6 py-4">
+                    <div className="flex items-center justify-end gap-1">
                       <button
                         onClick={() => setEditingMember(member)}
-                        className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                        className="rounded-lg p-2 text-gray-400 hover:bg-gray-50 hover:text-gray-600"
                       >
                         <Edit className="h-4 w-4" />
                       </button>
                       <button
                         onClick={() => handleDelete(member.id)}
-                        className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-red-600"
+                        className="rounded-lg p-2 text-gray-400 hover:bg-gray-50 hover:text-red-500"
                       >
                         <Trash2 className="h-4 w-4" />
                       </button>
@@ -242,7 +243,7 @@ export default function MembersPage() {
       </div>
 
       {membersData && (
-        <div className="text-sm text-gray-500">
+        <div className="text-sm text-gray-400">
           {membersData.total} member(s)
         </div>
       )}
@@ -309,101 +310,101 @@ function MemberForm({
   const isPending = createMutation.isPending || updateMutation.isPending;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="w-full max-w-2xl rounded-lg bg-white p-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+      <div className="w-full max-w-2xl rounded-2xl bg-white p-8">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-medium text-gray-900">{t("title")}</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+          <h2 className="text-xl font-light text-gray-900">{t("title")}</h2>
+          <button onClick={onClose} className="rounded-lg p-1 text-gray-400 hover:bg-gray-50 hover:text-gray-600">
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-          <div className="grid gap-4 sm:grid-cols-2">
+        <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+          <div className="grid gap-5 sm:grid-cols-2">
             <div>
-              <label className="block text-sm text-gray-600">{t("firstname")}</label>
+              <label className="block text-sm text-gray-500">{t("firstname")}</label>
               <input
                 type="text"
                 value={formData.firstname}
                 onChange={(e) => setFormData({ ...formData, firstname: e.target.value })}
-                className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600">{t("lastname")}</label>
+              <label className="block text-sm text-gray-500">{t("lastname")}</label>
               <input
                 type="text"
                 value={formData.lastname}
                 onChange={(e) => setFormData({ ...formData, lastname: e.target.value })}
-                className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600">{t("email")}</label>
+              <label className="block text-sm text-gray-500">{t("email")}</label>
               <input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600">{t("phone")}</label>
+              <label className="block text-sm text-gray-500">{t("phone")}</label>
               <input
                 type="tel"
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600">{t("address")}</label>
+              <label className="block text-sm text-gray-500">{t("address")}</label>
               <input
                 type="text"
                 value={formData.address}
                 onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-                className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               />
             </div>
-            <div className="grid grid-cols-2 gap-2">
+            <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm text-gray-600">{t("postalCode")}</label>
+                <label className="block text-sm text-gray-500">{t("postalCode")}</label>
                 <input
                   type="text"
                   value={formData.postalCode}
                   onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-                  className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                  className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
                 />
               </div>
               <div>
-                <label className="block text-sm text-gray-600">{t("city")}</label>
+                <label className="block text-sm text-gray-500">{t("city")}</label>
                 <input
                   type="text"
                   value={formData.city}
                   onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                  className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                  className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
                 />
               </div>
             </div>
             <div>
-              <label className="block text-sm text-gray-600">{t("podNumber")}</label>
+              <label className="block text-sm text-gray-500">{t("podNumber")}</label>
               <input
                 type="text"
                 value={formData.podNumber}
                 onChange={(e) => setFormData({ ...formData, podNumber: e.target.value })}
-                className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm font-mono focus:border-gray-400 focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm font-mono focus:border-gray-200 focus:outline-none"
                 required
               />
             </div>
             <div>
-              <label className="block text-sm text-gray-600">{t("installationType")}</label>
+              <label className="block text-sm text-gray-500">{t("installationType")}</label>
               <select
                 value={formData.installationType}
                 onChange={(e) => setFormData({ ...formData, installationType: e.target.value })}
-                className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               >
                 <option value="consumer">{tTypes("consumer")}</option>
                 <option value="producer">{tTypes("producer")}</option>
@@ -413,33 +414,33 @@ function MemberForm({
             {(formData.installationType === "producer" || formData.installationType === "prosumer") && (
               <>
                 <div>
-                  <label className="block text-sm text-gray-600">{t("solarCapacity")}</label>
+                  <label className="block text-sm text-gray-500">{t("solarCapacity")}</label>
                   <input
                     type="number"
                     step="0.1"
                     value={formData.solarCapacityKwp ?? ""}
                     onChange={(e) => setFormData({ ...formData, solarCapacityKwp: e.target.value ? parseFloat(e.target.value) : undefined })}
-                    className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                    className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
                   />
                 </div>
                 <div>
-                  <label className="block text-sm text-gray-600">{t("batteryCapacity")}</label>
+                  <label className="block text-sm text-gray-500">{t("batteryCapacity")}</label>
                   <input
                     type="number"
                     step="0.1"
                     value={formData.batteryCapacityKwh ?? ""}
                     onChange={(e) => setFormData({ ...formData, batteryCapacityKwh: e.target.value ? parseFloat(e.target.value) : undefined })}
-                    className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                    className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
                   />
                 </div>
               </>
             )}
             <div>
-              <label className="block text-sm text-gray-600">{tCommon("status")}</label>
+              <label className="block text-sm text-gray-500">{tCommon("status")}</label>
               <select
                 value={formData.status}
                 onChange={(e) => setFormData({ ...formData, status: e.target.value })}
-                className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               >
                 <option value="pending">{tStatus("pending")}</option>
                 <option value="active">{tStatus("active")}</option>
@@ -448,18 +449,18 @@ function MemberForm({
             </div>
           </div>
 
-          <div className="flex gap-3 pt-4">
+          <div className="flex gap-4 pt-6">
             <button
               type="submit"
               disabled={isPending}
-              className="rounded-lg bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
+              className="rounded-xl bg-gray-900 px-6 py-3 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
             >
               {isPending ? tCommon("loading") : tCommon("save")}
             </button>
             <button
               type="button"
               onClick={onClose}
-              className="rounded-lg border border-gray-200 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50"
+              className="rounded-xl border border-gray-200 px-6 py-3 text-sm text-gray-500 hover:bg-gray-50"
             >
               {tCommon("cancel")}
             </button>
@@ -577,17 +578,17 @@ function ImportModal({
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="w-full max-w-2xl rounded-lg bg-white p-6">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm">
+      <div className="w-full max-w-2xl rounded-2xl bg-white p-8">
         <div className="flex items-center justify-between">
-          <h2 className="text-lg font-medium text-gray-900">{t("importMembers")}</h2>
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+          <h2 className="text-xl font-light text-gray-900">{t("importMembers")}</h2>
+          <button onClick={onClose} className="rounded-lg p-1 text-gray-400 hover:bg-gray-50 hover:text-gray-600">
             <X className="h-5 w-5" />
           </button>
         </div>
 
-        <div className="mt-6">
-          <div className="rounded-lg border-2 border-dashed border-gray-200 p-8 text-center">
+        <div className="mt-8">
+          <div className="rounded-2xl border-2 border-dashed border-gray-200 p-12 text-center">
             <input
               type="file"
               accept=".csv"
@@ -597,24 +598,24 @@ function ImportModal({
             />
             <label
               htmlFor="csv-upload"
-              className="cursor-pointer text-sm text-gray-500 hover:text-gray-700"
+              className="cursor-pointer text-sm text-gray-400 hover:text-gray-600"
             >
               {file ? file.name : "Click to select CSV file"}
             </label>
           </div>
 
           {preview.length > 0 && (
-            <div className="mt-4">
-              <p className="text-sm text-gray-600">Preview (first 5 rows):</p>
-              <div className="mt-2 max-h-40 overflow-auto rounded border border-gray-200">
+            <div className="mt-6">
+              <p className="text-sm text-gray-400">Preview (first 5 rows):</p>
+              <div className="mt-3 max-h-40 overflow-auto rounded-xl border border-gray-100">
                 <table className="w-full text-xs">
                   <tbody>
                     {preview.map((row, i) => (
-                      <tr key={i} className="border-b border-gray-100">
-                        <td className="px-2 py-1">{row.firstname}</td>
-                        <td className="px-2 py-1">{row.lastname}</td>
-                        <td className="px-2 py-1">{row.email}</td>
-                        <td className="px-2 py-1">{row.podnumber || row.pod}</td>
+                      <tr key={i} className="border-b border-gray-50">
+                        <td className="px-3 py-2 text-gray-600">{row.firstname}</td>
+                        <td className="px-3 py-2 text-gray-600">{row.lastname}</td>
+                        <td className="px-3 py-2 text-gray-500">{row.email}</td>
+                        <td className="px-3 py-2 font-mono text-gray-400">{row.podnumber || row.pod}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -624,7 +625,7 @@ function ImportModal({
           )}
 
           {errors.length > 0 && (
-            <div className="mt-4 rounded bg-red-50 p-3 text-sm text-red-700">
+            <div className="mt-6 rounded-xl bg-red-50 p-4 text-sm text-red-600">
               {errors.map((err, i) => (
                 <p key={i}>{err}</p>
               ))}
@@ -632,23 +633,23 @@ function ImportModal({
           )}
 
           {bulkCreateMutation.isSuccess && (
-            <div className="mt-4 rounded bg-green-50 p-3 text-sm text-green-700">
+            <div className="mt-6 rounded-xl bg-emerald-50 p-4 text-sm text-emerald-600">
               {bulkCreateMutation.data.created} members imported successfully
             </div>
           )}
         </div>
 
-        <div className="mt-6 flex gap-3">
+        <div className="mt-8 flex gap-4">
           <button
             onClick={handleImport}
             disabled={!file || bulkCreateMutation.isPending}
-            className="rounded-lg bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
+            className="rounded-xl bg-gray-900 px-6 py-3 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
           >
             {bulkCreateMutation.isPending ? tCommon("loading") : tCommon("import")}
           </button>
           <button
             onClick={onClose}
-            className="rounded-lg border border-gray-200 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50"
+            className="rounded-xl border border-gray-200 px-6 py-3 text-sm text-gray-500 hover:bg-gray-50"
           >
             {tCommon("close")}
           </button>

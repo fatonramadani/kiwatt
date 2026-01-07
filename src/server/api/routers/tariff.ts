@@ -4,9 +4,10 @@ import { eq, and, desc, count } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { tariffPlan, organizationMember, invoice } from "~/server/db/schema";
+import { tariffPlan, organizationMember } from "~/server/db/schema";
 
 // Helper to verify org membership
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 async function verifyMembership(
   ctx: { db: any; session: { user: { id: string } } },
   orgId: string,
@@ -35,6 +36,7 @@ async function verifyMembership(
 
   return membership;
 }
+/* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 
 export const tariffRouter = createTRPCRouter({
   // List all tariff plans for an organization
@@ -172,7 +174,7 @@ export const tariffRouter = createTRPCRouter({
       const { tariffId, ...updates } = input;
 
       // Convert numbers to strings for decimal fields
-      const dbUpdates: Record<string, any> = { updatedAt: new Date() };
+      const dbUpdates: Record<string, unknown> = { updatedAt: new Date() };
       if (updates.name !== undefined) dbUpdates.name = updates.name;
       if (updates.communityRateChfKwh !== undefined)
         dbUpdates.communityRateChfKwh = updates.communityRateChfKwh.toString();

@@ -11,6 +11,7 @@ import {
 } from "~/server/db/schema";
 
 // Helper to verify org membership
+/* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 async function verifyMembership(
   ctx: { db: any; session: { user: { id: string } } },
   orgId: string,
@@ -39,6 +40,7 @@ async function verifyMembership(
 
   return membership;
 }
+/* eslint-enable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
 
 export const energyRouter = createTRPCRouter({
   // Get community energy overview for a period

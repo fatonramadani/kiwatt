@@ -26,26 +26,27 @@ export default function SettingsPage() {
   ];
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       <div>
-        <h1 className="text-2xl font-normal text-gray-900">{t("title")}</h1>
+        <h1 className="text-3xl font-light tracking-tight text-gray-900">{t("title")}</h1>
+        <p className="mt-3 text-gray-400">Configure your community settings</p>
       </div>
 
-      <div className="flex gap-6">
+      <div className="flex gap-10">
         {/* Sidebar tabs */}
-        <div className="w-48 shrink-0">
-          <nav className="space-y-1">
+        <div className="w-56 shrink-0">
+          <nav className="space-y-2">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
                 onClick={() => setActiveTab(tab.id)}
-                className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-sm ${
+                className={`flex w-full items-center gap-3 rounded-xl px-4 py-3 text-sm transition-colors ${
                   activeTab === tab.id
-                    ? "bg-gray-100 text-gray-900"
-                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900"
+                    ? "bg-gray-50 text-gray-900"
+                    : "text-gray-500 hover:bg-gray-50 hover:text-gray-700"
                 }`}
               >
-                <tab.icon className="h-4 w-4" />
+                <tab.icon className={`h-5 w-5 ${activeTab === tab.id ? "text-pelorous-500" : "text-gray-400"}`} />
                 {tab.label}
               </button>
             ))}
@@ -101,88 +102,88 @@ function GeneralTab({
   };
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6">
-      <h2 className="text-lg font-medium text-gray-900">{t("title")}</h2>
-      <form onSubmit={handleSubmit} className="mt-6 space-y-4">
-        <div className="grid gap-4 sm:grid-cols-2">
+    <div className="rounded-2xl border border-gray-100 bg-white p-8">
+      <h2 className="text-xl font-light text-gray-900">{t("title")}</h2>
+      <form onSubmit={handleSubmit} className="mt-8 space-y-5">
+        <div className="grid gap-5 sm:grid-cols-2">
           <div>
-            <label className="block text-sm text-gray-600">{t("name")}</label>
+            <label className="block text-sm text-gray-500">{t("name")}</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("address")}</label>
+            <label className="block text-sm text-gray-500">{t("address")}</label>
             <input
               type="text"
               value={formData.address}
               onChange={(e) => setFormData({ ...formData, address: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("postalCode")}</label>
+            <label className="block text-sm text-gray-500">{t("postalCode")}</label>
             <input
               type="text"
               value={formData.postalCode}
               onChange={(e) => setFormData({ ...formData, postalCode: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("city")}</label>
+            <label className="block text-sm text-gray-500">{t("city")}</label>
             <input
               type="text"
               value={formData.city}
               onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("commune")}</label>
+            <label className="block text-sm text-gray-500">{t("commune")}</label>
             <input
               type="text"
               value={formData.commune}
               onChange={(e) => setFormData({ ...formData, commune: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("canton")}</label>
+            <label className="block text-sm text-gray-500">{t("canton")}</label>
             <input
               type="text"
               value={formData.canton}
               onChange={(e) => setFormData({ ...formData, canton: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("contactEmail")}</label>
+            <label className="block text-sm text-gray-500">{t("contactEmail")}</label>
             <input
               type="email"
               value={formData.contactEmail}
               onChange={(e) => setFormData({ ...formData, contactEmail: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("contactPhone")}</label>
+            <label className="block text-sm text-gray-500">{t("contactPhone")}</label>
             <input
               type="tel"
               value={formData.contactPhone}
               onChange={(e) => setFormData({ ...formData, contactPhone: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
             />
           </div>
         </div>
-        <div className="pt-4">
+        <div className="pt-6">
           <button
             type="submit"
             disabled={updateMutation.isPending}
-            className="rounded-lg bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
+            className="rounded-xl bg-gray-900 px-6 py-3 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
           >
             {updateMutation.isPending ? tCommon("loading") : tCommon("save")}
           </button>
@@ -205,54 +206,160 @@ function BillingTab({
   const [formData, setFormData] = useState({
     vatRate: org.billingSettings?.vatRate ?? 7.7,
     paymentTermDays: org.billingSettings?.paymentTermDays ?? 30,
+    iban: org.billingSettings?.iban ?? "",
+    qrIban: org.billingSettings?.qrIban ?? "",
+    payeeName: org.billingSettings?.payeeName ?? "",
+    payeeAddress: org.billingSettings?.payeeAddress ?? "",
+    payeeZip: org.billingSettings?.payeeZip ?? "",
+    payeeCity: org.billingSettings?.payeeCity ?? "",
   });
 
-  // Note: This would need a separate mutation to update billing settings
-  // For now, showing the UI
+  const updateMutation = api.organization.updateBillingSettings.useMutation({
+    onSuccess: () => onUpdate(),
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    updateMutation.mutate({ orgId: org.id, ...formData });
+  };
+
+  // Check if QR-bill is properly configured
+  const qrBillConfigured = formData.iban && formData.payeeName && formData.payeeZip && formData.payeeCity;
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6">
-      <h2 className="text-lg font-medium text-gray-900">{t("title")}</h2>
-      <div className="mt-6 space-y-4">
-        <div className="grid gap-4 sm:grid-cols-2">
-          <div>
-            <label className="block text-sm text-gray-600">{t("currency")}</label>
-            <input
-              type="text"
-              value="CHF"
-              disabled
-              className="mt-1 w-full rounded-lg border border-gray-200 bg-gray-50 px-3 py-2 text-sm text-gray-500"
-            />
+    <div className="space-y-8">
+      {/* Billing Settings */}
+      <form onSubmit={handleSubmit} className="rounded-2xl border border-gray-100 bg-white p-8">
+        <h2 className="text-xl font-light text-gray-900">{t("title")}</h2>
+        <div className="mt-8 space-y-6">
+          <div className="grid gap-5 sm:grid-cols-3">
+            <div>
+              <label className="block text-sm text-gray-500">{t("currency")}</label>
+              <input
+                type="text"
+                value="CHF"
+                disabled
+                className="mt-2 w-full rounded-xl border border-gray-100 bg-gray-50/50 px-4 py-3 text-sm text-gray-400"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-500">{t("vatRate")}</label>
+              <input
+                type="number"
+                step="0.1"
+                value={formData.vatRate}
+                onChange={(e) => setFormData({ ...formData, vatRate: parseFloat(e.target.value) })}
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-sm text-gray-500">{t("paymentTerms")}</label>
+              <input
+                type="number"
+                value={formData.paymentTermDays}
+                onChange={(e) => setFormData({ ...formData, paymentTermDays: parseInt(e.target.value) })}
+                className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+              />
+            </div>
           </div>
-          <div>
-            <label className="block text-sm text-gray-600">{t("vatRate")}</label>
-            <input
-              type="number"
-              step="0.1"
-              value={formData.vatRate}
-              onChange={(e) => setFormData({ ...formData, vatRate: parseFloat(e.target.value) })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
-            />
+
+          {/* QR-bill Payment Information */}
+          <div className="border-t border-gray-100 pt-6">
+            <div className="flex items-center justify-between">
+              <div>
+                <h3 className="text-sm font-medium text-gray-900">Swiss QR-bill</h3>
+                <p className="mt-1 text-xs text-gray-400">
+                  Configure payment information for invoices with QR code
+                </p>
+              </div>
+              {qrBillConfigured ? (
+                <span className="rounded-lg bg-emerald-50 px-3 py-1.5 text-xs text-emerald-600">
+                  Configured
+                </span>
+              ) : (
+                <span className="rounded-lg bg-amber-50 px-3 py-1.5 text-xs text-amber-600">
+                  Not configured
+                </span>
+              )}
+            </div>
+
+            <div className="mt-6 grid gap-5 sm:grid-cols-2">
+              <div className="sm:col-span-2">
+                <label className="block text-sm text-gray-500">IBAN</label>
+                <input
+                  type="text"
+                  placeholder="CH93 0076 2011 6238 5295 7"
+                  value={formData.iban}
+                  onChange={(e) => setFormData({ ...formData, iban: e.target.value.toUpperCase() })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 font-mono text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-sm text-gray-500">
+                  QR-IBAN <span className="text-gray-300">(optional)</span>
+                </label>
+                <input
+                  type="text"
+                  placeholder="CH44 3199 9123 0008 8901 2"
+                  value={formData.qrIban}
+                  onChange={(e) => setFormData({ ...formData, qrIban: e.target.value.toUpperCase() })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 font-mono text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-sm text-gray-500">Payee Name</label>
+                <input
+                  type="text"
+                  placeholder="My Energy Community"
+                  value={formData.payeeName}
+                  onChange={(e) => setFormData({ ...formData, payeeName: e.target.value })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <label className="block text-sm text-gray-500">Payee Address</label>
+                <input
+                  type="text"
+                  placeholder="Rue de l'Energie 1"
+                  value={formData.payeeAddress}
+                  onChange={(e) => setFormData({ ...formData, payeeAddress: e.target.value })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500">ZIP Code</label>
+                <input
+                  type="text"
+                  placeholder="1700"
+                  value={formData.payeeZip}
+                  onChange={(e) => setFormData({ ...formData, payeeZip: e.target.value })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500">City</label>
+                <input
+                  type="text"
+                  placeholder="Fribourg"
+                  value={formData.payeeCity}
+                  onChange={(e) => setFormData({ ...formData, payeeCity: e.target.value })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
+            </div>
           </div>
-          <div>
-            <label className="block text-sm text-gray-600">{t("paymentTerms")}</label>
-            <input
-              type="number"
-              value={formData.paymentTermDays}
-              onChange={(e) => setFormData({ ...formData, paymentTermDays: parseInt(e.target.value) })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
-            />
+
+          <div className="pt-6">
+            <button
+              type="submit"
+              disabled={updateMutation.isPending}
+              className="rounded-xl bg-gray-900 px-6 py-3 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
+            >
+              {updateMutation.isPending ? tCommon("loading") : tCommon("save")}
+            </button>
           </div>
         </div>
-        <div className="pt-4">
-          <button
-            type="button"
-            className="rounded-lg bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-800"
-          >
-            {tCommon("save")}
-          </button>
-        </div>
-      </div>
+      </form>
     </div>
   );
 }
@@ -273,15 +380,15 @@ function TariffsTab({ orgId }: { orgId: string }) {
   });
 
   return (
-    <div className="space-y-4">
+    <div className="space-y-6">
       <div className="flex items-center justify-between">
-        <h2 className="text-lg font-medium text-gray-900">{t("title")}</h2>
+        <h2 className="text-xl font-light text-gray-900">{t("title")}</h2>
         <button
           onClick={() => {
             setEditingId(null);
             setShowForm(true);
           }}
-          className="flex items-center gap-2 rounded-lg bg-gray-900 px-3 py-2 text-sm text-white hover:bg-gray-800"
+          className="flex items-center gap-2 rounded-xl bg-gray-900 px-5 py-2.5 text-sm text-white hover:bg-gray-800"
         >
           <Plus className="h-4 w-4" />
           {t("add")}
@@ -304,42 +411,42 @@ function TariffsTab({ orgId }: { orgId: string }) {
         />
       )}
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         {tariffs?.map((tariff) => (
           <div
             key={tariff.id}
-            className="rounded-lg border border-gray-200 bg-white p-4"
+            className="rounded-2xl border border-gray-100 bg-white p-6"
           >
             <div className="flex items-start justify-between">
               <div>
-                <div className="flex items-center gap-2">
-                  <h3 className="font-medium text-gray-900">{tariff.name}</h3>
+                <div className="flex items-center gap-3">
+                  <h3 className="text-gray-900">{tariff.name}</h3>
                   {tariff.isDefault && (
-                    <span className="rounded bg-gray-100 px-2 py-0.5 text-xs text-gray-600">
+                    <span className="rounded-lg bg-pelorous-50 px-2.5 py-1 text-xs text-pelorous-600">
                       {t("default")}
                     </span>
                   )}
                 </div>
-                <div className="mt-2 grid grid-cols-3 gap-4 text-sm text-gray-500">
+                <div className="mt-4 grid grid-cols-3 gap-6 text-sm">
                   <div>
                     <span className="block text-xs text-gray-400">{t("communityRate")}</span>
-                    {parseFloat(tariff.communityRateChfKwh).toFixed(4)}
+                    <span className="text-gray-900">{parseFloat(tariff.communityRateChfKwh).toFixed(4)}</span>
                   </div>
                   <div>
                     <span className="block text-xs text-gray-400">{t("gridRate")}</span>
-                    {parseFloat(tariff.gridRateChfKwh).toFixed(4)}
+                    <span className="text-gray-900">{parseFloat(tariff.gridRateChfKwh).toFixed(4)}</span>
                   </div>
                   <div>
                     <span className="block text-xs text-gray-400">{t("injectionRate")}</span>
-                    {parseFloat(tariff.injectionRateChfKwh).toFixed(4)}
+                    <span className="text-gray-900">{parseFloat(tariff.injectionRateChfKwh).toFixed(4)}</span>
                   </div>
                 </div>
               </div>
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1">
                 {!tariff.isDefault && (
                   <button
                     onClick={() => setDefaultMutation.mutate({ tariffId: tariff.id })}
-                    className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                    className="rounded-lg p-2 text-gray-400 hover:bg-gray-50 hover:text-pelorous-600"
                     title="Set as default"
                   >
                     <Check className="h-4 w-4" />
@@ -350,7 +457,7 @@ function TariffsTab({ orgId }: { orgId: string }) {
                     setEditingId(tariff.id);
                     setShowForm(true);
                   }}
-                  className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
+                  className="rounded-lg px-3 py-2 text-sm text-gray-400 hover:bg-gray-50 hover:text-gray-600"
                 >
                   {tCommon("edit")}
                 </button>
@@ -360,7 +467,7 @@ function TariffsTab({ orgId }: { orgId: string }) {
                       deleteMutation.mutate({ tariffId: tariff.id });
                     }
                   }}
-                  className="rounded p-1 text-gray-400 hover:bg-gray-100 hover:text-red-600"
+                  className="rounded-lg p-2 text-gray-400 hover:bg-gray-50 hover:text-red-500"
                 >
                   <Trash2 className="h-4 w-4" />
                 </button>
@@ -370,8 +477,8 @@ function TariffsTab({ orgId }: { orgId: string }) {
         ))}
 
         {(!tariffs || tariffs.length === 0) && (
-          <div className="rounded-lg border border-gray-200 bg-white p-8 text-center">
-            <p className="text-sm text-gray-500">No tariffs configured yet</p>
+          <div className="rounded-2xl border border-gray-100 bg-white p-12 text-center">
+            <p className="text-sm text-gray-400">No tariffs configured yet</p>
           </div>
         )}
       </div>
@@ -406,7 +513,7 @@ function TariffForm({
     injectionRateChfKwh: 0.08,
     monthlyFeeChf: 0,
     vatRate: 7.7,
-    validFrom: new Date().toISOString().split("T")[0],
+    validFrom: new Date().toISOString().split("T")[0] ?? "",
     validTo: "",
     isDefault: false,
   });
@@ -421,7 +528,7 @@ function TariffForm({
         injectionRateChfKwh: parseFloat(existingTariff.injectionRateChfKwh),
         monthlyFeeChf: parseFloat(existingTariff.monthlyFeeChf ?? "0"),
         vatRate: parseFloat(existingTariff.vatRate),
-        validFrom: existingTariff.validFrom.toISOString().split("T")[0],
+        validFrom: existingTariff.validFrom.toISOString().split("T")[0] ?? "",
         validTo: existingTariff.validTo?.toISOString().split("T")[0] ?? "",
         isDefault: existingTariff.isDefault,
       });
@@ -442,7 +549,7 @@ function TariffForm({
         injectionRateChfKwh: formData.injectionRateChfKwh,
         monthlyFeeChf: formData.monthlyFeeChf,
         vatRate: formData.vatRate,
-        validFrom: new Date(formData.validFrom),
+        validFrom: new Date(formData.validFrom || new Date()),
         validTo: formData.validTo ? new Date(formData.validTo) : null,
       });
     } else {
@@ -454,7 +561,7 @@ function TariffForm({
         injectionRateChfKwh: formData.injectionRateChfKwh,
         monthlyFeeChf: formData.monthlyFeeChf,
         vatRate: formData.vatRate,
-        validFrom: new Date(formData.validFrom),
+        validFrom: new Date(formData.validFrom || new Date()),
         validTo: formData.validTo ? new Date(formData.validTo) : undefined,
         isDefault: formData.isDefault,
       });
@@ -464,107 +571,107 @@ function TariffForm({
   const isPending = createMutation.isPending || updateMutation.isPending;
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6">
-      <form onSubmit={handleSubmit} className="space-y-4">
-        <div className="grid gap-4 sm:grid-cols-2">
+    <div className="rounded-2xl border border-gray-100 bg-white p-8">
+      <form onSubmit={handleSubmit} className="space-y-5">
+        <div className="grid gap-5 sm:grid-cols-2">
           <div className="sm:col-span-2">
-            <label className="block text-sm text-gray-600">{t("name")}</label>
+            <label className="block text-sm text-gray-500">{t("name")}</label>
             <input
               type="text"
               value={formData.name}
               onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               required
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("communityRate")}</label>
+            <label className="block text-sm text-gray-500">{t("communityRate")}</label>
             <input
               type="number"
               step="0.0001"
               value={formData.communityRateChfKwh}
               onChange={(e) => setFormData({ ...formData, communityRateChfKwh: parseFloat(e.target.value) })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               required
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("gridRate")}</label>
+            <label className="block text-sm text-gray-500">{t("gridRate")}</label>
             <input
               type="number"
               step="0.0001"
               value={formData.gridRateChfKwh}
               onChange={(e) => setFormData({ ...formData, gridRateChfKwh: parseFloat(e.target.value) })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               required
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("injectionRate")}</label>
+            <label className="block text-sm text-gray-500">{t("injectionRate")}</label>
             <input
               type="number"
               step="0.0001"
               value={formData.injectionRateChfKwh}
               onChange={(e) => setFormData({ ...formData, injectionRateChfKwh: parseFloat(e.target.value) })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               required
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("monthlyFee")}</label>
+            <label className="block text-sm text-gray-500">{t("monthlyFee")}</label>
             <input
               type="number"
               step="0.01"
               value={formData.monthlyFeeChf}
               onChange={(e) => setFormData({ ...formData, monthlyFeeChf: parseFloat(e.target.value) })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("validFrom")}</label>
+            <label className="block text-sm text-gray-500">{t("validFrom")}</label>
             <input
               type="date"
               value={formData.validFrom}
               onChange={(e) => setFormData({ ...formData, validFrom: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               required
             />
           </div>
           <div>
-            <label className="block text-sm text-gray-600">{t("validTo")}</label>
+            <label className="block text-sm text-gray-500">{t("validTo")}</label>
             <input
               type="date"
               value={formData.validTo}
               onChange={(e) => setFormData({ ...formData, validTo: e.target.value })}
-              className="mt-1 w-full rounded-lg border border-gray-200 px-3 py-2 text-sm focus:border-gray-400 focus:outline-none"
+              className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
             />
           </div>
           {!tariffId && (
             <div className="sm:col-span-2">
-              <label className="flex items-center gap-2">
+              <label className="flex items-center gap-3">
                 <input
                   type="checkbox"
                   checked={formData.isDefault}
                   onChange={(e) => setFormData({ ...formData, isDefault: e.target.checked })}
-                  className="rounded border-gray-300"
+                  className="h-4 w-4 rounded border-gray-300 text-pelorous-600"
                 />
-                <span className="text-sm text-gray-600">{t("default")}</span>
+                <span className="text-sm text-gray-500">{t("default")}</span>
               </label>
             </div>
           )}
         </div>
-        <div className="flex gap-3 pt-4">
+        <div className="flex gap-4 pt-6">
           <button
             type="submit"
             disabled={isPending}
-            className="rounded-lg bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
+            className="rounded-xl bg-gray-900 px-6 py-3 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
           >
             {isPending ? tCommon("loading") : tCommon("save")}
           </button>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-lg border border-gray-200 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50"
+            className="rounded-xl border border-gray-200 px-6 py-3 text-sm text-gray-500 hover:bg-gray-50"
           >
             {tCommon("cancel")}
           </button>
@@ -604,40 +711,43 @@ function DistributionTab({
   };
 
   return (
-    <div className="rounded-lg border border-gray-200 bg-white p-6">
-      <h2 className="text-lg font-medium text-gray-900">{t("title")}</h2>
-      <div className="mt-6 space-y-3">
+    <div className="rounded-2xl border border-gray-100 bg-white p-8">
+      <h2 className="text-lg font-light text-gray-900">{t("title")}</h2>
+      <p className="mt-2 text-sm text-gray-400">
+        Choose how excess solar production is distributed among members
+      </p>
+      <div className="mt-8 space-y-4">
         {strategies.map((strategy) => (
           <label
             key={strategy.id}
-            className={`block cursor-pointer rounded-lg border p-4 ${
+            className={`block cursor-pointer rounded-xl border p-5 transition-colors ${
               selected === strategy.id
-                ? "border-gray-900 bg-gray-50"
-                : "border-gray-200 hover:border-gray-300"
+                ? "border-pelorous-200 bg-pelorous-50/50"
+                : "border-gray-100 hover:border-gray-200 hover:bg-gray-50/50"
             }`}
           >
-            <div className="flex items-center gap-3">
+            <div className="flex items-start gap-4">
               <input
                 type="radio"
                 name="distribution"
                 value={strategy.id}
                 checked={selected === strategy.id}
                 onChange={() => setSelected(strategy.id)}
-                className="h-4 w-4 border-gray-300 text-gray-900"
+                className="mt-1 h-4 w-4 border-gray-300 text-pelorous-600"
               />
               <div>
                 <p className="font-medium text-gray-900">{strategy.label}</p>
-                <p className="text-sm text-gray-500">{strategy.description}</p>
+                <p className="mt-1 text-sm text-gray-500">{strategy.description}</p>
               </div>
             </div>
           </label>
         ))}
       </div>
-      <div className="pt-6">
+      <div className="pt-8">
         <button
           onClick={handleSave}
           disabled={updateMutation.isPending}
-          className="rounded-lg bg-gray-900 px-4 py-2 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
+          className="rounded-xl bg-gray-900 px-6 py-3 text-sm text-white hover:bg-gray-800 disabled:opacity-50"
         >
           {updateMutation.isPending ? tCommon("loading") : tCommon("save")}
         </button>

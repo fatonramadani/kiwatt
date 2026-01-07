@@ -11,6 +11,8 @@ import {
   ArrowUpRight,
   ArrowDownRight,
   Zap,
+  ArrowRight,
+  AlertTriangle,
 } from "lucide-react";
 import { SetupChecklist } from "~/components/app/setup-checklist";
 
@@ -31,6 +33,11 @@ export default function DashboardPage() {
 
   const { data: activity } = api.organization.getRecentActivity.useQuery(
     { orgId: org?.id ?? "", limit: 5 },
+    { enabled: !!org?.id }
+  );
+
+  const { data: overdueData } = api.invoice.getOverdueCount.useQuery(
+    { orgId: org?.id ?? "" },
     { enabled: !!org?.id }
   );
 
@@ -57,13 +64,13 @@ export default function DashboardPage() {
       !stats.setupStatus.hasEnergyData);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-12">
       {/* Page header */}
       <div>
-        <h1 className="text-2xl font-normal text-gray-900">
+        <h1 className="text-3xl font-light tracking-tight text-gray-900">
           {org?.name ?? t("title")}
         </h1>
-        <p className="mt-1 text-sm text-gray-500">
+        <p className="mt-3 text-gray-400">
           {t("overview")}
         </p>
       </div>
@@ -73,32 +80,58 @@ export default function DashboardPage() {
         <SetupChecklist orgSlug={params.orgSlug} setupStatus={stats.setupStatus} />
       )}
 
-      {/* Stats grid */}
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        {/* Members */}
-        <div className="rounded-lg border border-gray-200 bg-white p-5">
-          <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-500">{t("stats.totalMembers")}</span>
-            <Users className="h-4 w-4 text-gray-400" />
+      {/* Overdue invoices alert */}
+      {overdueData && overdueData.overdueCount > 0 && (
+        <div className="flex items-center justify-between rounded-2xl border border-red-100 bg-red-50/50 p-6">
+          <div className="flex items-center gap-4">
+            <div className="flex h-10 w-10 items-center justify-center rounded-full bg-red-100">
+              <AlertTriangle className="h-5 w-5 text-red-600" />
+            </div>
+            <div>
+              <p className="font-medium text-red-800">
+                {overdueData.overdueCount} facture{overdueData.overdueCount > 1 ? "s" : ""} en retard
+              </p>
+              <p className="mt-0.5 text-sm text-red-600">
+                Certaines factures ont dépassé leur date d'échéance
+              </p>
+            </div>
           </div>
-          <p className="mt-2 text-3xl font-medium text-gray-900">
+          <Link
+            href={`/app/${params.orgSlug}/invoices?status=overdue`}
+            className="flex items-center gap-2 rounded-xl bg-red-600 px-5 py-2.5 text-sm text-white transition-colors hover:bg-red-700"
+          >
+            Voir les factures
+            <ArrowRight className="h-4 w-4" />
+          </Link>
+        </div>
+      )}
+
+      {/* Stats grid */}
+      <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
+        {/* Members */}
+        <div className="rounded-2xl border border-gray-100 bg-white p-8">
+          <div className="flex items-center justify-between">
+            <span className="text-sm text-gray-400">{t("stats.totalMembers")}</span>
+            <Users className="h-5 w-5 text-gray-300" />
+          </div>
+          <p className="mt-6 text-5xl font-light text-gray-900">
             {statsLoading ? "-" : stats?.totalMembers ?? 0}
           </p>
         </div>
 
         {/* Production */}
-        <div className="rounded-lg border border-gray-200 bg-white p-5">
+        <div className="rounded-2xl border border-gray-100 bg-white p-8">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-500">{t("stats.totalProduction")}</span>
-            <ArrowUpRight className="h-4 w-4 text-green-500" />
+            <span className="text-sm text-gray-400">{t("stats.totalProduction")}</span>
+            <ArrowUpRight className="h-5 w-5 text-emerald-400" />
           </div>
-          <p className="mt-2 text-3xl font-medium text-gray-900">
+          <p className="mt-6 text-5xl font-light text-gray-900">
             {stats?.hasEnergyData ? formatKwh(stats?.totalProduction) : "-"}
           </p>
           {!stats?.hasEnergyData && (
             <Link
               href={`/app/${params.orgSlug}/energy`}
-              className="mt-2 block text-sm text-gray-400 hover:text-gray-600"
+              className="mt-4 inline-block text-sm text-gray-400 underline decoration-gray-200 underline-offset-4 hover:text-gray-600"
             >
               {t("setup.step3")}
             </Link>
@@ -106,18 +139,18 @@ export default function DashboardPage() {
         </div>
 
         {/* Consumption */}
-        <div className="rounded-lg border border-gray-200 bg-white p-5">
+        <div className="rounded-2xl border border-gray-100 bg-white p-8">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-500">{t("stats.totalConsumption")}</span>
-            <ArrowDownRight className="h-4 w-4 text-gray-400" />
+            <span className="text-sm text-gray-400">{t("stats.totalConsumption")}</span>
+            <ArrowDownRight className="h-5 w-5 text-gray-300" />
           </div>
-          <p className="mt-2 text-3xl font-medium text-gray-900">
+          <p className="mt-6 text-5xl font-light text-gray-900">
             {stats?.hasEnergyData ? formatKwh(stats?.totalConsumption) : "-"}
           </p>
           {!stats?.hasEnergyData && (
             <Link
               href={`/app/${params.orgSlug}/energy`}
-              className="mt-2 block text-sm text-gray-400 hover:text-gray-600"
+              className="mt-4 inline-block text-sm text-gray-400 underline decoration-gray-200 underline-offset-4 hover:text-gray-600"
             >
               {t("setup.step3")}
             </Link>
@@ -125,12 +158,12 @@ export default function DashboardPage() {
         </div>
 
         {/* Savings */}
-        <div className="rounded-lg border border-gray-200 bg-white p-5">
+        <div className="rounded-2xl border border-gray-100 bg-white p-8">
           <div className="flex items-center justify-between">
-            <span className="text-sm text-gray-500">{t("stats.savings")}</span>
-            <TrendingUp className="h-4 w-4 text-green-500" />
+            <span className="text-sm text-gray-400">{t("stats.savings")}</span>
+            <TrendingUp className="h-5 w-5 text-pelorous-400" />
           </div>
-          <p className="mt-2 text-3xl font-medium text-green-600">
+          <p className="mt-6 text-5xl font-light text-pelorous-600">
             {stats?.hasTariff && stats.estimatedSavings !== null
               ? formatCurrency(stats.estimatedSavings)
               : "-"}
@@ -138,7 +171,7 @@ export default function DashboardPage() {
           {!stats?.hasTariff && (
             <Link
               href={`/app/${params.orgSlug}/settings`}
-              className="mt-2 block text-sm text-gray-400 hover:text-gray-600"
+              className="mt-4 inline-block text-sm text-gray-400 underline decoration-gray-200 underline-offset-4 hover:text-gray-600"
             >
               {t("configureToSee")}
             </Link>
@@ -147,33 +180,45 @@ export default function DashboardPage() {
       </div>
 
       {/* Main content */}
-      <div className="grid gap-6 lg:grid-cols-3">
+      <div className="grid gap-10 lg:grid-cols-3">
         {/* Energy distribution */}
-        <div className="rounded-lg border border-gray-200 bg-white p-6 lg:col-span-2">
-          <h2 className="text-base font-medium text-gray-900">
-            {t("charts.distribution")}
-          </h2>
-          <p className="text-sm text-gray-500">
-            {stats?.currentMonth}/{stats?.currentYear}
-          </p>
+        <div className="rounded-2xl border border-gray-100 bg-white p-10 lg:col-span-2">
+          <div className="flex items-center justify-between">
+            <div>
+              <h2 className="text-xl font-light text-gray-900">
+                {t("charts.distribution")}
+              </h2>
+              <p className="mt-2 text-sm text-gray-400">
+                {stats?.currentMonth}/{stats?.currentYear}
+              </p>
+            </div>
+            {stats?.hasEnergyData && (
+              <Link
+                href={`/app/${params.orgSlug}/energy`}
+                className="text-sm text-gray-400 underline decoration-gray-200 underline-offset-4 hover:text-gray-600"
+              >
+                View details
+              </Link>
+            )}
+          </div>
 
-          <div className="mt-6">
+          <div className="mt-10">
             {stats?.hasEnergyData &&
             stats.communityConsumption !== null &&
             stats.gridConsumption !== null &&
             (stats.communityConsumption > 0 || stats.gridConsumption > 0) ? (
-              <div className="space-y-6">
+              <div className="space-y-10">
                 {/* Community */}
                 <div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">{t("energySources.community")}</span>
+                    <span className="text-gray-400">{t("energySources.community")}</span>
                     <span className="font-medium text-gray-900">
                       {formatKwh(stats.communityConsumption)}
                     </span>
                   </div>
-                  <div className="mt-2 h-2 rounded-full bg-gray-100">
+                  <div className="mt-4 h-3 rounded-full bg-gray-100">
                     <div
-                      className="h-2 rounded-full bg-gray-900"
+                      className="h-3 rounded-full bg-pelorous-500"
                       style={{
                         width: `${
                           stats.totalConsumption && stats.totalConsumption > 0
@@ -188,14 +233,14 @@ export default function DashboardPage() {
                 {/* Grid */}
                 <div>
                   <div className="flex justify-between text-sm">
-                    <span className="text-gray-600">{t("energySources.grid")}</span>
+                    <span className="text-gray-400">{t("energySources.grid")}</span>
                     <span className="font-medium text-gray-900">
                       {formatKwh(stats.gridConsumption)}
                     </span>
                   </div>
-                  <div className="mt-2 h-2 rounded-full bg-gray-100">
+                  <div className="mt-4 h-3 rounded-full bg-gray-100">
                     <div
-                      className="h-2 rounded-full bg-gray-400"
+                      className="h-3 rounded-full bg-gray-300"
                       style={{
                         width: `${
                           stats.totalConsumption && stats.totalConsumption > 0
@@ -208,28 +253,28 @@ export default function DashboardPage() {
                 </div>
 
                 {/* Self-sufficiency */}
-                <div className="flex items-center justify-between border-t border-gray-100 pt-6">
+                <div className="flex items-center justify-between border-t border-gray-100 pt-10">
                   <div>
-                    <p className="text-sm text-gray-600">{t("selfSufficiency.title")}</p>
-                    <p className="text-xs text-gray-400">{t("selfSufficiency.description")}</p>
+                    <p className="text-gray-900">{t("selfSufficiency.title")}</p>
+                    <p className="mt-1 text-sm text-gray-400">{t("selfSufficiency.description")}</p>
                   </div>
-                  <p className="text-4xl font-medium text-gray-900">
+                  <p className="text-6xl font-light text-gray-900">
                     {stats.totalConsumption && stats.totalConsumption > 0
                       ? Math.round(
                           (stats.communityConsumption / stats.totalConsumption) * 100
                         )
                       : 0}
-                    %
+                    <span className="text-3xl text-gray-300">%</span>
                   </p>
                 </div>
               </div>
             ) : (
-              <div className="flex h-40 flex-col items-center justify-center text-center">
-                <Zap className="h-8 w-8 text-gray-300" />
-                <p className="mt-3 text-sm text-gray-500">{t("emptyState.noEnergyData")}</p>
+              <div className="flex h-56 flex-col items-center justify-center">
+                <Zap className="h-10 w-10 text-gray-200" />
+                <p className="mt-6 text-gray-400">{t("emptyState.noEnergyData")}</p>
                 <Link
                   href={`/app/${params.orgSlug}/energy`}
-                  className="mt-2 text-sm text-gray-900 underline hover:no-underline"
+                  className="mt-3 text-sm text-gray-400 underline decoration-gray-200 underline-offset-4 hover:text-gray-600"
                 >
                   {t("emptyState.importHint")}
                 </Link>
@@ -239,30 +284,40 @@ export default function DashboardPage() {
         </div>
 
         {/* Recent activity */}
-        <div className="rounded-lg border border-gray-200 bg-white p-6">
-          <h2 className="text-base font-medium text-gray-900">{t("recentActivity")}</h2>
+        <div className="rounded-2xl border border-gray-100 bg-white p-10">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-light text-gray-900">{t("recentActivity")}</h2>
+            {activity?.recentInvoices && activity.recentInvoices.length > 0 && (
+              <Link
+                href={`/app/${params.orgSlug}/invoices`}
+                className="text-sm text-gray-400 underline decoration-gray-200 underline-offset-4 hover:text-gray-600"
+              >
+                View all
+              </Link>
+            )}
+          </div>
 
-          <div className="mt-4">
+          <div className="mt-8">
             {activity?.recentInvoices && activity.recentInvoices.length > 0 ? (
-              <div className="space-y-3">
+              <div className="space-y-5">
                 {activity.recentInvoices.map((item) => (
                   <div
                     key={item.id}
-                    className="flex items-start justify-between py-2"
+                    className="flex items-start justify-between border-b border-gray-50 pb-5 last:border-0 last:pb-0"
                   >
                     <div>
-                      <p className="text-sm text-gray-700">{item.description}</p>
-                      <p className="text-xs text-gray-400">
+                      <p className="text-sm text-gray-600">{item.description}</p>
+                      <p className="mt-1.5 text-xs text-gray-400">
                         {new Date(item.date).toLocaleDateString("fr-CH")}
                       </p>
                     </div>
                     <span
-                      className={`rounded px-2 py-0.5 text-xs ${
+                      className={`text-xs ${
                         item.status === "paid"
-                          ? "bg-green-50 text-green-700"
+                          ? "text-emerald-500"
                           : item.status === "sent"
-                            ? "bg-gray-100 text-gray-600"
-                            : "bg-gray-50 text-gray-500"
+                            ? "text-pelorous-500"
+                            : "text-gray-400"
                       }`}
                     >
                       {item.status}
@@ -271,7 +326,7 @@ export default function DashboardPage() {
                 ))}
               </div>
             ) : (
-              <p className="py-8 text-center text-sm text-gray-400">
+              <p className="py-10 text-center text-sm text-gray-400">
                 {t("emptyState.noActivity")}
               </p>
             )}
@@ -281,23 +336,24 @@ export default function DashboardPage() {
 
       {/* Pending invoices */}
       {stats && stats.pendingInvoices > 0 && (
-        <div className="flex items-center justify-between rounded-lg border border-amber-200 bg-amber-50 p-4">
-          <div className="flex items-center gap-3">
-            <FileText className="h-5 w-5 text-amber-600" />
+        <div className="flex items-center justify-between rounded-2xl border border-amber-100 bg-amber-50/30 p-8">
+          <div className="flex items-center gap-5">
+            <FileText className="h-6 w-6 text-amber-500" />
             <div>
-              <p className="text-sm font-medium text-amber-900">
+              <p className="text-gray-900">
                 {t("stats.pendingInvoices")}
               </p>
-              <p className="text-xs text-amber-700">
+              <p className="mt-1 text-sm text-gray-500">
                 {t("emptyState.pendingInvoicesHint", { count: stats.pendingInvoices })}
               </p>
             </div>
           </div>
           <Link
             href={`/app/${params.orgSlug}/invoices`}
-            className="rounded bg-amber-600 px-4 py-2 text-sm text-white hover:bg-amber-700"
+            className="flex items-center gap-2 rounded-full bg-gray-900 px-6 py-3 text-sm text-white transition-colors hover:bg-gray-800"
           >
             {tNav("invoices")}
+            <ArrowRight className="h-4 w-4" />
           </Link>
         </div>
       )}

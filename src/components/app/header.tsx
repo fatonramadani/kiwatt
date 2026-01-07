@@ -37,7 +37,7 @@ export function AppHeader({ user, orgSlug }: HeaderProps) {
     .slice(0, 2);
 
   return (
-    <header className="sticky top-0 z-30 flex h-14 items-center justify-end border-b border-gray-200 bg-white px-6">
+    <header className="sticky top-0 z-30 flex h-16 items-center justify-end bg-gray-50 px-10">
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <button className="flex items-center gap-2 text-sm text-gray-600 hover:text-gray-900">
