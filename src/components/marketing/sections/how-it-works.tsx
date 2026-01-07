@@ -13,35 +13,39 @@ export function HowItWorksSection() {
   const t = useTranslations("landing.howItWorks");
 
   return (
-    <section className="bg-pelorous-950 py-32 text-white lg:py-40">
+    <section className="bg-gray-50 py-32 lg:py-40">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <div className="mb-20 max-w-xl">
-          <p className="mb-4 text-sm font-light uppercase tracking-[0.3em] text-pelorous-400">
+          <p className="mb-4 text-sm font-light uppercase tracking-[0.3em] text-gray-400">
             Process
           </p>
-          <h2 className="text-4xl font-light leading-tight tracking-tight lg:text-5xl">
+          <h2 className="text-4xl font-light leading-tight tracking-tight text-gray-900 lg:text-5xl">
             {t("title")}
           </h2>
         </div>
 
-        <div className="grid gap-16 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((step, index) => (
-            <div key={step.key} className="relative">
-              {/* Connector line - positioned to the right of the number */}
-              {index < steps.length - 1 && (
-                <div className="absolute left-20 top-8 hidden h-px w-[calc(100%-5rem)] bg-gradient-to-r from-pelorous-500 to-transparent lg:block" />
-              )}
-
-              <div className="relative inline-block">
-                <span className="text-6xl font-extralight text-pelorous-700">
+            <div
+              key={step.key}
+              className="relative rounded-2xl border border-gray-100 bg-white p-8"
+            >
+              {/* Step number */}
+              <div className="mb-6">
+                <span className="text-5xl font-extralight text-gray-200">
                   {step.number}
                 </span>
-                <span className="absolute -bottom-1 left-0 h-0.5 w-8 bg-pelorous-500" />
               </div>
-              <h3 className="mt-6 text-xl font-light">
+
+              {/* Connector line for larger screens */}
+              {index < steps.length - 1 && (
+                <div className="absolute -right-4 top-1/2 hidden h-px w-8 bg-gray-200 lg:block" />
+              )}
+
+              <h3 className="text-lg font-light text-gray-900">
                 {t(`${step.key}.title`)}
               </h3>
-              <p className="mt-4 text-sm font-light leading-relaxed text-pelorous-300">
+              <p className="mt-3 text-sm font-light leading-relaxed text-gray-500">
                 {t(`${step.key}.description`)}
               </p>
             </div>

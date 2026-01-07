@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "~/i18n/navigation";
-import { Button } from "~/components/ui/button";
 import { LanguageSwitcher } from "~/components/marketing/language-switcher";
 
 export function MarketingHeader() {
@@ -29,31 +28,32 @@ export function MarketingHeader() {
       }`}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-12">
-        <Link href="/" className="text-2xl font-light tracking-tight text-pelorous-950">
+        <Link href="/" className="text-2xl font-light tracking-tight text-gray-900">
           wattly
         </Link>
 
         <nav className="hidden items-center gap-12 md:flex">
-          <a href="#features" className="text-sm font-light text-pelorous-700 transition-colors hover:text-pelorous-950">
+          <a href="#features" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
             {tLanding("features")}
           </a>
-          <a href="#pricing" className="text-sm font-light text-pelorous-700 transition-colors hover:text-pelorous-950">
+          <a href="#pricing" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
             {tLanding("pricing")}
           </a>
-          <a href="#faq" className="text-sm font-light text-pelorous-700 transition-colors hover:text-pelorous-950">
+          <a href="#faq" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
             {tLanding("faq")}
           </a>
         </nav>
 
         <div className="flex items-center gap-6">
           <LanguageSwitcher />
-          <Link href="/login" className="text-sm font-light text-pelorous-700 transition-colors hover:text-pelorous-950">
+          <Link href="/login" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
             {t("login")}
           </Link>
-          <Link href="/register">
-            <Button className="rounded-none bg-pelorous-950 px-6 py-2 text-sm font-light hover:bg-pelorous-800">
-              {t("register")}
-            </Button>
+          <Link
+            href="/register"
+            className="rounded-xl bg-gray-900 px-6 py-2.5 text-sm font-light text-white transition-colors hover:bg-gray-800"
+          >
+            {t("register")}
           </Link>
         </div>
       </div>

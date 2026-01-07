@@ -22,8 +22,8 @@ export function LanguageSwitcher() {
 
   return (
     <DropdownMenu modal={false}>
-      <DropdownMenuTrigger className="flex items-center gap-2 text-sm font-light text-pelorous-700 outline-none transition-colors hover:text-pelorous-950">
-        <Globe className="h-4 w-4 text-pelorous-500" />
+      <DropdownMenuTrigger className="flex items-center gap-2 text-sm font-light text-gray-500 outline-none transition-colors hover:text-gray-900">
+        <Globe className="h-4 w-4 text-gray-400" />
         <span>{localeNames[locale as Locale]}</span>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="min-w-[140px]">
@@ -34,7 +34,7 @@ export function LanguageSwitcher() {
             className="flex cursor-pointer items-center justify-between text-sm font-light"
           >
             {localeNames[loc]}
-            {locale === loc && <Check className="h-4 w-4 text-pelorous-500" />}
+            {locale === loc && <Check className="h-4 w-4 text-gray-500" />}
           </DropdownMenuItem>
         ))}
       </DropdownMenuContent>

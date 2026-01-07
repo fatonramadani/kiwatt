@@ -2,7 +2,6 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "~/i18n/navigation";
-import { Button } from "~/components/ui/button";
 import { ArrowRight } from "lucide-react";
 
 export function CTASection() {
@@ -11,17 +10,18 @@ export function CTASection() {
   return (
     <section className="bg-white py-32 lg:py-40">
       <div className="mx-auto max-w-7xl px-6 text-center lg:px-12">
-        <h2 className="mx-auto max-w-3xl text-4xl font-light leading-tight tracking-tight text-pelorous-950 lg:text-5xl">
+        <h2 className="mx-auto max-w-3xl text-4xl font-light leading-tight tracking-tight text-gray-900 lg:text-5xl">
           {t("title")}
         </h2>
-        <p className="mx-auto mt-6 max-w-xl text-lg font-light text-pelorous-600">
+        <p className="mx-auto mt-6 max-w-xl text-lg font-light text-gray-500">
           {t("subtitle")}
         </p>
-        <Link href="/register" className="mt-12 inline-block">
-          <Button className="group rounded-none bg-pelorous-950 px-12 py-6 text-sm font-light tracking-wide hover:bg-pelorous-800">
-            {t("button")}
-            <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-          </Button>
+        <Link
+          href="/register"
+          className="group mt-12 inline-flex items-center gap-2 rounded-xl bg-gray-900 px-12 py-4 text-sm font-light tracking-wide text-white transition-colors hover:bg-gray-800"
+        >
+          {t("button")}
+          <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
         </Link>
       </div>
     </section>

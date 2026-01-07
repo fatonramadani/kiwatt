@@ -2,7 +2,6 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "~/i18n/navigation";
-import { Button } from "~/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 
@@ -10,9 +9,9 @@ export function HeroSection() {
   const t = useTranslations("landing.hero");
 
   return (
-    <section className="bg-pelorous-50/30 relative min-h-screen overflow-hidden">
+    <section className="relative min-h-screen overflow-hidden bg-gradient-to-b from-gray-50 to-white">
       {/* Electric pylons background */}
-      <div className="pointer-events-none absolute inset-0 opacity-[0.04]">
+      <div className="pointer-events-none absolute inset-0 opacity-[0.03]">
         <Image
           src="/1555193034.svg"
           alt=""
@@ -24,29 +23,30 @@ export function HeroSection() {
 
       <div className="relative mx-auto flex min-h-screen max-w-7xl flex-col justify-center px-6 pt-20 lg:px-12">
         <div className="max-w-4xl">
-          <p className="text-pelorous-500 mb-6 flex items-center gap-3 text-sm font-light tracking-[0.3em] uppercase">
-            <span className="bg-pelorous-500 h-px w-8" />
+          <p className="mb-6 flex items-center gap-3 text-sm font-light uppercase tracking-[0.3em] text-gray-400">
+            <span className="h-px w-8 bg-gray-300" />
             {t("tagline")}
           </p>
 
-          <h1 className="text-pelorous-950 text-5xl leading-[1.1] font-light tracking-tight md:text-6xl lg:text-7xl">
+          <h1 className="text-5xl font-light leading-[1.1] tracking-tight text-gray-900 md:text-6xl lg:text-7xl">
             {t("title")}
           </h1>
 
-          <p className="text-pelorous-600 mt-8 max-w-xl text-lg leading-relaxed font-light">
+          <p className="mt-8 max-w-xl text-lg font-light leading-relaxed text-gray-500">
             {t("subtitle")}
           </p>
 
           <div className="mt-12 flex items-center gap-8">
-            <Link href="/register">
-              <Button className="group bg-pelorous-950 hover:bg-pelorous-800 rounded-none px-8 py-6 text-sm font-light tracking-wide">
-                {t("cta")}
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Button>
+            <Link
+              href="/register"
+              className="group flex items-center gap-2 rounded-xl bg-gray-900 px-8 py-4 text-sm font-light tracking-wide text-white transition-colors hover:bg-gray-800"
+            >
+              {t("cta")}
+              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </Link>
             <a
               href="#features"
-              className="text-pelorous-700 hover:text-pelorous-950 text-sm font-light underline underline-offset-4 transition-colors"
+              className="text-sm font-light text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-900"
             >
               {t("ctaSecondary")}
             </a>

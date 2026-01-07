@@ -7,31 +7,31 @@ export function MarketingFooter() {
   const t = useTranslations("landing.footer");
 
   return (
-    <footer className="border-t border-pelorous-100 bg-white">
+    <footer className="border-t border-gray-100 bg-white">
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-12">
         <div className="flex flex-col justify-between gap-12 lg:flex-row">
           <div className="max-w-sm">
             <Link
               href="/"
-              className="text-2xl font-light tracking-tight text-pelorous-950"
+              className="text-2xl font-light tracking-tight text-gray-900"
             >
               wattly
             </Link>
-            <p className="mt-6 text-sm font-light leading-relaxed text-pelorous-600">
+            <p className="mt-6 text-sm font-light leading-relaxed text-gray-500">
               {t("description")}
             </p>
           </div>
 
           <div className="flex gap-20">
             <div>
-              <h4 className="text-xs font-light uppercase tracking-[0.2em] text-pelorous-500">
+              <h4 className="text-xs font-light uppercase tracking-[0.2em] text-gray-400">
                 Legal
               </h4>
               <ul className="mt-6 space-y-4">
                 <li>
                   <Link
                     href="#"
-                    className="text-sm font-light text-pelorous-700 transition-colors hover:text-pelorous-950"
+                    className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900"
                   >
                     {t("legal")}
                   </Link>
@@ -39,7 +39,7 @@ export function MarketingFooter() {
                 <li>
                   <Link
                     href="#"
-                    className="text-sm font-light text-pelorous-700 transition-colors hover:text-pelorous-950"
+                    className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900"
                   >
                     {t("privacy")}
                   </Link>
@@ -47,7 +47,7 @@ export function MarketingFooter() {
                 <li>
                   <Link
                     href="#"
-                    className="text-sm font-light text-pelorous-700 transition-colors hover:text-pelorous-950"
+                    className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900"
                   >
                     {t("terms")}
                   </Link>
@@ -56,14 +56,14 @@ export function MarketingFooter() {
             </div>
 
             <div>
-              <h4 className="text-xs font-light uppercase tracking-[0.2em] text-pelorous-500">
+              <h4 className="text-xs font-light uppercase tracking-[0.2em] text-gray-400">
                 {t("contact")}
               </h4>
               <ul className="mt-6 space-y-4">
-                <li className="text-sm font-light text-pelorous-700">
+                <li className="text-sm font-light text-gray-500">
                   info@wattly.ch
                 </li>
-                <li className="text-sm font-light text-pelorous-700">
+                <li className="text-sm font-light text-gray-500">
                   +41 21 000 00 00
                 </li>
               </ul>
@@ -71,8 +71,8 @@ export function MarketingFooter() {
           </div>
         </div>
 
-        <div className="mt-16 border-t border-pelorous-100 pt-8">
-          <p className="text-xs font-light text-pelorous-500">
+        <div className="mt-16 border-t border-gray-100 pt-8">
+          <p className="text-xs font-light text-gray-400">
             &copy; {new Date().getFullYear()} Wattly. All rights reserved.
           </p>
         </div>
