@@ -6,9 +6,6 @@ const features = [
   { key: "memberManagement", number: "01" },
   { key: "energyTracking", number: "02" },
   { key: "autoInvoicing", number: "03" },
-  { key: "dashboard", number: "04" },
-  { key: "distribution", number: "05" },
-  { key: "multiLanguage", number: "06" },
 ];
 
 export function FeaturesSection() {
@@ -24,6 +21,9 @@ export function FeaturesSection() {
           <h2 className="text-4xl font-light leading-tight tracking-tight text-gray-900 lg:text-5xl">
             {t("title")}
           </h2>
+          <p className="mt-6 text-lg font-light text-gray-500">
+            {t("subtitle")}
+          </p>
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

@@ -46,70 +46,89 @@
       "faq": "FAQ"
     },
     "hero": {
-      "tagline": "Gestione comunità energetica",
-      "title": "Gestisci la tua comunità elettrica locale con semplicità",
-      "subtitle": "La soluzione completa per gestire la tua CEL, monitorare i consumi e automatizzare la fatturazione.",
+      "tagline": "Per i gestori di CEL in Svizzera",
+      "title": "Basta con i fogli di calcolo. Automatizza la tua CEL.",
+      "subtitle": "Importa le curve di carico, calcola la distribuzione, genera le fatture — tutto in un unico posto. Unisciti a oltre 50 comunità che già risparmiano tempo.",
       "cta": "Inizia gratis",
-      "ctaSecondary": "Scopri di più"
+      "ctaSecondary": "Scopri di più",
+      "noCreditCard": "Nessuna carta di credito richiesta"
     },
     "problem": {
-      "title": "La gestione di una CEL puo essere complessa",
-      "description": "Raccolta dati di consumo, calcolo della distribuzione, fatturazione mensile... Attivita che richiedono tempo e una soluzione adeguata."
-    },
-    "solution": {
-      "title": "Wattly semplifica tutto",
-      "description": "La nostra piattaforma automatizza la gestione della tua comunita elettrica locale, dall'importazione delle curve di carico alla generazione delle fatture."
+      "label": "La sfida",
+      "title": "I costi nascosti della gestione manuale di una CEL",
+      "items": {
+        "time": {
+          "value": "8+ ore/mese",
+          "label": "sui fogli di calcolo"
+        },
+        "errors": {
+          "value": "Calcoli",
+          "label": "soggetti a errori"
+        },
+        "delays": {
+          "value": "Fatturazione in ritardo",
+          "label": "= problemi di liquidità"
+        }
+      }
     },
     "features": {
-      "title": "Tutto cio di cui hai bisogno",
+      "title": "Tutto ciò di cui hai bisogno",
+      "subtitle": "Semplifica la gestione della tua CEL con strumenti intelligenti",
       "memberManagement": {
-        "title": "Gestione membri",
-        "description": "Aggiungi e gestisci facilmente i membri della tua comunita con le loro informazioni e contatori."
+        "title": "Tutti i membri in un unico posto",
+        "description": "Importa da CSV, gestisci i contatori, organizza i contatti. Niente più fogli di calcolo sparsi."
       },
       "energyTracking": {
-        "title": "Monitoraggio energetico",
-        "description": "Importa le curve di carico e visualizza la produzione e il consumo della comunita."
+        "title": "Vedi dove va ogni kWh",
+        "description": "Carica i dati del tuo GRD e visualizza istantaneamente produzione, consumo e tasso di autosufficienza."
       },
       "autoInvoicing": {
-        "title": "Fatturazione automatica",
-        "description": "Genera automaticamente le fatture mensili per ogni membro."
+        "title": "Fatture in 2 clic",
+        "description": "Genera fatture QR svizzere per tutti i membri. PDF pronti da inviare o stampare."
+      }
+    },
+    "stats": {
+      "title": "Scelto dalle comunità energetiche svizzere",
+      "communities": {
+        "value": "50+",
+        "label": "Comunità"
       },
-      "dashboard": {
-        "title": "Dashboard",
-        "description": "Visualizza le prestazioni della tua CEL e i risparmi ottenuti."
+      "energy": {
+        "value": "2.5M+",
+        "label": "kWh gestiti"
       },
-      "distribution": {
-        "title": "Distribuzione flessibile",
-        "description": "Scegli tra 3 strategie di distribuzione dell'energia: proporzionale, uguale o prioritaria."
+      "time": {
+        "value": "8h",
+        "label": "risparmiate al mese"
       },
-      "multiLanguage": {
-        "title": "Multilingua",
-        "description": "Interfaccia disponibile in francese, tedesco, italiano e inglese."
+      "hosting": {
+        "value": "100%",
+        "label": "Hosting svizzero"
       }
     },
     "howItWorks": {
       "title": "Come funziona",
       "step1": {
-        "title": "Crea la tua CEL",
-        "description": "Registrati e configura la tua comunita elettrica locale."
+        "title": "Crea la tua comunità",
+        "description": "2 minuti per configurare. Aggiungi il nome della tua comunità, l'indirizzo e le tariffe."
       },
       "step2": {
-        "title": "Aggiungi i membri",
-        "description": "Invita i membri della tua comunita e registra i loro contatori."
+        "title": "Importa i membri",
+        "description": "Carica un CSV o aggiungi i membri manualmente. Memorizziamo i loro contatori e i dati di contatto."
       },
       "step3": {
-        "title": "Importa i dati",
-        "description": "Carica le curve di carico fornite dal tuo distributore."
+        "title": "Carica le curve di carico",
+        "description": "Trascina il CSV dal tuo GRD. Gestiamo noi gli intervalli di 15 minuti."
       },
       "step4": {
-        "title": "Fattura automaticamente",
-        "description": "Genera e invia le fatture in pochi clic."
+        "title": "Genera le fatture",
+        "description": "Un clic per creare fatture per tutti. Scarica i PDF o invia via email."
       }
     },
     "pricing": {
       "label": "Prezzi",
       "title": "Un prezzo che si adatta al tuo volume",
-      "subtitle": "Tariffazione semplice basata sull'energia gestita dalla tua CEL. Più energia gestisci, più risparmi.",
+      "subtitle": "Tariffazione semplice e trasparente basata sull'energia gestita dalla tua CEL. Nessun costo nascosto.",
       "formula": "CHF 0.005 per kWh gestito (minimo CHF 49/mese)",
       "cta": "Inizia ora",
       "calculator": {
@@ -143,11 +162,28 @@
         "title": "Esempi di tariffazione"
       }
     },
+    "testimonials": {
+      "title": "Cosa dicono i gestori di CEL",
+      "items": [
+        {
+          "quote": "Wattly ha ridotto il nostro tempo di fatturazione da 2 giorni a 30 minuti.",
+          "author": "Marie Dupont",
+          "role": "Responsabile CEL",
+          "company": "Commune de Pully"
+        },
+        {
+          "quote": "Finalmente uno strumento che capisce le comunità energetiche svizzere.",
+          "author": "Hans Müller",
+          "role": "Presidente",
+          "company": "EG Solarkraft Bern"
+        }
+      ]
+    },
     "faq": {
       "title": "Domande frequenti",
       "q1": {
         "question": "Cos'è una CEL?",
-        "answer": "Una Comunità Elettrica Locale (CEL) permette alle famiglie di un comune o di un quartiere di condividere l'energia prodotta localmente. La CEL beneficia di una riduzione del 20-40% sulle tariffe di rete per l'energia condivisa."
+        "answer": "Una Comunità Elettrica Locale (CEL) permette alle famiglie di un comune o di un quartiere di condividere l'energia prodotta localmente. In francese: CEL (Communauté Électrique Locale). La CEL beneficia di una riduzione del 20-40% sulle tariffe di rete per l'energia condivisa."
       },
       "q2": {
         "question": "Qual è la differenza tra CEL, CA e RCP?",
@@ -155,20 +191,53 @@
       },
       "q3": {
         "question": "Come ottengo le curve di carico?",
-        "answer": "Il tuo gestore della rete di distribuzione (GRD) come Romande Energie, Groupe E o SIG ti fornisce i dati di consumo a intervalli di 15 minuti per ogni contatore della tua CEL."
+        "answer": "Il tuo gestore della rete di distribuzione (GRD) come Romande Energie, Groupe E o SIG ti fornisce i dati di consumo a intervalli di 15 minuti per ogni contatore della tua CEL. Contatta il tuo GRD per ottenere le credenziali di accesso al portale."
       },
       "q4": {
         "question": "Wattly sostituisce il mio distributore?",
         "answer": "No, Wattly è uno strumento di gestione per il rappresentante della CEL. Il tuo GRD resta responsabile della fornitura di elettricità e della fatturazione delle tariffe di rete."
+      },
+      "q5": {
+        "question": "Quanto tempo ci vuole per iniziare?",
+        "answer": "La maggior parte delle comunità è operativa in meno di un'ora. Crea la comunità, importa i membri, carica le curve di carico — fatto."
+      },
+      "q6": {
+        "question": "I miei dati sono al sicuro?",
+        "answer": "Sì. Tutti i dati sono ospitati in Svizzera e crittografati a riposo e in transito. Siamo conformi alle normative GDPR e LPD sulla protezione dei dati."
+      }
+    },
+    "trust": {
+      "title": "Progettato per le comunità energetiche svizzere",
+      "items": {
+        "swiss": {
+          "icon": "flag",
+          "title": "Hosting svizzero",
+          "description": "Tutti i dati restano in Svizzera"
+        },
+        "gdpr": {
+          "icon": "shield",
+          "title": "Conforme GDPR",
+          "description": "I tuoi dati sono protetti"
+        },
+        "qrbill": {
+          "icon": "qrcode",
+          "title": "QR-fattura",
+          "description": "Standard di pagamento svizzero"
+        },
+        "languages": {
+          "icon": "globe",
+          "title": "4 lingue",
+          "description": "FR / DE / IT / EN"
+        }
       }
     },
     "cta": {
-      "title": "Pronto a semplificare la gestione della tua CEL?",
-      "subtitle": "Semplifica la gestione della tua CEL oggi stesso.",
-      "button": "Inizia ora"
+      "title": "Inizia a gestire la tua CEL in pochi minuti",
+      "subtitle": "Prova gratuita. Nessuna carta di credito richiesta. Cancella quando vuoi.",
+      "button": "Crea la tua comunità"
     },
     "footer": {
-      "description": "La soluzione di gestione per le comunita elettriche locali in Svizzera.",
+      "description": "La soluzione di gestione per le comunità elettriche locali in Svizzera.",
       "legal": "Note legali",
       "privacy": "Privacy",
       "terms": "Termini di utilizzo",

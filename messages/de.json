@@ -46,70 +46,89 @@
       "faq": "FAQ"
     },
     "hero": {
-      "tagline": "Energiegemeinschaft-Verwaltung",
-      "title": "Verwalten Sie Ihre lokale Energiegemeinschaft einfach",
-      "subtitle": "Die komplette Lösung für die Verwaltung Ihrer LEG, Verbrauchsverfolgung und automatisierte Abrechnung.",
+      "tagline": "Für LEG-Verwalter in der Schweiz",
+      "title": "Schluss mit Tabellenkalkulationen. Automatisieren Sie Ihre LEG.",
+      "subtitle": "Lastgänge importieren, Verteilung berechnen, Rechnungen erstellen — alles an einem Ort. Schliessen Sie sich über 50 Gemeinschaften an, die bereits Zeit sparen.",
       "cta": "Kostenlos starten",
-      "ctaSecondary": "Mehr erfahren"
+      "ctaSecondary": "Mehr erfahren",
+      "noCreditCard": "Keine Kreditkarte erforderlich"
     },
     "problem": {
-      "title": "Die Verwaltung einer ZEV kann komplex sein",
-      "description": "Verbrauchsdatenerfassung, Verteilungsberechnung, monatliche Abrechnung... Zeitaufwendige Aufgaben, die eine angepasste Losung erfordern."
-    },
-    "solution": {
-      "title": "Wattly vereinfacht alles",
-      "subtitle": "Unsere Plattform automatisiert die Verwaltung Ihrer lokalen Energiegemeinschaft, vom Import der Lastgange bis zur Rechnungserstellung."
+      "label": "Die Herausforderung",
+      "title": "Die versteckten Kosten manueller LEG-Verwaltung",
+      "items": {
+        "time": {
+          "value": "8+ Stunden/Monat",
+          "label": "für Tabellenkalkulationen"
+        },
+        "errors": {
+          "value": "Fehleranfällige",
+          "label": "Berechnungen"
+        },
+        "delays": {
+          "value": "Verspätete Abrechnung",
+          "label": "= Cashflow-Probleme"
+        }
+      }
     },
     "features": {
       "title": "Alles was Sie brauchen",
+      "subtitle": "Vereinfachen Sie Ihre LEG-Verwaltung mit intelligenten Werkzeugen",
       "memberManagement": {
-        "title": "Mitgliederverwaltung",
-        "description": "Fugen Sie einfach Mitglieder Ihrer Gemeinschaft mit ihren Informationen und Zahlern hinzu."
+        "title": "Alle Mitglieder an einem Ort",
+        "description": "Import per CSV, Zähler verfolgen, Kontakte verwalten. Keine verstreuten Tabellenkalkulationen mehr."
       },
       "energyTracking": {
-        "title": "Energieverfolgung",
-        "description": "Importieren Sie Lastgange und visualisieren Sie die Produktion und den Verbrauch der Gemeinschaft."
+        "title": "Sehen Sie, wohin jede kWh geht",
+        "description": "Laden Sie Ihre VNB-Daten hoch und sehen Sie sofort Produktion, Verbrauch und Autarkiequote."
       },
       "autoInvoicing": {
-        "title": "Automatische Abrechnung",
-        "description": "Generieren Sie automatisch monatliche Rechnungen fur jedes Mitglied."
+        "title": "Rechnungen mit 2 Klicks",
+        "description": "Erstellen Sie Schweizer QR-Rechnungen für alle Mitglieder. PDF bereit zum Versenden oder Drucken."
+      }
+    },
+    "stats": {
+      "title": "Vertraut von Schweizer Energiegemeinschaften",
+      "communities": {
+        "value": "50+",
+        "label": "Gemeinschaften"
       },
-      "dashboard": {
-        "title": "Dashboards",
-        "description": "Visualisieren Sie die Leistung Ihrer ZEV und die erzielten Einsparungen."
+      "energy": {
+        "value": "2.5M+",
+        "label": "verwaltete kWh"
       },
-      "distribution": {
-        "title": "Flexible Verteilung",
-        "description": "Wahlen Sie aus 3 Energieverteilungsstrategien: anteilig, gleich oder priorisiert."
+      "time": {
+        "value": "8h",
+        "label": "gespart pro Monat"
       },
-      "multiLanguage": {
-        "title": "Mehrsprachig",
-        "description": "Oberflache verfugbar auf Franzosisch, Deutsch, Italienisch und Englisch."
+      "hosting": {
+        "value": "100%",
+        "label": "Schweizer Hosting"
       }
     },
     "howItWorks": {
       "title": "So funktioniert es",
       "step1": {
-        "title": "Erstellen Sie Ihre ZEV",
-        "description": "Registrieren Sie sich und konfigurieren Sie Ihre lokale Energiegemeinschaft."
+        "title": "Gemeinschaft erstellen",
+        "description": "2 Minuten zur Einrichtung. Name, Adresse und Tarife Ihrer Gemeinschaft hinzufügen."
       },
       "step2": {
-        "title": "Fugen Sie Mitglieder hinzu",
-        "description": "Laden Sie Gemeinschaftsmitglieder ein und registrieren Sie ihre Zahler."
+        "title": "Mitglieder importieren",
+        "description": "CSV hochladen oder Mitglieder manuell hinzufügen. Wir speichern ihre Zähler und Kontaktdaten."
       },
       "step3": {
-        "title": "Importieren Sie Daten",
-        "description": "Laden Sie die von Ihrem Verteiler bereitgestellten Lastgange hoch."
+        "title": "Lastgänge hochladen",
+        "description": "CSV von Ihrem VNB per Drag & Drop. Wir verarbeiten die 15-Minuten-Intervalle."
       },
       "step4": {
-        "title": "Automatische Abrechnung",
-        "description": "Erstellen und versenden Sie Rechnungen mit wenigen Klicks."
+        "title": "Rechnungen erstellen",
+        "description": "Ein Klick, um Rechnungen für alle zu erstellen. PDFs herunterladen oder per E-Mail senden."
       }
     },
     "pricing": {
       "label": "Preise",
       "title": "Ein Preis, der sich Ihrem Volumen anpasst",
-      "subtitle": "Einfache Preisgestaltung basierend auf der von Ihrer LEG verwalteten Energie. Je mehr Energie Sie verwalten, desto mehr sparen Sie.",
+      "subtitle": "Einfache, transparente Preisgestaltung basierend auf der von Ihrer LEG verwalteten Energie. Keine versteckten Kosten.",
       "formula": "CHF 0.005 pro kWh verwaltet (Minimum CHF 49/Monat)",
       "cta": "Jetzt starten",
       "calculator": {
@@ -143,11 +162,28 @@
         "title": "Preisbeispiele"
       }
     },
+    "testimonials": {
+      "title": "Was LEG-Verwalter sagen",
+      "items": [
+        {
+          "quote": "Wattly hat unsere Abrechnungszeit von 2 Tagen auf 30 Minuten reduziert.",
+          "author": "Marie Dupont",
+          "role": "LEG-Verwalterin",
+          "company": "Commune de Pully"
+        },
+        {
+          "quote": "Endlich ein Tool, das Schweizer Energiegemeinschaften versteht.",
+          "author": "Hans Müller",
+          "role": "Präsident",
+          "company": "EG Solarkraft Bern"
+        }
+      ]
+    },
     "faq": {
       "title": "Häufig gestellte Fragen",
       "q1": {
         "question": "Was ist eine LEG?",
-        "answer": "Eine Lokale Elektrizitätsgemeinschaft (LEG) ermöglicht es Haushalten einer Gemeinde oder eines Quartiers, lokal produzierte Energie zu teilen. Die LEG profitiert von einer Reduktion der Netzgebühren um 20 bis 40% für die geteilte Energie."
+        "answer": "Eine Lokale Elektrizitätsgemeinschaft (LEG) ermöglicht es Haushalten einer Gemeinde oder eines Quartiers, lokal produzierte Energie zu teilen. Auf Französisch: CEL (Communauté Électrique Locale). Die LEG profitiert von einer Reduktion der Netzgebühren um 20 bis 40% für die geteilte Energie."
       },
       "q2": {
         "question": "Was ist der Unterschied zwischen LEG, EVG und ZEV?",
@@ -155,20 +191,53 @@
       },
       "q3": {
         "question": "Wie erhalte ich die Lastgänge?",
-        "answer": "Ihr Verteilnetzbetreiber (VNB) wie Romande Energie, Groupe E oder SIG stellt Ihnen die Verbrauchsdaten in 15-Minuten-Intervallen für jeden Zähler Ihrer LEG zur Verfügung."
+        "answer": "Ihr Verteilnetzbetreiber (VNB) wie Romande Energie, Groupe E oder SIG stellt Ihnen die Verbrauchsdaten in 15-Minuten-Intervallen für jeden Zähler Ihrer LEG zur Verfügung. Kontaktieren Sie Ihren VNB für die Zugangsdaten zum Portal."
       },
       "q4": {
         "question": "Ersetzt Wattly meinen Verteiler?",
         "answer": "Nein, Wattly ist ein Verwaltungstool für den Vertreter der LEG. Ihr VNB bleibt verantwortlich für die Stromversorgung und die Abrechnung der Netzgebühren."
+      },
+      "q5": {
+        "question": "Wie lange dauert der Einstieg?",
+        "answer": "Die meisten Gemeinschaften sind in weniger als einer Stunde einsatzbereit. Gemeinschaft erstellen, Mitglieder importieren, Lastgänge hochladen — fertig."
+      },
+      "q6": {
+        "question": "Sind meine Daten sicher?",
+        "answer": "Ja. Alle Daten werden in der Schweiz gehostet und in Ruhe und bei der Übertragung verschlüsselt. Wir entsprechen den Datenschutzvorschriften der DSGVO und des DSG."
+      }
+    },
+    "trust": {
+      "title": "Entwickelt für Schweizer Energiegemeinschaften",
+      "items": {
+        "swiss": {
+          "icon": "flag",
+          "title": "Schweizer Hosting",
+          "description": "Alle Daten bleiben in der Schweiz"
+        },
+        "gdpr": {
+          "icon": "shield",
+          "title": "DSGVO-konform",
+          "description": "Ihre Daten sind geschützt"
+        },
+        "qrbill": {
+          "icon": "qrcode",
+          "title": "QR-Rechnung",
+          "description": "Schweizer Zahlungsstandard"
+        },
+        "languages": {
+          "icon": "globe",
+          "title": "4 Sprachen",
+          "description": "FR / DE / IT / EN"
+        }
       }
     },
     "cta": {
-      "title": "Bereit, Ihre LEG-Verwaltung zu vereinfachen?",
-      "subtitle": "Vereinfachen Sie die Verwaltung Ihrer LEG noch heute.",
-      "button": "Jetzt starten"
+      "title": "Starten Sie Ihre LEG-Verwaltung in Minuten",
+      "subtitle": "Kostenlos testen. Keine Kreditkarte erforderlich. Jederzeit kündbar.",
+      "button": "Gemeinschaft erstellen"
     },
     "footer": {
-      "description": "Die Verwaltungslosung fur lokale Energiegemeinschaften in der Schweiz.",
+      "description": "Die Verwaltungslösung für lokale Energiegemeinschaften in der Schweiz.",
       "legal": "Impressum",
       "privacy": "Datenschutz",
       "terms": "Nutzungsbedingungen",

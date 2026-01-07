@@ -36,20 +36,25 @@ export function HeroSection() {
             {t("subtitle")}
           </p>
 
-          <div className="mt-12 flex items-center gap-8">
-            <Link
-              href="/register"
-              className="group flex items-center gap-2 rounded-xl bg-gray-900 px-8 py-4 text-sm font-light tracking-wide text-white transition-colors hover:bg-gray-800"
-            >
-              {t("cta")}
-              <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-            <a
-              href="#features"
-              className="text-sm font-light text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-900"
-            >
-              {t("ctaSecondary")}
-            </a>
+          <div className="mt-12 flex flex-col gap-4">
+            <div className="flex items-center gap-8">
+              <Link
+                href="/register"
+                className="group flex items-center gap-2 rounded-xl bg-gray-900 px-8 py-4 text-sm font-light tracking-wide text-white transition-colors hover:bg-gray-800"
+              >
+                {t("cta")}
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <a
+                href="#features"
+                className="text-sm font-light text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-900"
+              >
+                {t("ctaSecondary")}
+              </a>
+            </div>
+            <p className="text-sm font-light text-gray-400">
+              {t("noCreditCard")}
+            </p>
           </div>
         </div>
       </div>

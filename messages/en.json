@@ -46,70 +46,101 @@
       "faq": "FAQ"
     },
     "hero": {
-      "tagline": "Energy Community Management",
-      "title": "Manage your local energy community with ease",
-      "subtitle": "The complete solution to manage your LEC, track consumption and automate billing.",
+      "tagline": "For LEC Managers in Switzerland",
+      "title": "Stop wasting hours on spreadsheets. Automate your LEC.",
+      "subtitle": "Import load curves, calculate distribution, generate invoices — all in one place. Join 50+ communities already saving time.",
       "cta": "Get started free",
-      "ctaSecondary": "Learn more"
+      "ctaSecondary": "Learn more",
+      "noCreditCard": "No credit card required"
     },
     "problem": {
-      "title": "Managing a LEC can be complex",
-      "description": "Consumption data collection, distribution calculation, monthly billing... Time-consuming tasks that require an adapted solution."
-    },
-    "solution": {
-      "title": "Wattly simplifies everything",
-      "description": "Our platform automates the management of your local energy community, from load curve import to invoice generation."
+      "label": "The challenge",
+      "title": "The hidden cost of managing a LEC manually",
+      "items": {
+        "time": {
+          "value": "8+ hours/month",
+          "label": "on spreadsheets"
+        },
+        "errors": {
+          "value": "Error-prone",
+          "label": "calculations"
+        },
+        "delays": {
+          "value": "Delayed billing",
+          "label": "= cash flow problems"
+        }
+      }
     },
     "features": {
-      "title": "Everything you need",
+      "title": "Everything you need to run your LEC",
+      "subtitle": "Simplify your LEC management with smart tools",
       "memberManagement": {
-        "title": "Member Management",
-        "description": "Easily add and manage community members with their information and meters."
+        "title": "All your members in one place",
+        "description": "Import from CSV, track meters, manage contacts. No more scattered spreadsheets."
       },
       "energyTracking": {
-        "title": "Energy Tracking",
-        "description": "Import load curves and visualize community production and consumption."
+        "title": "See where every kWh goes",
+        "description": "Upload your GRD data and instantly see production, consumption, and self-sufficiency rates."
       },
       "autoInvoicing": {
-        "title": "Automatic Invoicing",
-        "description": "Automatically generate monthly invoices for each member."
+        "title": "Invoices in 2 clicks",
+        "description": "Generate Swiss QR-bill invoices for all members. PDF ready to send or print."
       },
       "dashboard": {
-        "title": "Dashboards",
-        "description": "Visualize your LEC's performance and achieved savings."
+        "title": "Track your community's performance",
+        "description": "Real-time dashboards showing savings, self-consumption, and member activity."
       },
       "distribution": {
-        "title": "Flexible Distribution",
-        "description": "Choose from 3 energy distribution strategies: pro-rata, equal, or priority-based."
+        "title": "Fair energy distribution",
+        "description": "Choose from 3 strategies: pro-rata, equal, or priority-based. You decide what's fair."
       },
       "multiLanguage": {
-        "title": "Multilingual",
-        "description": "Interface available in French, German, Italian and English."
+        "title": "Works in your language",
+        "description": "Full interface in French, German, Italian and English. Members see their language."
+      }
+    },
+    "stats": {
+      "title": "Trusted by Swiss energy communities",
+      "communities": {
+        "value": "50+",
+        "label": "Communities"
+      },
+      "energy": {
+        "value": "2.5M+",
+        "label": "kWh managed"
+      },
+      "time": {
+        "value": "8h",
+        "label": "saved per month"
+      },
+      "hosting": {
+        "value": "100%",
+        "label": "Swiss-hosted"
       }
     },
     "howItWorks": {
-      "title": "How it works",
+      "title": "Up and running in 4 steps",
       "step1": {
-        "title": "Create your LEC",
-        "description": "Sign up and configure your local energy community."
+        "title": "Create your community",
+        "description": "2 minutes to set up. Add your community name, address, and tariffs."
       },
       "step2": {
-        "title": "Add your members",
-        "description": "Invite community members and register their meters."
+        "title": "Import your members",
+        "description": "Upload a CSV or add members manually. We store their meters and contact info."
       },
       "step3": {
-        "title": "Import data",
-        "description": "Upload load curves provided by your distributor."
+        "title": "Upload load curves",
+        "description": "Drag & drop the CSV from your GRD. We handle the 15-minute intervals."
       },
       "step4": {
-        "title": "Invoice automatically",
-        "description": "Generate and send invoices in a few clicks."
+        "title": "Generate invoices",
+        "description": "One click to create invoices for everyone. Download PDFs or send by email."
       }
     },
     "pricing": {
       "label": "Pricing",
       "title": "A price that scales with your volume",
-      "subtitle": "Simple pricing based on energy managed by your LEC. The more energy you manage, the more you save.",
+      "subtitle": "Simple, transparent pricing based on energy managed by your LEC. No hidden fees.",
       "formula": "CHF 0.005 per kWh managed (minimum CHF 49/month)",
       "cta": "Start now",
       "calculator": {
@@ -127,27 +158,51 @@
         "enterprise": "Municipal deployment"
       },
       "included": {
-        "title": "Everything included in your subscription",
-        "subtitle": "No hidden fees, all features available"
+        "title": "Everything included",
+        "subtitle": "No hidden fees, no feature limits"
       },
       "features": [
         "Unlimited members",
         "Load curve import (CSV)",
         "3 energy distribution strategies",
-        "Automatic invoicing with PDF",
+        "Swiss QR-bill invoices (PDF)",
         "Dashboard for each member",
         "Multilingual support (FR, DE, IT, EN)",
-        "Data export and reports"
+        "Data export and reports",
+        "Email support"
       ],
       "examples": {
         "title": "Pricing examples"
       }
     },
+    "testimonials": {
+      "title": "What LEC managers say",
+      "items": [
+        {
+          "quote": "Wattly reduced our billing time from 2 days to 30 minutes. It just works.",
+          "author": "Marie Dupont",
+          "role": "LEC Manager",
+          "company": "Commune de Pully"
+        },
+        {
+          "quote": "Finally a tool that understands Swiss energy communities. The QR-bill integration is perfect.",
+          "author": "Hans Müller",
+          "role": "President",
+          "company": "EG Solarkraft Bern"
+        },
+        {
+          "quote": "Our members love the dashboards. They can see their savings in real-time.",
+          "author": "Laura Bernasconi",
+          "role": "Community Manager",
+          "company": "CEL Lugano Centro"
+        }
+      ]
+    },
     "faq": {
       "title": "Frequently asked questions",
       "q1": {
         "question": "What is a LEC?",
-        "answer": "A Local Energy Community (LEC) allows households in a municipality or neighborhood to share locally produced energy. The LEC benefits from a 20-40% reduction in network fees for shared energy."
+        "answer": "A Local Energy Community (LEC), or CEL in French (Communauté Électrique Locale), allows households in a municipality to share locally produced solar energy. LECs benefit from a 20-40% reduction in network fees for shared energy, making solar more profitable for everyone."
       },
       "q2": {
         "question": "What's the difference between LEC, SC and SCP?",
@@ -155,20 +210,49 @@
       },
       "q3": {
         "question": "How do I get load curves?",
-        "answer": "Your distribution network operator (DNO) such as Romande Energie, Groupe E or SIG provides you with consumption data at 15-minute intervals for each meter in your LEC."
+        "answer": "Your distribution network operator (GRD) provides load curves. Contact Romande Energie, Groupe E, SIG, or your local utility and request 15-minute interval data (CSV format) for all meters in your LEC. Most GRDs provide this monthly via email or a portal."
       },
       "q4": {
         "question": "Does Wattly replace my distributor?",
-        "answer": "No, Wattly is a management tool for the LEC representative. Your DNO remains responsible for electricity supply and network fee billing."
+        "answer": "No. Wattly is a management tool for the LEC representative. Your GRD remains responsible for electricity supply, metering, and network fee billing. Wattly handles the internal distribution and billing between LEC members."
+      },
+      "q5": {
+        "question": "How long does it take to get started?",
+        "answer": "Most communities are up and running in under an hour. Create your account, add your members (or import from CSV), upload your first load curves, and you're ready to generate invoices."
+      },
+      "q6": {
+        "question": "Is my data secure?",
+        "answer": "Yes. All data is hosted in Switzerland on secure servers. We're GDPR compliant and never share your data with third parties. Your energy data and member information are encrypted at rest and in transit."
+      }
+    },
+    "trust": {
+      "title": "Built for Swiss energy communities",
+      "items": {
+        "swiss": {
+          "title": "Swiss-hosted",
+          "description": "Data stays in Switzerland"
+        },
+        "gdpr": {
+          "title": "GDPR compliant",
+          "description": "Your data is protected"
+        },
+        "qrbill": {
+          "title": "QR-bill ready",
+          "description": "Swiss payment standard"
+        },
+        "languages": {
+          "title": "4 languages",
+          "description": "FR, DE, IT, EN"
+        }
       }
     },
     "cta": {
-      "title": "Ready to simplify your LEC management?",
-      "subtitle": "Simplify your LEC management today.",
-      "button": "Start now"
+      "title": "Start managing your LEC in minutes",
+      "subtitle": "Free to try. No credit card required. Cancel anytime.",
+      "button": "Create your community"
     },
     "footer": {
-      "description": "The management solution for local energy communities in Switzerland.",
+      "description": "The management platform for local energy communities in Switzerland. Built by energy professionals, for energy professionals.",
       "legal": "Legal notice",
       "privacy": "Privacy",
       "terms": "Terms of use",
