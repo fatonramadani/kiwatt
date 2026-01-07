@@ -5,6 +5,7 @@ import { tariffRouter } from "~/server/api/routers/tariff";
 import { energyRouter } from "~/server/api/routers/energy";
 import { invoiceRouter } from "~/server/api/routers/invoice";
 import { reportsRouter } from "~/server/api/routers/reports";
+import { platformBillingRouter } from "~/server/api/routers/platformBilling";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**
@@ -20,6 +21,7 @@ export const appRouter = createTRPCRouter({
   energy: energyRouter,
   invoice: invoiceRouter,
   reports: reportsRouter,
+  platformBilling: platformBillingRouter,
 });
 
 // export type definition of API

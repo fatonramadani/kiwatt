@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { api } from "~/trpc/react";
-import { Settings, CreditCard, Tag, Share2, Check, Plus, Trash2 } from "lucide-react";
+import { Settings, CreditCard, Tag, Share2, Check, Plus, Trash2, Receipt, Download, ExternalLink } from "lucide-react";
 
 type TabId = "general" | "billing" | "tariffs" | "distribution";
 
@@ -193,6 +193,165 @@ function GeneralTab({
   );
 }
 
+// Platform Subscription Section (Wattly billing)
+function PlatformSubscriptionSection({ orgId }: { orgId: string }) {
+  const { data: summary, isLoading } = api.platformBilling.getBillingSummary.useQuery({ orgId });
+  const { data: invoicesData } = api.platformBilling.getMyPlatformInvoices.useQuery({ orgId, limit: 5 });
+
+  const monthNames = ["", "Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  const formatDate = (date: Date | string | null) => {
+    if (!date) return "-";
+    const d = new Date(date);
+    return d.toLocaleDateString("fr-CH");
+  };
+
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case "paid":
+        return "bg-emerald-50 text-emerald-600";
+      case "sent":
+        return "bg-amber-50 text-amber-600";
+      default:
+        return "bg-gray-50 text-gray-500";
+    }
+  };
+
+  if (isLoading) {
+    return (
+      <div className="rounded-2xl border border-gray-100 bg-white p-8">
+        <div className="animate-pulse">
+          <div className="h-6 w-48 bg-gray-100 rounded"></div>
+          <div className="mt-6 grid grid-cols-3 gap-4">
+            <div className="h-20 bg-gray-50 rounded-xl"></div>
+            <div className="h-20 bg-gray-50 rounded-xl"></div>
+            <div className="h-20 bg-gray-50 rounded-xl"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="rounded-2xl border border-gray-100 bg-white p-8">
+      <div className="flex items-center justify-between">
+        <div>
+          <h2 className="text-xl font-light text-gray-900">Wattly Subscription</h2>
+          <p className="mt-1 text-sm text-gray-400">
+            Platform usage billing from Wattly
+          </p>
+        </div>
+        <div className="rounded-xl bg-pelorous-50 px-4 py-2">
+          <span className="text-sm text-pelorous-600">
+            CHF {summary?.ratePerKwh?.toFixed(3) ?? "0.005"}/kWh
+          </span>
+          <span className="mx-2 text-pelorous-300">|</span>
+          <span className="text-sm text-pelorous-600">
+            min. CHF {summary?.minimumMonthly ?? 49}/mo
+          </span>
+        </div>
+      </div>
+
+      {/* Summary Cards */}
+      <div className="mt-6 grid grid-cols-3 gap-4">
+        <div className="rounded-xl bg-gray-50 p-4">
+          <p className="text-xs text-gray-400">Total Paid</p>
+          <p className="mt-1 text-xl font-light text-gray-900">
+            CHF {(summary?.totalPaid ?? 0).toFixed(2)}
+          </p>
+        </div>
+        <div className="rounded-xl bg-gray-50 p-4">
+          <p className="text-xs text-gray-400">Outstanding</p>
+          <p className="mt-1 text-xl font-light text-gray-900">
+            CHF {(summary?.totalOutstanding ?? 0).toFixed(2)}
+          </p>
+        </div>
+        <div className="rounded-xl bg-gray-50 p-4">
+          <p className="text-xs text-gray-400">Total Invoices</p>
+          <p className="mt-1 text-xl font-light text-gray-900">
+            {summary?.invoiceCount ?? 0}
+          </p>
+        </div>
+      </div>
+
+      {/* Recent Invoices */}
+      {invoicesData && invoicesData.invoices.length > 0 && (
+        <div className="mt-8">
+          <h3 className="text-sm font-medium text-gray-900">Recent Invoices</h3>
+          <div className="mt-4 space-y-3">
+            {invoicesData.invoices.map((invoice) => (
+              <div
+                key={invoice.id}
+                className="flex items-center justify-between rounded-xl border border-gray-100 p-4"
+              >
+                <div className="flex items-center gap-4">
+                  <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50">
+                    <Receipt className="h-5 w-5 text-gray-400" />
+                  </div>
+                  <div>
+                    <p className="font-medium text-gray-900">{invoice.invoiceNumber}</p>
+                    <p className="text-sm text-gray-400">
+                      {monthNames[invoice.month]} {invoice.year} • {invoice.totalKwhManaged.toFixed(0)} kWh
+                    </p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-4">
+                  <div className="text-right">
+                    <p className="font-medium text-gray-900">
+                      CHF {invoice.totalAmount.toFixed(2)}
+                    </p>
+                    <p className="text-xs text-gray-400">
+                      Due {formatDate(invoice.dueDate)}
+                    </p>
+                  </div>
+                  <span className={`rounded-lg px-2.5 py-1 text-xs ${getStatusColor(invoice.status)}`}>
+                    {invoice.status}
+                  </span>
+                  {invoice.pdfUrl && (
+                    <a
+                      href={invoice.pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-lg p-2 text-gray-400 hover:bg-gray-50 hover:text-gray-600"
+                    >
+                      <Download className="h-4 w-4" />
+                    </a>
+                  )}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* No invoices yet */}
+      {(!invoicesData || invoicesData.invoices.length === 0) && (
+        <div className="mt-8 rounded-xl bg-gray-50 p-6 text-center">
+          <Receipt className="mx-auto h-8 w-8 text-gray-300" />
+          <p className="mt-2 text-sm text-gray-400">
+            No invoices yet. Your first invoice will appear here after your first billing period.
+          </p>
+        </div>
+      )}
+
+      {/* Info footer */}
+      <div className="mt-6 rounded-xl bg-pelorous-50/50 p-4">
+        <div className="flex items-start gap-3">
+          <ExternalLink className="mt-0.5 h-4 w-4 text-pelorous-500" />
+          <div>
+            <p className="text-sm text-pelorous-700">
+              Wattly charges CHF 0.005 per kWh managed through your community, with a minimum of CHF 49/month.
+            </p>
+            <p className="mt-1 text-xs text-pelorous-600">
+              VAT ({summary?.vatRate ?? 8.1}%) is added to all invoices.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 // Billing Tab
 function BillingTab({
   org,
@@ -228,7 +387,10 @@ function BillingTab({
 
   return (
     <div className="space-y-8">
-      {/* Billing Settings */}
+      {/* Platform Subscription */}
+      <PlatformSubscriptionSection orgId={org.id} />
+
+      {/* Member Billing Settings */}
       <form onSubmit={handleSubmit} className="rounded-2xl border border-gray-100 bg-white p-8">
         <h2 className="text-xl font-light text-gray-900">{t("title")}</h2>
         <div className="mt-8 space-y-6">

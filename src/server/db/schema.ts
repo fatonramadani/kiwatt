@@ -485,6 +485,7 @@ export const organizationMemberRelations = relations(
     loadCurves: many(loadCurve),
     monthlyAggregations: many(monthlyAggregation),
     invoices: many(invoice),
+    invites: many(memberInvite),
   }),
 );
 
@@ -538,3 +539,111 @@ export const invoiceLineRelations = relations(invoiceLine, ({ one }) => ({
     references: [invoice.id],
   }),
 }));
+
+// ============================================================================
+// Member Invitations
+// ============================================================================
+
+export const memberInvite = pgTable(
+  "member_invite",
+  {
+    id: text("id").primaryKey(),
+    memberId: text("member_id")
+      .notNull()
+      .references(() => organizationMember.id, { onDelete: "cascade" }),
+    token: text("token").notNull().unique(),
+    expiresAt: timestamp("expires_at").notNull(),
+    usedAt: timestamp("used_at"),
+    createdAt: timestamp("created_at")
+      .$defaultFn(() => new Date())
+      .notNull(),
+  },
+  (t) => [
+    index("invite_member_idx").on(t.memberId),
+    uniqueIndex("invite_token_idx").on(t.token),
+  ],
+);
+
+export const memberInviteRelations = relations(memberInvite, ({ one }) => ({
+  member: one(organizationMember, {
+    fields: [memberInvite.memberId],
+    references: [organizationMember.id],
+  }),
+}));
+
+// ============================================================================
+// Platform Billing (Wattly → LEC Managers)
+// ============================================================================
+
+export const platformInvoiceStatusEnum = pgEnum("platform_invoice_status", [
+  "draft",
+  "sent",
+  "paid",
+]);
+
+export const platformInvoice = pgTable(
+  "platform_invoice",
+  {
+    id: text("id").primaryKey(),
+    organizationId: text("organization_id")
+      .notNull()
+      .references(() => organization.id, { onDelete: "cascade" }),
+    invoiceNumber: text("invoice_number").notNull(),
+    year: integer("year").notNull(),
+    month: integer("month").notNull(),
+
+    // Usage metrics
+    totalKwhManaged: decimal("total_kwh_managed", {
+      precision: 12,
+      scale: 2,
+    }).notNull(),
+    ratePerKwh: decimal("rate_per_kwh", { precision: 6, scale: 4 })
+      .notNull()
+      .default("0.005"),
+
+    // Amounts
+    calculatedAmount: decimal("calculated_amount", {
+      precision: 10,
+      scale: 2,
+    }).notNull(),
+    minimumAmount: decimal("minimum_amount", { precision: 10, scale: 2 })
+      .notNull()
+      .default("49.00"),
+    finalAmount: decimal("final_amount", { precision: 10, scale: 2 }).notNull(),
+    vatRate: decimal("vat_rate", { precision: 4, scale: 2 })
+      .notNull()
+      .default("8.1"),
+    vatAmount: decimal("vat_amount", { precision: 10, scale: 2 }).notNull(),
+    totalAmount: decimal("total_amount", { precision: 10, scale: 2 }).notNull(),
+
+    // Status
+    status: platformInvoiceStatusEnum("status").notNull().default("draft"),
+    pdfUrl: text("pdf_url"),
+
+    // Dates
+    dueDate: timestamp("due_date").notNull(),
+    sentAt: timestamp("sent_at"),
+    paidAt: timestamp("paid_at"),
+    createdAt: timestamp("created_at")
+      .$defaultFn(() => new Date())
+      .notNull(),
+  },
+  (t) => [
+    index("platform_invoice_org_idx").on(t.organizationId),
+    uniqueIndex("platform_invoice_org_period_idx").on(
+      t.organizationId,
+      t.year,
+      t.month,
+    ),
+  ],
+);
+
+export const platformInvoiceRelations = relations(
+  platformInvoice,
+  ({ one }) => ({
+    organization: one(organization, {
+      fields: [platformInvoice.organizationId],
+      references: [organization.id],
+    }),
+  }),
+);

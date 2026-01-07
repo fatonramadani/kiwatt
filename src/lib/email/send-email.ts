@@ -2,6 +2,7 @@ import { render } from "@react-email/render";
 import { resend, FROM_EMAIL } from "./resend";
 import { InvoiceEmail } from "./templates/invoice-email";
 import { PaymentReminderEmail } from "./templates/payment-reminder";
+import { MemberInviteEmail } from "./templates/member-invite";
 
 interface SendInvoiceEmailParams {
   to: string;
@@ -28,6 +29,14 @@ interface SendPaymentReminderParams {
   locale?: "fr" | "de" | "it" | "en";
 }
 
+interface SendMemberInviteParams {
+  to: string;
+  memberName: string;
+  organizationName: string;
+  inviteToken: string;
+  locale?: "fr" | "de" | "it" | "en";
+}
+
 const subjects = {
   invoice: {
     fr: "Nouvelle facture",
@@ -40,6 +49,12 @@ const subjects = {
     de: "Zahlungserinnerung",
     it: "Sollecito di pagamento",
     en: "Payment reminder",
+  },
+  invite: {
+    fr: "Invitation à rejoindre votre communauté énergétique",
+    de: "Einladung zu Ihrer Energiegemeinschaft",
+    it: "Invito a unirsi alla comunità energetica",
+    en: "Invitation to join your energy community",
   },
 };
 
@@ -120,6 +135,46 @@ export async function sendPaymentReminderEmail(params: SendPaymentReminderParams
     return { success: true, id: result.data?.id };
   } catch (error) {
     console.error("Failed to send payment reminder email:", error);
+    return { success: false, error: String(error) };
+  }
+}
+
+/**
+ * Send member invite email
+ */
+export async function sendMemberInviteEmail(params: SendMemberInviteParams) {
+  if (!resend) {
+    console.warn("Resend not configured, skipping email send");
+    return { success: false, error: "Email not configured" };
+  }
+
+  const locale = params.locale ?? "fr";
+  const subject = subjects.invite[locale];
+
+  // Build invite URL
+  const baseUrl = process.env.NEXT_PUBLIC_APP_URL ?? "http://localhost:3000";
+  const inviteUrl = `${baseUrl}/portal/invite/${params.inviteToken}`;
+
+  try {
+    const html = await render(
+      MemberInviteEmail({
+        memberName: params.memberName,
+        organizationName: params.organizationName,
+        inviteUrl,
+        locale,
+      })
+    );
+
+    const result = await resend.emails.send({
+      from: FROM_EMAIL,
+      to: params.to,
+      subject,
+      html,
+    });
+
+    return { success: true, id: result.data?.id };
+  } catch (error) {
+    console.error("Failed to send member invite email:", error);
     return { success: false, error: String(error) };
   }
 }

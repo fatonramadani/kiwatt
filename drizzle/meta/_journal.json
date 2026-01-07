@@ -15,6 +15,13 @@
       "when": 1767783163529,
       "tag": "0001_futuristic_spiral",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1767788779829,
+      "tag": "0002_optimal_anita_blake",
+      "breakpoints": true
     }
   ]
 }

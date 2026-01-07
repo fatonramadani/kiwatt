@@ -8,10 +8,13 @@ import {
   Plus,
   Search,
   Upload,
-  MoreHorizontal,
   Trash2,
   Edit,
   X,
+  Mail,
+  Loader2,
+  CheckCircle,
+  Clock,
 } from "lucide-react";
 
 export default function MembersPage() {
@@ -48,10 +51,23 @@ export default function MembersPage() {
     onSuccess: () => refetch(),
   });
 
+  const inviteMutation = api.member.inviteMember.useMutation({
+    onSuccess: () => refetch(),
+  });
+
+  const [invitingMemberId, setInvitingMemberId] = useState<string | null>(null);
+
   const handleDelete = (memberId: string) => {
     if (confirm("Are you sure you want to delete this member?")) {
       deleteMutation.mutate({ memberId });
     }
+  };
+
+  const handleInvite = (memberId: string) => {
+    setInvitingMemberId(memberId);
+    inviteMutation.mutate({ memberId }, {
+      onSettled: () => setInvitingMemberId(null),
+    });
   };
 
   return (
@@ -165,6 +181,9 @@ export default function MembersPage() {
               <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">
                 {t("table.status")}
               </th>
+              <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">
+                Portal
+              </th>
               <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">
                 {t("table.actions")}
               </th>
@@ -173,13 +192,13 @@ export default function MembersPage() {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-sm text-gray-400">
+                <td colSpan={7} className="px-6 py-12 text-center text-sm text-gray-400">
                   {tCommon("loading")}
                 </td>
               </tr>
             ) : membersData?.members.length === 0 ? (
               <tr>
-                <td colSpan={6} className="px-6 py-12 text-center text-sm text-gray-400">
+                <td colSpan={7} className="px-6 py-12 text-center text-sm text-gray-400">
                   No members found
                 </td>
               </tr>
@@ -218,6 +237,41 @@ export default function MembersPage() {
                     >
                       {t(`status.${member.status}`)}
                     </span>
+                  </td>
+                  <td className="px-6 py-4">
+                    {member.userId ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-lg bg-emerald-50 px-2.5 py-1 text-xs text-emerald-600">
+                        <CheckCircle className="h-3 w-3" />
+                        Linked
+                      </span>
+                    ) : member.inviteStatus === "pending" ? (
+                      <button
+                        onClick={() => handleInvite(member.id)}
+                        disabled={invitingMemberId === member.id}
+                        className="inline-flex items-center gap-1.5 rounded-lg bg-amber-50 px-2.5 py-1 text-xs text-amber-600 hover:bg-amber-100"
+                        title="Resend invite"
+                      >
+                        {invitingMemberId === member.id ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <Clock className="h-3 w-3" />
+                        )}
+                        Invited
+                      </button>
+                    ) : (
+                      <button
+                        onClick={() => handleInvite(member.id)}
+                        disabled={invitingMemberId === member.id}
+                        className="inline-flex items-center gap-1.5 rounded-lg bg-gray-100 px-2.5 py-1 text-xs text-gray-600 hover:bg-gray-200"
+                      >
+                        {invitingMemberId === member.id ? (
+                          <Loader2 className="h-3 w-3 animate-spin" />
+                        ) : (
+                          <Mail className="h-3 w-3" />
+                        )}
+                        Send Invite
+                      </button>
+                    )}
                   </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end gap-1">

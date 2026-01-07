@@ -3,8 +3,9 @@ import { TRPCError } from "@trpc/server";
 import { eq, and, or, ilike, count, desc, ne } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 
-import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
-import { organizationMember, organization, invoice, monthlyAggregation } from "~/server/db/schema";
+import { createTRPCRouter, protectedProcedure, publicProcedure } from "~/server/api/trpc";
+import { organizationMember, organization, invoice, monthlyAggregation, memberInvite, user } from "~/server/db/schema";
+import { sendMemberInviteEmail } from "~/lib/email/send-email";
 
 // Helper to verify org membership
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
@@ -89,16 +90,47 @@ export const memberRouter = createTRPCRouter({
         );
       }
 
-      // Get members
+      // Get members with invites
       const members = await ctx.db.query.organizationMember.findMany({
         where: whereClause,
         orderBy: [desc(organizationMember.createdAt)],
         limit: input.limit,
         offset: input.offset,
+        with: {
+          invites: {
+            orderBy: [desc(memberInvite.createdAt)],
+            limit: 1,
+          },
+        },
+      });
+
+      // Compute invite status for each member
+      const membersWithInviteStatus = members.map((member) => {
+        const latestInvite = member.invites[0];
+        let inviteStatus: "not_invited" | "pending" | "accepted" | "expired" = "not_invited";
+
+        if (member.userId) {
+          inviteStatus = "accepted";
+        } else if (latestInvite) {
+          if (latestInvite.usedAt) {
+            inviteStatus = "accepted";
+          } else if (new Date() > latestInvite.expiresAt) {
+            inviteStatus = "expired";
+          } else {
+            inviteStatus = "pending";
+          }
+        }
+
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        const { invites, ...memberData } = member;
+        return {
+          ...memberData,
+          inviteStatus,
+        };
       });
 
       return {
-        members,
+        members: membersWithInviteStatus,
         total: countResult?.count ?? 0,
         hasMore: (input.offset + members.length) < (countResult?.count ?? 0),
       };
@@ -639,6 +671,231 @@ export const memberRouter = createTRPCRouter({
           pdfUrl: inv.pdfUrl,
         })),
         unpaidCount: unpaidCount?.count ?? 0,
+      };
+    }),
+
+  // ============================================================================
+  // Member Invitation System
+  // ============================================================================
+
+  // Generate and send invite to a member
+  inviteMember: protectedProcedure
+    .input(z.object({ memberId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      // Get member and verify admin access
+      const member = await ctx.db.query.organizationMember.findFirst({
+        where: eq(organizationMember.id, input.memberId),
+        with: { organization: true },
+      });
+
+      if (!member) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Member not found",
+        });
+      }
+
+      await verifyMembership(ctx, member.organizationId, true);
+
+      // Check if member already has a user account linked
+      if (member.userId) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Member already has an account linked",
+        });
+      }
+
+      // Generate unique token
+      const token = createId() + createId(); // Extra long for security
+
+      // Set expiration to 7 days from now
+      const expiresAt = new Date();
+      expiresAt.setDate(expiresAt.getDate() + 7);
+
+      // Create or update invite
+      const existingInvite = await ctx.db.query.memberInvite.findFirst({
+        where: eq(memberInvite.memberId, input.memberId),
+      });
+
+      if (existingInvite) {
+        // Update existing invite with new token
+        await ctx.db
+          .update(memberInvite)
+          .set({
+            token,
+            expiresAt,
+            usedAt: null,
+            createdAt: new Date(),
+          })
+          .where(eq(memberInvite.id, existingInvite.id));
+      } else {
+        // Create new invite
+        await ctx.db.insert(memberInvite).values({
+          id: createId(),
+          memberId: input.memberId,
+          token,
+          expiresAt,
+          createdAt: new Date(),
+        });
+      }
+
+      // Send invite email
+      await sendMemberInviteEmail({
+        to: member.email,
+        memberName: `${member.firstname} ${member.lastname}`,
+        organizationName: member.organization.name,
+        inviteToken: token,
+      });
+
+      return { success: true, email: member.email };
+    }),
+
+  // Verify invite token (public - no auth required)
+  verifyInvite: publicProcedure
+    .input(z.object({ token: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const invite = await ctx.db.query.memberInvite.findFirst({
+        where: eq(memberInvite.token, input.token),
+        with: {
+          member: {
+            with: { organization: true },
+          },
+        },
+      });
+
+      if (!invite) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Invalid invite link",
+        });
+      }
+
+      if (invite.usedAt) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "This invite has already been used",
+        });
+      }
+
+      if (new Date() > invite.expiresAt) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "This invite has expired",
+        });
+      }
+
+      return {
+        memberEmail: invite.member.email,
+        memberName: `${invite.member.firstname} ${invite.member.lastname}`,
+        organizationName: invite.member.organization.name,
+        organizationSlug: invite.member.organization.slug,
+      };
+    }),
+
+  // Accept invite (after login/register)
+  acceptInvite: protectedProcedure
+    .input(z.object({ token: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      const invite = await ctx.db.query.memberInvite.findFirst({
+        where: eq(memberInvite.token, input.token),
+        with: {
+          member: {
+            with: { organization: true },
+          },
+        },
+      });
+
+      if (!invite) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Invalid invite link",
+        });
+      }
+
+      if (invite.usedAt) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "This invite has already been used",
+        });
+      }
+
+      if (new Date() > invite.expiresAt) {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "This invite has expired",
+        });
+      }
+
+      // Verify email matches (optional but recommended)
+      const currentUser = await ctx.db.query.user.findFirst({
+        where: eq(user.id, ctx.session.user.id),
+      });
+
+      // Link user to member
+      await ctx.db
+        .update(organizationMember)
+        .set({
+          userId: ctx.session.user.id,
+          status: "active",
+          updatedAt: new Date(),
+        })
+        .where(eq(organizationMember.id, invite.memberId));
+
+      // Mark invite as used
+      await ctx.db
+        .update(memberInvite)
+        .set({ usedAt: new Date() })
+        .where(eq(memberInvite.id, invite.id));
+
+      return {
+        success: true,
+        organizationSlug: invite.member.organization.slug,
+      };
+    }),
+
+  // Get invite status for a member (for admin to see)
+  getInviteStatus: protectedProcedure
+    .input(z.object({ memberId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      const member = await ctx.db.query.organizationMember.findFirst({
+        where: eq(organizationMember.id, input.memberId),
+      });
+
+      if (!member) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Member not found",
+        });
+      }
+
+      await verifyMembership(ctx, member.organizationId);
+
+      // Check if already linked
+      if (member.userId) {
+        return { status: "linked" as const, userId: member.userId };
+      }
+
+      // Check for invite
+      const invite = await ctx.db.query.memberInvite.findFirst({
+        where: eq(memberInvite.memberId, input.memberId),
+      });
+
+      if (!invite) {
+        return { status: "not_invited" as const };
+      }
+
+      if (invite.usedAt) {
+        return { status: "accepted" as const, usedAt: invite.usedAt };
+      }
+
+      if (new Date() > invite.expiresAt) {
+        return { status: "expired" as const, expiresAt: invite.expiresAt };
+      }
+
+      return {
+        status: "pending" as const,
+        createdAt: invite.createdAt,
+        expiresAt: invite.expiresAt,
       };
     }),
 });
