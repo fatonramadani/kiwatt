@@ -898,4 +898,104 @@ export const memberRouter = createTRPCRouter({
         expiresAt: invite.expiresAt,
       };
     }),
+
+  // ============================================================================
+  // API Key Management (for Smart Home Integration)
+  // ============================================================================
+
+  // Generate new API key for a member
+  generateApiKey: protectedProcedure
+    .input(z.object({ orgId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      // Find membership for current user
+      const membership = await ctx.db.query.organizationMember.findFirst({
+        where: and(
+          eq(organizationMember.organizationId, input.orgId),
+          eq(organizationMember.userId, ctx.session.user.id)
+        ),
+      });
+
+      if (!membership) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You are not a member of this organization",
+        });
+      }
+
+      // Generate a secure API key
+      const apiKey = `wattly_${createId()}${createId()}`;
+
+      // Update member with new API key
+      await ctx.db
+        .update(organizationMember)
+        .set({
+          apiKey,
+          apiKeyCreatedAt: new Date(),
+          updatedAt: new Date(),
+        })
+        .where(eq(organizationMember.id, membership.id));
+
+      return { apiKey };
+    }),
+
+  // Revoke API key
+  revokeApiKey: protectedProcedure
+    .input(z.object({ orgId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      // Find membership for current user
+      const membership = await ctx.db.query.organizationMember.findFirst({
+        where: and(
+          eq(organizationMember.organizationId, input.orgId),
+          eq(organizationMember.userId, ctx.session.user.id)
+        ),
+      });
+
+      if (!membership) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You are not a member of this organization",
+        });
+      }
+
+      // Clear API key
+      await ctx.db
+        .update(organizationMember)
+        .set({
+          apiKey: null,
+          apiKeyCreatedAt: null,
+          updatedAt: new Date(),
+        })
+        .where(eq(organizationMember.id, membership.id));
+
+      return { success: true };
+    }),
+
+  // Get current API key status (not the key itself for security)
+  getApiKeyStatus: protectedProcedure
+    .input(z.object({ orgId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      // Find membership for current user
+      const membership = await ctx.db.query.organizationMember.findFirst({
+        where: and(
+          eq(organizationMember.organizationId, input.orgId),
+          eq(organizationMember.userId, ctx.session.user.id)
+        ),
+      });
+
+      if (!membership) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You are not a member of this organization",
+        });
+      }
+
+      return {
+        hasApiKey: !!membership.apiKey,
+        apiKeyCreatedAt: membership.apiKeyCreatedAt,
+        // Return masked key for display
+        maskedKey: membership.apiKey
+          ? `${membership.apiKey.slice(0, 12)}...${membership.apiKey.slice(-4)}`
+          : null,
+      };
+    }),
 });

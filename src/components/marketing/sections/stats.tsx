@@ -2,7 +2,12 @@
 
 import { useTranslations } from "next-intl";
 
-const statItems = ["communities", "energy", "time", "hosting"];
+const statItems = [
+  { key: "communities", color: "text-blue-600" },
+  { key: "energy", color: "text-emerald-600" },
+  { key: "time", color: "text-violet-600" },
+  { key: "hosting", color: "text-rose-600" },
+];
 
 export function StatsSection() {
   const t = useTranslations("landing.stats");
@@ -19,14 +24,14 @@ export function StatsSection() {
         <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
           {statItems.map((item) => (
             <div
-              key={item}
+              key={item.key}
               className="rounded-2xl border border-gray-200 bg-white p-8 text-center"
             >
-              <p className="text-4xl font-light tracking-tight text-gray-900 lg:text-5xl">
-                {t(`${item}.value`)}
+              <p className={`text-4xl font-light tracking-tight lg:text-5xl ${item.color}`}>
+                {t(`${item.key}.value`)}
               </p>
               <p className="mt-3 text-sm font-light text-gray-500">
-                {t(`${item}.label`)}
+                {t(`${item.key}.label`)}
               </p>
             </div>
           ))}

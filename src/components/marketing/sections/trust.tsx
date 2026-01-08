@@ -4,10 +4,10 @@ import { useTranslations } from "next-intl";
 import { Flag, Shield, QrCode, Globe } from "lucide-react";
 
 const trustItems = [
-  { key: "swiss", icon: Flag },
-  { key: "gdpr", icon: Shield },
-  { key: "qrbill", icon: QrCode },
-  { key: "languages", icon: Globe },
+  { key: "swiss", icon: Flag, color: "bg-red-50 text-red-500" },
+  { key: "gdpr", icon: Shield, color: "bg-emerald-50 text-emerald-500" },
+  { key: "qrbill", icon: QrCode, color: "bg-blue-50 text-blue-500" },
+  { key: "languages", icon: Globe, color: "bg-violet-50 text-violet-500" },
 ];
 
 export function TrustSection() {
@@ -30,8 +30,8 @@ export function TrustSection() {
                 key={item.key}
                 className="rounded-2xl border border-gray-200 bg-white p-8 text-center"
               >
-                <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl bg-gray-100">
-                  <Icon className="h-6 w-6 text-gray-600" />
+                <div className={`mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl ${item.color.split(" ")[0]}`}>
+                  <Icon className={`h-6 w-6 ${item.color.split(" ")[1]}`} />
                 </div>
                 <h3 className="font-light text-gray-900">
                   {t(`items.${item.key}.title`)}

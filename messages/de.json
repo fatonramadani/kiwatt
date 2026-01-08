@@ -445,12 +445,6 @@
     "notFound": "Rechnung nicht gefunden",
     "backToInvoices": "Zurück zu Rechnungen"
   },
-  "reports": {
-    "title": "Berichte",
-    "description": "Finanz- und Energieberichte anzeigen",
-    "noFinancialData": "Keine Finanzdaten verfügbar",
-    "noEnergyData": "Keine Energiedaten verfügbar"
-  },
   "settings": {
     "title": "Einstellungen",
     "description": "Konfigurieren Sie die Einstellungen Ihrer Gemeinschaft",
@@ -589,6 +583,9 @@
   },
   "reports": {
     "title": "Berichte",
+    "description": "Finanz- und Energieberichte anzeigen",
+    "noFinancialData": "Keine Finanzdaten verfügbar",
+    "noEnergyData": "Keine Energiedaten verfügbar",
     "financial": "Finanzen",
     "energy": "Energie",
     "export": "CSV exportieren",
@@ -609,6 +606,7 @@
     "dashboard": "Dashboard",
     "invoices": "Meine Rechnungen",
     "consumption": "Verbrauch",
+    "smartHome": "Smart Home",
     "profile": "Profil",
     "logout": "Abmelden",
     "welcome": "Willkommen",
@@ -679,6 +677,77 @@
       "placeholder": "Adresse suchen...",
       "noResults": "Keine Adressen gefunden",
       "searching": "Suche läuft..."
+    }
+  },
+  "carbon": {
+    "title": "CO2-Bilanz",
+    "co2Saved": "CO2 eingespart",
+    "thisMonth": "Diesen Monat",
+    "thisMonthShort": "Monat",
+    "thisYear": "Dieses Jahr",
+    "trees": "Bäume",
+    "treesEquivalent": "Bäume-Äquivalent",
+    "treesDesc": "Jährliche CO2-Aufnahme",
+    "carKmAvoided": "Auto-km vermieden",
+    "carKmDesc": "Verhinderte Emissionen",
+    "solarUsed": "Solar genutzt",
+    "monthlyTrend": "Monatliche CO2-Einsparungen",
+    "communityImpact": "Gemeinschafts-Impact",
+    "yourImpact": "Ihr Beitrag",
+    "vsAverage": "vs. Durchschnitt",
+    "topSavers": "Top CO2-Sparer",
+    "totalCommunitySaved": "Gesamt von Gemeinschaft eingespart",
+    "members": "Mitglieder",
+    "contributing": "tragen aktiv bei",
+    "avgPerMember": "Durchschnitt pro Mitglied"
+  },
+  "smartHome": {
+    "title": "Smart Home Integration",
+    "description": "Verbinden Sie Ihre Smart-Home-Geräte zur Optimierung des Energieverbrauchs",
+    "apiKey": "API-Schlüssel",
+    "apiKeyDescription": "Verwenden Sie diesen Schlüssel für externe Anwendungen wie Home Assistant",
+    "generateKey": "API-Schlüssel generieren",
+    "regenerateKey": "Schlüssel neu generieren",
+    "revokeKey": "Schlüssel widerrufen",
+    "keyGenerated": "API-Schlüssel erfolgreich generiert",
+    "keyRevoked": "API-Schlüssel widerrufen",
+    "copyKey": "Schlüssel kopieren",
+    "keyCopied": "In die Zwischenablage kopiert",
+    "keyWarning": "Bewahren Sie diesen Schlüssel sicher auf. Er wird nur einmal angezeigt.",
+    "noKey": "Noch kein API-Schlüssel generiert",
+    "createdAt": "Erstellt am",
+    "endpoints": {
+      "title": "API-Endpunkte",
+      "forecast": "Produktionsprognose",
+      "forecastDesc": "24-Stunden-Produktionsprognose für Ihre Gemeinschaft",
+      "surplus": "Aktueller Überschuss",
+      "surplusDesc": "Echtzeit Überschuss/Defizit Status",
+      "recommendations": "Geräteempfehlungen",
+      "recommendationsDesc": "Personalisierte Empfehlungen für Ihre Geräte"
+    },
+    "homeAssistant": {
+      "title": "Home Assistant Einrichtung",
+      "description": "Fügen Sie diese Konfiguration zu Ihrem Home Assistant hinzu",
+      "sensorConfig": "Sensor-Konfiguration",
+      "automationConfig": "Automatisierungs-Beispiel"
+    },
+    "devices": {
+      "evCharger": "E-Auto-Ladestation",
+      "battery": "Hausbatterie",
+      "washingMachine": "Waschmaschine",
+      "dishwasher": "Geschirrspüler",
+      "heatPump": "Wärmepumpe"
+    },
+    "status": {
+      "surplus": "Überschuss",
+      "balanced": "Ausgeglichen",
+      "deficit": "Defizit"
+    },
+    "actions": {
+      "startCharging": "Laden starten",
+      "stopCharging": "Laden stoppen",
+      "delay": "Verschieben",
+      "startNow": "Jetzt starten"
     }
   }
 }

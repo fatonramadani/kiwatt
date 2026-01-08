@@ -15,6 +15,7 @@ import {
   Check,
   Menu,
   X,
+  Home,
 } from "lucide-react";
 import { api } from "~/trpc/react";
 import { authClient } from "~/server/better-auth/client";
@@ -166,6 +167,7 @@ export default function PortalLayout({
     { href: `/portal/${params.orgSlug}`, icon: LayoutDashboard, label: t("dashboard"), exact: true },
     { href: `/portal/${params.orgSlug}/invoices`, icon: FileText, label: t("invoices") },
     { href: `/portal/${params.orgSlug}/consumption`, icon: Zap, label: t("consumption") },
+    { href: `/portal/${params.orgSlug}/smart-home`, icon: Home, label: t("smartHome") },
     { href: `/portal/${params.orgSlug}/profile`, icon: User, label: t("profile") },
   ];
 

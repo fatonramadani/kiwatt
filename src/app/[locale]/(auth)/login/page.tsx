@@ -46,18 +46,18 @@ export default function LoginPage() {
   }
 
   return (
-    <div>
-      <p className="text-sm font-light uppercase tracking-[0.3em] text-pelorous-500">
+    <div className="rounded-2xl bg-white p-10 shadow-sm">
+      <p className="text-sm font-light uppercase tracking-[0.3em] text-gray-400">
         {t("tagline")}
       </p>
-      <h2 className="mt-4 text-3xl font-light tracking-tight text-pelorous-950">
+      <h2 className="mt-4 text-3xl font-light tracking-tight text-gray-900">
         {t("title")}
       </h2>
-      <p className="mt-2 text-sm font-light text-pelorous-600">{t("subtitle")}</p>
+      <p className="mt-2 text-sm font-light text-gray-500">{t("subtitle")}</p>
 
-      <form onSubmit={onSubmit} className="mt-12 space-y-8">
+      <form onSubmit={onSubmit} className="mt-10 space-y-6">
         {error && (
-          <div className="border border-red-200 bg-red-50 p-4 text-sm font-light text-red-600">
+          <div className="rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-light text-red-600">
             {error}
           </div>
         )}
@@ -65,7 +65,7 @@ export default function LoginPage() {
         <div className="space-y-2">
           <label
             htmlFor="email"
-            className="text-xs font-light uppercase tracking-[0.15em] text-pelorous-600"
+            className="text-xs font-light uppercase tracking-[0.15em] text-gray-500"
           >
             {t("email")}
           </label>
@@ -75,7 +75,7 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="nom@exemple.ch"
-            className="rounded-none border-pelorous-200 bg-white px-4 py-6 text-base font-light focus-visible:ring-pelorous-500"
+            className="rounded-xl border-gray-200 bg-gray-50 px-4 py-6 text-base font-light focus-visible:ring-gray-400"
             required
           />
         </div>
@@ -84,13 +84,13 @@ export default function LoginPage() {
           <div className="flex items-center justify-between">
             <label
               htmlFor="password"
-              className="text-xs font-light uppercase tracking-[0.15em] text-pelorous-600"
+              className="text-xs font-light uppercase tracking-[0.15em] text-gray-500"
             >
               {t("password")}
             </label>
             <Link
               href="#"
-              className="text-xs font-light text-pelorous-500 underline underline-offset-4 hover:text-pelorous-700"
+              className="text-xs font-light text-gray-400 underline underline-offset-4 hover:text-gray-600"
             >
               {t("forgotPassword")}
             </Link>
@@ -100,14 +100,14 @@ export default function LoginPage() {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-none border-pelorous-200 bg-white px-4 py-6 text-base font-light focus-visible:ring-pelorous-500"
+            className="rounded-xl border-gray-200 bg-gray-50 px-4 py-6 text-base font-light focus-visible:ring-gray-400"
             required
           />
         </div>
 
         <Button
           type="submit"
-          className="group w-full rounded-none bg-pelorous-950 py-6 text-sm font-light tracking-wide hover:bg-pelorous-800"
+          className="group w-full rounded-xl bg-gray-900 py-6 text-sm font-light tracking-wide hover:bg-gray-800"
           disabled={loading}
         >
           {loading ? "..." : t("submit")}
@@ -115,11 +115,11 @@ export default function LoginPage() {
         </Button>
       </form>
 
-      <p className="mt-12 text-center text-sm font-light text-pelorous-600">
+      <p className="mt-8 text-center text-sm font-light text-gray-500">
         {t("noAccount")}{" "}
         <Link
           href={returnUrl ? `/register?returnUrl=${encodeURIComponent(returnUrl)}` : "/register"}
-          className="text-pelorous-700 underline underline-offset-4 hover:text-pelorous-950"
+          className="text-gray-700 underline underline-offset-4 hover:text-gray-900"
         >
           {t("register")}
         </Link>

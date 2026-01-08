@@ -460,12 +460,6 @@
     "notFound": "Facture non trouvée",
     "backToInvoices": "Retour aux factures"
   },
-  "reports": {
-    "title": "Rapports",
-    "description": "Consulter les rapports financiers et énergétiques",
-    "noFinancialData": "Aucune donnée financière disponible",
-    "noEnergyData": "Aucune donnée énergétique disponible"
-  },
   "settings": {
     "title": "Paramètres",
     "description": "Configurez les paramètres de votre communauté",
@@ -604,6 +598,9 @@
   },
   "reports": {
     "title": "Rapports",
+    "description": "Consulter les rapports financiers et énergétiques",
+    "noFinancialData": "Aucune donnée financière disponible",
+    "noEnergyData": "Aucune donnée énergétique disponible",
     "financial": "Financier",
     "energy": "Énergie",
     "export": "Exporter CSV",
@@ -624,6 +621,7 @@
     "dashboard": "Tableau de bord",
     "invoices": "Mes factures",
     "consumption": "Consommation",
+    "smartHome": "Domotique",
     "profile": "Profil",
     "logout": "Déconnexion",
     "welcome": "Bienvenue",
@@ -694,6 +692,77 @@
       "placeholder": "Rechercher une adresse...",
       "noResults": "Aucune adresse trouvée",
       "searching": "Recherche en cours..."
+    }
+  },
+  "carbon": {
+    "title": "Impact Carbone",
+    "co2Saved": "CO2 Économisé",
+    "thisMonth": "Ce mois",
+    "thisMonthShort": "mois",
+    "thisYear": "Cette année",
+    "trees": "arbres",
+    "treesEquivalent": "Équivalent arbres",
+    "treesDesc": "Absorption annuelle de CO2",
+    "carKmAvoided": "Km voiture évités",
+    "carKmDesc": "Émissions évitées",
+    "solarUsed": "solaire utilisé",
+    "monthlyTrend": "Économies CO2 mensuelles",
+    "communityImpact": "Impact de la communauté",
+    "yourImpact": "Votre impact",
+    "vsAverage": "vs. Moyenne",
+    "topSavers": "Meilleurs économiseurs",
+    "totalCommunitySaved": "Total économisé par la communauté",
+    "members": "membres",
+    "contributing": "contribuent activement",
+    "avgPerMember": "Moyenne par membre"
+  },
+  "smartHome": {
+    "title": "Intégration domotique",
+    "description": "Connectez vos appareils intelligents pour optimiser votre consommation",
+    "apiKey": "Clé API",
+    "apiKeyDescription": "Utilisez cette clé pour connecter des applications externes comme Home Assistant",
+    "generateKey": "Générer une clé API",
+    "regenerateKey": "Regénérer la clé",
+    "revokeKey": "Révoquer la clé",
+    "keyGenerated": "Clé API générée avec succès",
+    "keyRevoked": "Clé API révoquée",
+    "copyKey": "Copier la clé",
+    "keyCopied": "Copié dans le presse-papier",
+    "keyWarning": "Conservez cette clé en lieu sûr. Elle ne sera affichée qu'une seule fois.",
+    "noKey": "Aucune clé API générée",
+    "createdAt": "Créée le",
+    "endpoints": {
+      "title": "Points d'accès API",
+      "forecast": "Prévision de production",
+      "forecastDesc": "Obtenez les prévisions de production sur 24h pour votre communauté",
+      "surplus": "Surplus actuel",
+      "surplusDesc": "Consultez le surplus/déficit en temps réel",
+      "recommendations": "Recommandations appareils",
+      "recommendationsDesc": "Obtenez des recommandations personnalisées pour vos appareils"
+    },
+    "homeAssistant": {
+      "title": "Configuration Home Assistant",
+      "description": "Ajoutez cette configuration à votre Home Assistant",
+      "sensorConfig": "Configuration du capteur",
+      "automationConfig": "Exemple d'automatisation"
+    },
+    "devices": {
+      "evCharger": "Borne de recharge VE",
+      "battery": "Batterie domestique",
+      "washingMachine": "Machine à laver",
+      "dishwasher": "Lave-vaisselle",
+      "heatPump": "Pompe à chaleur"
+    },
+    "status": {
+      "surplus": "Surplus",
+      "balanced": "Équilibré",
+      "deficit": "Déficit"
+    },
+    "actions": {
+      "startCharging": "Démarrer la charge",
+      "stopCharging": "Arrêter la charge",
+      "delay": "Reporter",
+      "startNow": "Démarrer maintenant"
     }
   }
 }

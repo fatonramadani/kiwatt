@@ -460,12 +460,6 @@
     "notFound": "Invoice not found",
     "backToInvoices": "Back to invoices"
   },
-  "reports": {
-    "title": "Reports",
-    "description": "View financial and energy reports",
-    "noFinancialData": "No financial data available",
-    "noEnergyData": "No energy data available"
-  },
   "settings": {
     "title": "Settings",
     "description": "Configure your community settings",
@@ -604,6 +598,9 @@
   },
   "reports": {
     "title": "Reports",
+    "description": "View financial and energy reports",
+    "noFinancialData": "No financial data available",
+    "noEnergyData": "No energy data available",
     "financial": "Financial",
     "energy": "Energy",
     "export": "Export CSV",
@@ -624,6 +621,7 @@
     "dashboard": "Dashboard",
     "invoices": "My Invoices",
     "consumption": "Consumption",
+    "smartHome": "Smart Home",
     "profile": "Profile",
     "logout": "Logout",
     "welcome": "Welcome",
@@ -694,6 +692,77 @@
       "placeholder": "Search for an address...",
       "noResults": "No addresses found",
       "searching": "Searching..."
+    }
+  },
+  "carbon": {
+    "title": "Carbon Impact",
+    "co2Saved": "CO2 Saved",
+    "thisMonth": "This Month",
+    "thisMonthShort": "month",
+    "thisYear": "This Year",
+    "trees": "trees",
+    "treesEquivalent": "Trees Equivalent",
+    "treesDesc": "Annual CO2 absorption",
+    "carKmAvoided": "Car km Avoided",
+    "carKmDesc": "Emissions prevented",
+    "solarUsed": "solar used",
+    "monthlyTrend": "Monthly CO2 Savings",
+    "communityImpact": "Community Impact",
+    "yourImpact": "Your Impact",
+    "vsAverage": "vs. Average",
+    "topSavers": "Top Carbon Savers",
+    "totalCommunitySaved": "Total saved by community",
+    "members": "members",
+    "contributing": "actively contributing",
+    "avgPerMember": "Average per member"
+  },
+  "smartHome": {
+    "title": "Smart Home Integration",
+    "description": "Connect your smart home devices to optimize energy consumption",
+    "apiKey": "API Key",
+    "apiKeyDescription": "Use this key to connect external applications like Home Assistant",
+    "generateKey": "Generate API Key",
+    "regenerateKey": "Regenerate Key",
+    "revokeKey": "Revoke Key",
+    "keyGenerated": "API key generated successfully",
+    "keyRevoked": "API key revoked",
+    "copyKey": "Copy Key",
+    "keyCopied": "Copied to clipboard",
+    "keyWarning": "Store this key securely. It will only be shown once.",
+    "noKey": "No API key generated yet",
+    "createdAt": "Created",
+    "endpoints": {
+      "title": "API Endpoints",
+      "forecast": "Production Forecast",
+      "forecastDesc": "Get 24-hour production forecast for your community",
+      "surplus": "Current Surplus",
+      "surplusDesc": "Get real-time surplus/deficit status",
+      "recommendations": "Device Recommendations",
+      "recommendationsDesc": "Get personalized recommendations for your devices"
+    },
+    "homeAssistant": {
+      "title": "Home Assistant Setup",
+      "description": "Add this configuration to your Home Assistant",
+      "sensorConfig": "Sensor Configuration",
+      "automationConfig": "Automation Example"
+    },
+    "devices": {
+      "evCharger": "EV Charger",
+      "battery": "Home Battery",
+      "washingMachine": "Washing Machine",
+      "dishwasher": "Dishwasher",
+      "heatPump": "Heat Pump"
+    },
+    "status": {
+      "surplus": "Surplus",
+      "balanced": "Balanced",
+      "deficit": "Deficit"
+    },
+    "actions": {
+      "startCharging": "Start charging",
+      "stopCharging": "Stop charging",
+      "delay": "Delay",
+      "startNow": "Start now"
     }
   }
 }

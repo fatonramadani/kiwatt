@@ -26,14 +26,16 @@ import {
   Wallet,
   Users,
   Sun,
+  Leaf,
 } from "lucide-react";
+import { CarbonDashboard } from "~/components/app/carbon-dashboard";
 
 export default function ReportsPage() {
   const params = useParams<{ orgSlug: string }>();
   const t = useTranslations("reports");
   const now = new Date();
   const [year, setYear] = useState(now.getFullYear());
-  const [activeTab, setActiveTab] = useState<"financial" | "energy">("financial");
+  const [activeTab, setActiveTab] = useState<"financial" | "energy" | "carbon">("financial");
 
   const { data: org } = api.organization.getBySlug.useQuery({
     slug: params.orgSlug,
@@ -162,6 +164,17 @@ export default function ReportsPage() {
           <Zap className="h-4 w-4" />
           Energy
         </button>
+        <button
+          onClick={() => setActiveTab("carbon")}
+          className={`flex items-center gap-2 px-5 py-3 text-sm transition-colors ${
+            activeTab === "carbon"
+              ? "border-b-2 border-gray-900 text-gray-900"
+              : "text-gray-400 hover:text-gray-600"
+          }`}
+        >
+          <Leaf className="h-4 w-4" />
+          Carbon
+        </button>
       </div>
 
       {activeTab === "financial" && (
@@ -179,6 +192,10 @@ export default function ReportsPage() {
           formatKwh={formatKwh}
           colors={COLORS}
         />
+      )}
+
+      {activeTab === "carbon" && org?.id && (
+        <CarbonDashboard orgId={org.id} year={year} showCommunityStats={true} />
       )}
     </div>
   );

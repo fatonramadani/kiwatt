@@ -445,12 +445,6 @@
     "notFound": "Fattura non trovata",
     "backToInvoices": "Torna alle fatture"
   },
-  "reports": {
-    "title": "Rapporti",
-    "description": "Visualizza rapporti finanziari ed energetici",
-    "noFinancialData": "Nessun dato finanziario disponibile",
-    "noEnergyData": "Nessun dato energetico disponibile"
-  },
   "settings": {
     "title": "Impostazioni",
     "description": "Configura le impostazioni della tua comunità",
@@ -588,7 +582,10 @@
     "invalidPod": "Numero POD non valido"
   },
   "reports": {
-    "title": "Report",
+    "title": "Rapporti",
+    "description": "Visualizza rapporti finanziari ed energetici",
+    "noFinancialData": "Nessun dato finanziario disponibile",
+    "noEnergyData": "Nessun dato energetico disponibile",
     "financial": "Finanziari",
     "energy": "Energia",
     "export": "Esporta CSV",
@@ -609,6 +606,7 @@
     "dashboard": "Dashboard",
     "invoices": "Le mie fatture",
     "consumption": "Consumo",
+    "smartHome": "Smart Home",
     "profile": "Profilo",
     "logout": "Esci",
     "welcome": "Benvenuto",
@@ -679,6 +677,77 @@
       "placeholder": "Cerca un indirizzo...",
       "noResults": "Nessun indirizzo trovato",
       "searching": "Ricerca in corso..."
+    }
+  },
+  "carbon": {
+    "title": "Impatto Carbonio",
+    "co2Saved": "CO2 Risparmiata",
+    "thisMonth": "Questo mese",
+    "thisMonthShort": "mese",
+    "thisYear": "Quest'anno",
+    "trees": "alberi",
+    "treesEquivalent": "Equivalente alberi",
+    "treesDesc": "Assorbimento annuale di CO2",
+    "carKmAvoided": "Km auto evitati",
+    "carKmDesc": "Emissioni evitate",
+    "solarUsed": "solare utilizzato",
+    "monthlyTrend": "Risparmi CO2 mensili",
+    "communityImpact": "Impatto della comunità",
+    "yourImpact": "Il tuo impatto",
+    "vsAverage": "vs. Media",
+    "topSavers": "Top risparmiatori CO2",
+    "totalCommunitySaved": "Totale risparmiato dalla comunità",
+    "members": "membri",
+    "contributing": "contribuiscono attivamente",
+    "avgPerMember": "Media per membro"
+  },
+  "smartHome": {
+    "title": "Integrazione Smart Home",
+    "description": "Collega i tuoi dispositivi intelligenti per ottimizzare il consumo energetico",
+    "apiKey": "Chiave API",
+    "apiKeyDescription": "Usa questa chiave per collegare applicazioni esterne come Home Assistant",
+    "generateKey": "Genera chiave API",
+    "regenerateKey": "Rigenera chiave",
+    "revokeKey": "Revoca chiave",
+    "keyGenerated": "Chiave API generata con successo",
+    "keyRevoked": "Chiave API revocata",
+    "copyKey": "Copia chiave",
+    "keyCopied": "Copiato negli appunti",
+    "keyWarning": "Conserva questa chiave in modo sicuro. Verrà mostrata solo una volta.",
+    "noKey": "Nessuna chiave API generata",
+    "createdAt": "Creata il",
+    "endpoints": {
+      "title": "Endpoint API",
+      "forecast": "Previsione produzione",
+      "forecastDesc": "Ottieni le previsioni di produzione a 24 ore per la tua comunità",
+      "surplus": "Surplus attuale",
+      "surplusDesc": "Stato surplus/deficit in tempo reale",
+      "recommendations": "Raccomandazioni dispositivi",
+      "recommendationsDesc": "Ottieni raccomandazioni personalizzate per i tuoi dispositivi"
+    },
+    "homeAssistant": {
+      "title": "Configurazione Home Assistant",
+      "description": "Aggiungi questa configurazione al tuo Home Assistant",
+      "sensorConfig": "Configurazione sensore",
+      "automationConfig": "Esempio di automazione"
+    },
+    "devices": {
+      "evCharger": "Caricatore EV",
+      "battery": "Batteria domestica",
+      "washingMachine": "Lavatrice",
+      "dishwasher": "Lavastoviglie",
+      "heatPump": "Pompa di calore"
+    },
+    "status": {
+      "surplus": "Surplus",
+      "balanced": "Bilanciato",
+      "deficit": "Deficit"
+    },
+    "actions": {
+      "startCharging": "Avvia ricarica",
+      "stopCharging": "Ferma ricarica",
+      "delay": "Rimanda",
+      "startNow": "Avvia ora"
     }
   }
 }

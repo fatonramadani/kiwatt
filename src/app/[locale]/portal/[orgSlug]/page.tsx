@@ -13,6 +13,7 @@ import {
   Download,
   AlertCircle,
 } from "lucide-react";
+import { CarbonCard } from "~/components/app/carbon-card";
 import {
   PieChart,
   Pie,
@@ -150,6 +151,11 @@ export default function PortalDashboardPage() {
           </div>
         </div>
       </div>
+
+      {/* Carbon Impact Card */}
+      {memberData?.organization.id && (
+        <CarbonCard orgId={memberData.organization.id} />
+      )}
 
       {/* Two Column Layout */}
       <div className="grid grid-cols-2 gap-6">

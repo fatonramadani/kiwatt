@@ -223,6 +223,9 @@ export const organizationMember = pgTable(
     priorityLevel: integer("priority_level").default(5).notNull(),
     status: memberStatusEnum("status").default("pending").notNull(),
     joinedAt: timestamp("joined_at").$defaultFn(() => new Date()),
+    // API key for smart home integrations
+    apiKey: text("api_key").unique(),
+    apiKeyCreatedAt: timestamp("api_key_created_at"),
     createdAt: timestamp("created_at")
       .$defaultFn(() => new Date())
       .notNull(),
@@ -234,6 +237,7 @@ export const organizationMember = pgTable(
     index("member_org_idx").on(t.organizationId),
     index("member_user_idx").on(t.userId),
     index("member_pod_idx").on(t.podNumber),
+    index("member_api_key_idx").on(t.apiKey),
     uniqueIndex("member_org_pod_idx").on(t.organizationId, t.podNumber),
   ],
 );

@@ -2,10 +2,12 @@
 
 import { useTranslations } from "next-intl";
 
+import { Users, Zap, FileText } from "lucide-react";
+
 const features = [
-  { key: "memberManagement", number: "01" },
-  { key: "energyTracking", number: "02" },
-  { key: "autoInvoicing", number: "03" },
+  { key: "memberManagement", number: "01", icon: Users, color: "bg-sky-50 text-sky-500" },
+  { key: "energyTracking", number: "02", icon: Zap, color: "bg-emerald-50 text-emerald-500" },
+  { key: "autoInvoicing", number: "03", icon: FileText, color: "bg-violet-50 text-violet-500" },
 ];
 
 export function FeaturesSection() {
@@ -27,22 +29,25 @@ export function FeaturesSection() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {features.map((feature) => (
-            <div
-              key={feature.key}
-              className="group relative rounded-2xl border border-gray-100 bg-white p-10 transition-all hover:border-gray-200 hover:shadow-sm"
-            >
-              <span className="text-xs font-light text-gray-300 transition-colors group-hover:text-gray-400">
-                {feature.number}
-              </span>
-              <h3 className="mt-6 text-xl font-light text-gray-900">
-                {t(`${feature.key}.title`)}
-              </h3>
-              <p className="mt-4 text-sm font-light leading-relaxed text-gray-500">
-                {t(`${feature.key}.description`)}
-              </p>
-            </div>
-          ))}
+          {features.map((feature) => {
+            const Icon = feature.icon;
+            return (
+              <div
+                key={feature.key}
+                className="group relative rounded-2xl border border-gray-100 bg-white p-10 transition-all hover:border-gray-200 hover:shadow-sm"
+              >
+                <div className={`mb-6 flex h-12 w-12 items-center justify-center rounded-xl ${feature.color.split(" ")[0]}`}>
+                  <Icon className={`h-6 w-6 ${feature.color.split(" ")[1]}`} />
+                </div>
+                <h3 className="text-xl font-light text-gray-900">
+                  {t(`${feature.key}.title`)}
+                </h3>
+                <p className="mt-4 text-sm font-light leading-relaxed text-gray-500">
+                  {t(`${feature.key}.description`)}
+                </p>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
