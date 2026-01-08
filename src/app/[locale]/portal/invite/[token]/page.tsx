@@ -112,7 +112,7 @@ export default function InviteAcceptPage() {
         <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm">
           <div className="mb-6 text-center">
             <h1 className="text-3xl font-light tracking-tight text-pelorous-600">
-              Wattly
+              Kiwatt
             </h1>
           </div>
 
@@ -173,7 +173,7 @@ export default function InviteAcceptPage() {
       <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm">
         <div className="mb-6 text-center">
           <h1 className="text-3xl font-light tracking-tight text-pelorous-600">
-            Wattly
+            Kiwatt
           </h1>
         </div>
 

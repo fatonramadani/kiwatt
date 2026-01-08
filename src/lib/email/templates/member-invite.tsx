@@ -30,7 +30,7 @@ const translations = {
     ignore:
       "Si vous n'avez pas demandé cette invitation, vous pouvez ignorer cet email.",
     regards: "Cordialement",
-    team: "L'équipe Wattly",
+    team: "L'équipe Kiwatt",
   },
   de: {
     preview: "Sie sind eingeladen beizutreten",
@@ -43,7 +43,7 @@ const translations = {
     ignore:
       "Wenn Sie diese Einladung nicht angefordert haben, können Sie diese E-Mail ignorieren.",
     regards: "Mit freundlichen Grüssen",
-    team: "Das Wattly Team",
+    team: "Das Kiwatt Team",
   },
   it: {
     preview: "Sei invitato a unirti",
@@ -53,10 +53,9 @@ const translations = {
       "Come membro, potrai consultare il tuo consumo energetico, scaricare le tue fatture e monitorare i tuoi risparmi.",
     action: "Accetta l'invito",
     expiry: "Questo link scade tra 7 giorni.",
-    ignore:
-      "Se non hai richiesto questo invito, puoi ignorare questa email.",
+    ignore: "Se non hai richiesto questo invito, puoi ignorare questa email.",
     regards: "Cordiali saluti",
-    team: "Il team Wattly",
+    team: "Il team kiwatt",
   },
   en: {
     preview: "You're invited to join",
@@ -66,10 +65,9 @@ const translations = {
       "As a member, you'll be able to view your energy consumption, download your invoices, and track your savings.",
     action: "Accept invitation",
     expiry: "This link expires in 7 days.",
-    ignore:
-      "If you didn't request this invitation, you can ignore this email.",
+    ignore: "If you didn't request this invitation, you can ignore this email.",
     regards: "Best regards",
-    team: "The Wattly Team",
+    team: "The kiwatt Team",
   },
 };
 
@@ -90,7 +88,7 @@ export function MemberInviteEmail({
       <Body style={styles.body}>
         <Container style={styles.container}>
           <Section style={styles.header}>
-            <Heading style={styles.logo}>Wattly</Heading>
+            <Heading style={styles.logo}>kiwatt</Heading>
           </Section>
 
           <Section style={styles.content}>
@@ -125,7 +123,7 @@ export function MemberInviteEmail({
 
           <Section style={styles.footer}>
             <Text style={styles.footerText}>
-              © {new Date().getFullYear()} Wattly. All rights reserved.
+              © {new Date().getFullYear()} kiwatt. All rights reserved.
             </Text>
           </Section>
         </Container>

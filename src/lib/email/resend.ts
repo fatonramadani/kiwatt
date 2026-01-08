@@ -7,4 +7,4 @@ export const resend = env.RESEND_API_KEY
   : null;
 
 // Default from email
-export const FROM_EMAIL = "Wattly <noreply@wattly.ch>";
+export const FROM_EMAIL = "Kiwatt <noreply@kiwatt.ch>";

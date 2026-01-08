@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Wattly",
+    "appName": "kiwatt",
     "loading": "Caricamento...",
     "error": "Si e verificato un errore",
     "save": "Salva",
@@ -166,7 +166,7 @@
       "title": "Cosa dicono i gestori di CEL",
       "items": [
         {
-          "quote": "Wattly ha ridotto il nostro tempo di fatturazione da 2 giorni a 30 minuti.",
+          "quote": "kiwatt ha ridotto il nostro tempo di fatturazione da 2 giorni a 30 minuti.",
           "author": "Marie Dupont",
           "role": "Responsabile CEL",
           "company": "Commune de Pully"
@@ -187,15 +187,15 @@
       },
       "q2": {
         "question": "Qual è la differenza tra CEL, CA e RCP?",
-        "answer": "Sono tre strutture giuridiche distinte in Svizzera. La CEL (Comunità Elettrica Locale) copre un intero comune con riduzione parziale delle tariffe di rete. La CA (Comunità di Autoconsumo) è limitata a un edificio o a lotti adiacenti con esenzione totale dalle tariffe di rete. L'RCP (Raggruppamento per il Consumo Proprio) funziona con un unico contatore per l'intero gruppo. Wattly è specializzato nella gestione delle CEL."
+        "answer": "Sono tre strutture giuridiche distinte in Svizzera. La CEL (Comunità Elettrica Locale) copre un intero comune con riduzione parziale delle tariffe di rete. La CA (Comunità di Autoconsumo) è limitata a un edificio o a lotti adiacenti con esenzione totale dalle tariffe di rete. L'RCP (Raggruppamento per il Consumo Proprio) funziona con un unico contatore per l'intero gruppo. kiwatt è specializzato nella gestione delle CEL."
       },
       "q3": {
         "question": "Come ottengo le curve di carico?",
         "answer": "Il tuo gestore della rete di distribuzione (GRD) come Romande Energie, Groupe E o SIG ti fornisce i dati di consumo a intervalli di 15 minuti per ogni contatore della tua CEL. Contatta il tuo GRD per ottenere le credenziali di accesso al portale."
       },
       "q4": {
-        "question": "Wattly sostituisce il mio distributore?",
-        "answer": "No, Wattly è uno strumento di gestione per il rappresentante della CEL. Il tuo GRD resta responsabile della fornitura di elettricità e della fatturazione delle tariffe di rete."
+        "question": "kiwatt sostituisce il mio distributore?",
+        "answer": "No, kiwatt è uno strumento di gestione per il rappresentante della CEL. Il tuo GRD resta responsabile della fornitura di elettricità e della fatturazione delle tariffe di rete."
       },
       "q5": {
         "question": "Quanto tempo ci vuole per iniziare?",
@@ -263,7 +263,7 @@
     "register": {
       "tagline": "Inizia",
       "title": "Registrazione",
-      "subtitle": "Crea il tuo account Wattly",
+      "subtitle": "Crea il tuo account kiwatt",
       "name": "Nome completo",
       "email": "Email",
       "password": "Password",
@@ -316,7 +316,7 @@
     },
     "setup": {
       "title": "Inizia",
-      "subtitle": "Completa questi passaggi per iniziare a usare Wattly",
+      "subtitle": "Completa questi passaggi per iniziare a usare kiwatt",
       "step1": "Aggiungi membri",
       "step2": "Configura le tariffe",
       "step3": "Importa i dati energetici",
@@ -488,14 +488,14 @@
         "city": "Città"
       },
       "subscription": {
-        "title": "Abbonamento Wattly",
-        "description": "Fatturazione utilizzo piattaforma Wattly",
+        "title": "Abbonamento kiwatt",
+        "description": "Fatturazione utilizzo piattaforma kiwatt",
         "totalPaid": "Totale pagato",
         "outstanding": "In sospeso",
         "totalInvoices": "Totale fatture",
         "recentInvoices": "Fatture recenti",
         "noInvoices": "Nessuna fattura ancora. La tua prima fattura apparirà qui dopo il primo periodo di fatturazione.",
-        "pricingInfo": "Wattly addebita CHF 0.005 per kWh gestito attraverso la tua comunità, con un minimo di CHF 49/mese.",
+        "pricingInfo": "kiwatt addebita CHF 0.005 per kWh gestito attraverso la tua comunità, con un minimo di CHF 49/mese.",
         "vatInfo": "IVA ({rate}%) aggiunta a tutte le fatture.",
         "due": "Scadenza {date}"
       }
@@ -529,7 +529,7 @@
         "memberSavings": "Risparmio membro per kWh",
         "applyRates": "Applica tariffe suggerite",
         "marginInfoTitle": "Informazioni sul margine",
-        "marginInfo1": "• Commissione piattaforma Wattly: 0.005 CHF/kWh",
+        "marginInfo1": "• Commissione piattaforma kiwatt: 0.005 CHF/kWh",
         "marginInfo2": "• Costi amministrativi e fatturazione",
         "marginInfo3": "• Riserva per spese impreviste"
       }

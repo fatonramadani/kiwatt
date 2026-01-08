@@ -141,7 +141,7 @@ export default function NewOrganizationPage() {
                 {t("form.slug")}
               </label>
               <div className="flex items-center gap-2">
-                <span className="text-sm text-gray-400">wattly.ch/app/</span>
+                <span className="text-sm text-gray-400">kiwatt.ch/app/</span>
                 <input
                   id="slug"
                   type="text"

@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Wattly",
+    "appName": "kiwatt",
     "loading": "Loading...",
     "error": "An error occurred",
     "save": "Save",
@@ -179,7 +179,7 @@
       "title": "What LEC managers say",
       "items": [
         {
-          "quote": "Wattly reduced our billing time from 2 days to 30 minutes. It just works.",
+          "quote": "kiwatt reduced our billing time from 2 days to 30 minutes. It just works.",
           "author": "Marie Dupont",
           "role": "LEC Manager",
           "company": "Commune de Pully"
@@ -206,15 +206,15 @@
       },
       "q2": {
         "question": "What's the difference between LEC, SC and SCP?",
-        "answer": "These are three distinct legal structures in Switzerland. The LEC (Local Energy Community) covers an entire municipality with partial network fee reduction. The SC (Self-Consumption Community) is limited to a building or adjacent plots with full network fee exemption. The SCP (Self-Consumption Pool) operates with a single meter for the entire group. Wattly specializes in LEC management."
+        "answer": "These are three distinct legal structures in Switzerland. The LEC (Local Energy Community) covers an entire municipality with partial network fee reduction. The SC (Self-Consumption Community) is limited to a building or adjacent plots with full network fee exemption. The SCP (Self-Consumption Pool) operates with a single meter for the entire group. kiwatt specializes in LEC management."
       },
       "q3": {
         "question": "How do I get load curves?",
         "answer": "Your distribution network operator (GRD) provides load curves. Contact Romande Energie, Groupe E, SIG, or your local utility and request 15-minute interval data (CSV format) for all meters in your LEC. Most GRDs provide this monthly via email or a portal."
       },
       "q4": {
-        "question": "Does Wattly replace my distributor?",
-        "answer": "No. Wattly is a management tool for the LEC representative. Your GRD remains responsible for electricity supply, metering, and network fee billing. Wattly handles the internal distribution and billing between LEC members."
+        "question": "Does kiwatt replace my distributor?",
+        "answer": "No. kiwatt is a management tool for the LEC representative. Your GRD remains responsible for electricity supply, metering, and network fee billing. kiwatt handles the internal distribution and billing between LEC members."
       },
       "q5": {
         "question": "How long does it take to get started?",
@@ -278,7 +278,7 @@
     "register": {
       "tagline": "Get started",
       "title": "Sign up",
-      "subtitle": "Create your Wattly account",
+      "subtitle": "Create your kiwatt account",
       "name": "Full name",
       "email": "Email",
       "password": "Password",
@@ -331,7 +331,7 @@
     },
     "setup": {
       "title": "Getting started",
-      "subtitle": "Complete these steps to start using Wattly",
+      "subtitle": "Complete these steps to start using kiwatt",
       "step1": "Add community members",
       "step2": "Configure tariffs",
       "step3": "Import energy data",
@@ -503,14 +503,14 @@
         "city": "City"
       },
       "subscription": {
-        "title": "Wattly Subscription",
-        "description": "Platform usage billing from Wattly",
+        "title": "kiwatt Subscription",
+        "description": "Platform usage billing from kiwatt",
         "totalPaid": "Total Paid",
         "outstanding": "Outstanding",
         "totalInvoices": "Total Invoices",
         "recentInvoices": "Recent Invoices",
         "noInvoices": "No invoices yet. Your first invoice will appear here after your first billing period.",
-        "pricingInfo": "Wattly charges CHF 0.005 per kWh managed through your community, with a minimum of CHF 49/month.",
+        "pricingInfo": "kiwatt charges CHF 0.005 per kWh managed through your community, with a minimum of CHF 49/month.",
         "vatInfo": "VAT ({rate}%) is added to all invoices.",
         "due": "Due {date}"
       }
@@ -544,7 +544,7 @@
         "memberSavings": "Member savings per kWh",
         "applyRates": "Apply suggested rates",
         "marginInfoTitle": "About the margin",
-        "marginInfo1": "• Wattly platform fee: 0.005 CHF/kWh",
+        "marginInfo1": "• kiwatt platform fee: 0.005 CHF/kWh",
         "marginInfo2": "• Administrative costs and billing",
         "marginInfo3": "• Reserve fund for unexpected expenses"
       }

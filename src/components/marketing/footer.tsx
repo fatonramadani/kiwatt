@@ -15,7 +15,7 @@ export function MarketingFooter() {
               href="/"
               className="text-2xl font-light tracking-tight text-gray-900"
             >
-              wattly
+              kiwatt
             </Link>
             <p className="mt-6 text-sm font-light leading-relaxed text-gray-500">
               {t("description")}
@@ -61,7 +61,7 @@ export function MarketingFooter() {
               </h4>
               <ul className="mt-6 space-y-4">
                 <li className="text-sm font-light text-gray-500">
-                  info@wattly.ch
+                  info@kiwatt.ch
                 </li>
                 <li className="text-sm font-light text-gray-500">
                   +41 21 000 00 00
@@ -73,7 +73,7 @@ export function MarketingFooter() {
 
         <div className="mt-16 border-t border-gray-100 pt-8">
           <p className="text-xs font-light text-gray-400">
-            &copy; {new Date().getFullYear()} Wattly. All rights reserved.
+            &copy; {new Date().getFullYear()} Kiwatt. All rights reserved.
           </p>
         </div>
       </div>

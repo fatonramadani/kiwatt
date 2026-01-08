@@ -18,7 +18,7 @@ export default async function AuthLayout({
           href="/"
           className="text-2xl font-light tracking-tight text-white"
         >
-          wattly
+          kiwatt
         </Link>
 
         <div className="max-w-lg">
@@ -34,7 +34,7 @@ export default async function AuthLayout({
         </div>
 
         <p className="text-xs font-light text-gray-600">
-          &copy; {new Date().getFullYear()} Wattly
+          &copy; {new Date().getFullYear()} Kiwatt
         </p>
       </div>
 
@@ -51,7 +51,7 @@ export default async function AuthLayout({
               href="/"
               className="text-2xl font-light tracking-tight text-gray-900"
             >
-              wattly
+              kiwatt
             </Link>
           </div>
           {children}

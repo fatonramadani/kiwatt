@@ -923,7 +923,7 @@ export const memberRouter = createTRPCRouter({
       }
 
       // Generate a secure API key
-      const apiKey = `wattly_${createId()}${createId()}`;
+      const apiKey = `kiwatt_${createId()}${createId()}`;
 
       // Update member with new API key
       await ctx.db

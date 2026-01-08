@@ -29,7 +29,7 @@ export function MarketingHeader() {
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-12">
         <Link href="/" className="text-2xl font-light tracking-tight text-gray-900">
-          wattly
+          kiwatt
         </Link>
 
         <nav className="hidden items-center gap-12 md:flex">

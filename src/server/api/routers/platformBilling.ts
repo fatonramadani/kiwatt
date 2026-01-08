@@ -39,9 +39,9 @@ async function verifyOrgAdmin(
   return membership;
 }
 
-// Generate invoice number: WATTLY-2025-001
+// Generate invoice number: KIWATT-2025-001
 function generateInvoiceNumber(year: number, sequence: number): string {
-  return `WATTLY-${year}-${sequence.toString().padStart(3, "0")}`;
+  return `KIWATT-${year}-${sequence.toString().padStart(3, "0")}`;
 }
 
 export const platformBillingRouter = createTRPCRouter({

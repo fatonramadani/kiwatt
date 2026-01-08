@@ -1,6 +1,6 @@
 {
   "common": {
-    "appName": "Wattly",
+    "appName": "kiwatt",
     "loading": "Laden...",
     "error": "Ein Fehler ist aufgetreten",
     "save": "Speichern",
@@ -166,7 +166,7 @@
       "title": "Was LEG-Verwalter sagen",
       "items": [
         {
-          "quote": "Wattly hat unsere Abrechnungszeit von 2 Tagen auf 30 Minuten reduziert.",
+          "quote": "kiwatt hat unsere Abrechnungszeit von 2 Tagen auf 30 Minuten reduziert.",
           "author": "Marie Dupont",
           "role": "LEG-Verwalterin",
           "company": "Commune de Pully"
@@ -187,15 +187,15 @@
       },
       "q2": {
         "question": "Was ist der Unterschied zwischen LEG, EVG und ZEV?",
-        "answer": "Das sind drei verschiedene rechtliche Strukturen in der Schweiz. Die LEG (Lokale Elektrizitätsgemeinschaft) umfasst eine ganze Gemeinde mit teilweiser Reduktion der Netzgebühren. Die EVG (Eigenverbrauchsgemeinschaft) ist auf ein Gebäude oder benachbarte Grundstücke beschränkt mit vollständiger Befreiung von Netzgebühren. Der ZEV (Zusammenschluss zum Eigenverbrauch) funktioniert mit einem einzigen Zähler für die gesamte Gruppe. Wattly ist auf die Verwaltung von LEG spezialisiert."
+        "answer": "Das sind drei verschiedene rechtliche Strukturen in der Schweiz. Die LEG (Lokale Elektrizitätsgemeinschaft) umfasst eine ganze Gemeinde mit teilweiser Reduktion der Netzgebühren. Die EVG (Eigenverbrauchsgemeinschaft) ist auf ein Gebäude oder benachbarte Grundstücke beschränkt mit vollständiger Befreiung von Netzgebühren. Der ZEV (Zusammenschluss zum Eigenverbrauch) funktioniert mit einem einzigen Zähler für die gesamte Gruppe. kiwatt ist auf die Verwaltung von LEG spezialisiert."
       },
       "q3": {
         "question": "Wie erhalte ich die Lastgänge?",
         "answer": "Ihr Verteilnetzbetreiber (VNB) wie Romande Energie, Groupe E oder SIG stellt Ihnen die Verbrauchsdaten in 15-Minuten-Intervallen für jeden Zähler Ihrer LEG zur Verfügung. Kontaktieren Sie Ihren VNB für die Zugangsdaten zum Portal."
       },
       "q4": {
-        "question": "Ersetzt Wattly meinen Verteiler?",
-        "answer": "Nein, Wattly ist ein Verwaltungstool für den Vertreter der LEG. Ihr VNB bleibt verantwortlich für die Stromversorgung und die Abrechnung der Netzgebühren."
+        "question": "Ersetzt kiwatt meinen Verteiler?",
+        "answer": "Nein, kiwatt ist ein Verwaltungstool für den Vertreter der LEG. Ihr VNB bleibt verantwortlich für die Stromversorgung und die Abrechnung der Netzgebühren."
       },
       "q5": {
         "question": "Wie lange dauert der Einstieg?",
@@ -263,7 +263,7 @@
     "register": {
       "tagline": "Loslegen",
       "title": "Registrierung",
-      "subtitle": "Erstellen Sie Ihr Wattly-Konto",
+      "subtitle": "Erstellen Sie Ihr kiwatt-Konto",
       "name": "Vollstandiger Name",
       "email": "E-Mail",
       "password": "Passwort",
@@ -316,7 +316,7 @@
     },
     "setup": {
       "title": "Erste Schritte",
-      "subtitle": "Fuhren Sie diese Schritte aus, um Wattly zu nutzen",
+      "subtitle": "Fuhren Sie diese Schritte aus, um kiwatt zu nutzen",
       "step1": "Mitglieder hinzufugen",
       "step2": "Tarife konfigurieren",
       "step3": "Energiedaten importieren",
@@ -488,14 +488,14 @@
         "city": "Stadt"
       },
       "subscription": {
-        "title": "Wattly-Abonnement",
-        "description": "Plattformnutzungsabrechnung von Wattly",
+        "title": "kiwatt-Abonnement",
+        "description": "Plattformnutzungsabrechnung von kiwatt",
         "totalPaid": "Gesamt bezahlt",
         "outstanding": "Ausstehend",
         "totalInvoices": "Gesamtrechnungen",
         "recentInvoices": "Letzte Rechnungen",
         "noInvoices": "Noch keine Rechnungen. Ihre erste Rechnung erscheint hier nach Ihrer ersten Abrechnungsperiode.",
-        "pricingInfo": "Wattly berechnet CHF 0.005 pro kWh, die über Ihre Gemeinschaft verwaltet werden, mit einem Minimum von CHF 49/Monat.",
+        "pricingInfo": "kiwatt berechnet CHF 0.005 pro kWh, die über Ihre Gemeinschaft verwaltet werden, mit einem Minimum von CHF 49/Monat.",
         "vatInfo": "MwSt ({rate}%) wird allen Rechnungen hinzugefügt.",
         "due": "Fällig {date}"
       }
@@ -529,7 +529,7 @@
         "memberSavings": "Einsparung pro Mitglied pro kWh",
         "applyRates": "Empfohlene Tarife anwenden",
         "marginInfoTitle": "Über die Marge",
-        "marginInfo1": "• Wattly-Plattformgebühr: 0.005 CHF/kWh",
+        "marginInfo1": "• kiwatt-Plattformgebühr: 0.005 CHF/kWh",
         "marginInfo2": "• Verwaltungskosten und Abrechnung",
         "marginInfo3": "• Reserve für unvorhergesehene Ausgaben"
       }

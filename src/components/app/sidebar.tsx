@@ -48,7 +48,7 @@ function SidebarContent({ orgSlug, orgName, onNavigate }: SidebarProps & { onNav
       {/* Logo */}
       <div className="flex h-16 items-center px-8">
         <Link href="/app" className="text-xl font-normal tracking-tight text-gray-900">
-          wattly
+          kiwatt
         </Link>
       </div>
 

@@ -250,8 +250,18 @@ function formatDate(date: Date): string {
 function formatPeriod(start: Date, end: Date): string {
   const startDate = new Date(start);
   const months = [
-    "Janvier", "Février", "Mars", "Avril", "Mai", "Juin",
-    "Juillet", "Août", "Septembre", "Octobre", "Novembre", "Décembre",
+    "Janvier",
+    "Février",
+    "Mars",
+    "Avril",
+    "Mai",
+    "Juin",
+    "Juillet",
+    "Août",
+    "Septembre",
+    "Octobre",
+    "Novembre",
+    "Décembre",
   ];
   return `${months[startDate.getMonth()]} ${startDate.getFullYear()}`;
 }
@@ -271,7 +281,8 @@ export function InvoiceDocument({ invoice }: { invoice: InvoiceData }) {
                 <Text>{invoice.organization.address}</Text>
               )}
               {/* eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing */}
-              {(invoice.organization.postalCode || invoice.organization.city) && (
+              {(invoice.organization.postalCode ||
+                invoice.organization.city) && (
                 <Text>
                   {invoice.organization.postalCode} {invoice.organization.city}
                 </Text>
@@ -309,7 +320,9 @@ export function InvoiceDocument({ invoice }: { invoice: InvoiceData }) {
             <Text style={[styles.addressLine, { marginTop: 4 }]}>
               {invoice.member.email}
             </Text>
-            <Text style={[styles.addressLine, { fontSize: 8, color: "#9ca3af" }]}>
+            <Text
+              style={[styles.addressLine, { fontSize: 8, color: "#9ca3af" }]}
+            >
               POD: {invoice.member.podNumber}
             </Text>
           </View>
@@ -328,16 +341,21 @@ export function InvoiceDocument({ invoice }: { invoice: InvoiceData }) {
           </View>
           <View style={styles.detailItem}>
             <Text style={styles.detailLabel}>Date d&apos;émission</Text>
-            <Text style={styles.detailValue}>{formatDate(invoice.createdAt)}</Text>
+            <Text style={styles.detailValue}>
+              {formatDate(invoice.createdAt)}
+            </Text>
           </View>
           <View style={styles.detailItem}>
             <Text style={styles.detailLabel}>Échéance</Text>
-            <Text style={styles.detailValue}>{formatDate(invoice.dueDate)}</Text>
+            <Text style={styles.detailValue}>
+              {formatDate(invoice.dueDate)}
+            </Text>
           </View>
           <View style={styles.detailItem}>
             <Text style={styles.detailLabel}>Période</Text>
             <Text style={styles.detailValue}>
-              {formatDate(invoice.periodStart)} - {formatDate(invoice.periodEnd)}
+              {formatDate(invoice.periodStart)} -{" "}
+              {formatDate(invoice.periodEnd)}
             </Text>
           </View>
         </View>
@@ -372,7 +390,9 @@ export function InvoiceDocument({ invoice }: { invoice: InvoiceData }) {
                 style={[
                   styles.tableCell,
                   styles.colTotal,
-                  line.lineType === "production_credit" ? styles.creditAmount : {},
+                  line.lineType === "production_credit"
+                    ? styles.creditAmount
+                    : {},
                 ]}
               >
                 {line.lineType === "production_credit" ? "-" : ""}
@@ -408,7 +428,7 @@ export function InvoiceDocument({ invoice }: { invoice: InvoiceData }) {
         <View style={styles.footer}>
           <Text style={styles.footerText}>
             Merci pour votre confiance. En cas de questions, contactez-nous à{" "}
-            {invoice.organization.contactEmail ?? "contact@wattly.ch"}
+            {invoice.organization.contactEmail ?? "contact@kiwatt.ch"}
           </Text>
         </View>
       </Page>

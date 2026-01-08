@@ -23,10 +23,8 @@ export default async function HomePage({
       <HeroSection />
       <ProblemSection />
       <FeaturesSection />
-      <StatsSection />
       <HowItWorksSection />
       <PricingSection />
-      <TestimonialsSection />
       <FAQSection />
       <TrustSection />
       <CTASection />

@@ -51,7 +51,7 @@ function SidebarContent({
       {/* Logo */}
       <div className="flex h-16 items-center px-8">
         <span className="text-xl font-normal tracking-tight text-gray-900">
-          wattly
+          kiwatt
         </span>
         <span className="ml-2 rounded-full bg-pelorous-50 px-2 py-0.5 text-xs text-pelorous-600">
           Portal
@@ -204,7 +204,7 @@ export default function PortalLayout({
         </button>
         <div className="flex items-center gap-2">
           <span className="text-lg font-normal tracking-tight text-gray-900">
-            wattly
+            kiwatt
           </span>
           <span className="rounded-full bg-pelorous-50 px-2 py-0.5 text-xs text-pelorous-600">
             Portal

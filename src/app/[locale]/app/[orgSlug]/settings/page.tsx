@@ -306,7 +306,7 @@ function GeneralTab({
   );
 }
 
-// Platform Subscription Section (Wattly billing)
+// Platform Subscription Section (Kiwatt billing)
 function PlatformSubscriptionSection({ orgId }: { orgId: string }) {
   const t = useTranslations("settings.billing.subscription");
   const { data: summary, isLoading } = api.platformBilling.getBillingSummary.useQuery({ orgId });

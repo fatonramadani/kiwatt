@@ -580,7 +580,7 @@ export const memberInviteRelations = relations(memberInvite, ({ one }) => ({
 }));
 
 // ============================================================================
-// Platform Billing (Wattly → LEC Managers)
+// Platform Billing (Kiwatt → LEC Managers)
 // ============================================================================
 
 export const platformInvoiceStatusEnum = pgEnum("platform_invoice_status", [
