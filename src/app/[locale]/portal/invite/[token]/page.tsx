@@ -5,7 +5,7 @@ import { useTranslations } from "next-intl";
 import { api } from "~/trpc/react";
 import { authClient } from "~/server/better-auth/client";
 import { useState } from "react";
-import { CheckCircle, XCircle, Loader2, Mail, Building } from "lucide-react";
+import { CheckCircle, XCircle, Loader2, Mail, Building, DatabaseZap } from "lucide-react";
 import Link from "next/link";
 
 export default function InviteAcceptPage() {
@@ -111,7 +111,8 @@ export default function InviteAcceptPage() {
       <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
         <div className="w-full max-w-md rounded-2xl bg-white p-8 shadow-sm">
           <div className="mb-6 text-center">
-            <h1 className="text-3xl font-light tracking-tight text-pelorous-600">
+            <h1 className="flex items-center justify-center gap-2 text-3xl font-light tracking-tight text-pelorous-600">
+              <DatabaseZap className="h-7 w-7" strokeWidth={1.5} />
               Kiwatt
             </h1>
           </div>

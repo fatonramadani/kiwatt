@@ -13,6 +13,7 @@ import {
   LogOut,
   Menu,
   X,
+  DatabaseZap,
 } from "lucide-react";
 import { authClient } from "~/server/better-auth/client";
 import { useRouter } from "~/i18n/navigation";
@@ -47,7 +48,8 @@ function SidebarContent({ orgSlug, orgName, onNavigate }: SidebarProps & { onNav
     <>
       {/* Logo */}
       <div className="flex h-16 items-center px-8">
-        <Link href="/app" className="text-xl font-normal tracking-tight text-gray-900">
+        <Link href="/app" className="flex items-center gap-2 text-xl font-normal tracking-tight text-gray-900">
+          <DatabaseZap className="h-5 w-5" strokeWidth={1.5} />
           kiwatt
         </Link>
       </div>

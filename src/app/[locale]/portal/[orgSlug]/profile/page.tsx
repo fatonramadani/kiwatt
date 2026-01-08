@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { api } from "~/trpc/react";
-import { User, Mail, Phone, MapPin, Zap } from "lucide-react";
+import { User, Mail, Phone, MapPin, Zap, Download, Loader2 } from "lucide-react";
 
 export default function PortalProfilePage() {
   const params = useParams<{ orgSlug: string }>();
@@ -12,6 +12,26 @@ export default function PortalProfilePage() {
   const { data: memberData, isLoading } = api.member.getMyMembership.useQuery({
     orgSlug: params.orgSlug,
   });
+
+  const exportMutation = api.member.exportMyData.useMutation({
+    onSuccess: (data) => {
+      const blob = new Blob([JSON.stringify(data, null, 2)], {
+        type: "application/json",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = `kiwatt-export-${new Date().toISOString().split("T")[0]}.json`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    },
+  });
+
+  const handleExportData = () => {
+    exportMutation.mutate({ orgSlug: params.orgSlug });
+  };
 
   if (isLoading) {
     return (
@@ -158,6 +178,27 @@ export default function PortalProfilePage() {
               <p className="mt-1 text-gray-900">{org.contactPhone}</p>
             </div>
           )}
+        </div>
+      </div>
+
+      {/* Data Privacy */}
+      <div className="rounded-2xl border border-gray-100 bg-white p-8">
+        <h3 className="text-lg font-light text-gray-900">{t("dataPrivacy")}</h3>
+        <p className="mt-2 text-sm text-gray-500">{t("dataPrivacyDescription")}</p>
+
+        <div className="mt-6">
+          <button
+            onClick={handleExportData}
+            disabled={exportMutation.isPending}
+            className="inline-flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 disabled:opacity-50"
+          >
+            {exportMutation.isPending ? (
+              <Loader2 className="h-4 w-4 animate-spin" />
+            ) : (
+              <Download className="h-4 w-4" />
+            )}
+            {t("downloadMyData")}
+          </button>
         </div>
       </div>
     </div>

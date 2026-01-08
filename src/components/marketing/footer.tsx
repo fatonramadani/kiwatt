@@ -2,6 +2,7 @@
 
 import { useTranslations } from "next-intl";
 import { Link } from "~/i18n/navigation";
+import { DatabaseZap } from "lucide-react";
 
 export function MarketingFooter() {
   const t = useTranslations("landing.footer");
@@ -13,24 +14,25 @@ export function MarketingFooter() {
           <div className="max-w-sm">
             <Link
               href="/"
-              className="text-2xl font-light tracking-tight text-gray-900"
+              className="flex items-center gap-2 text-2xl font-light tracking-tight text-gray-900"
             >
+              <DatabaseZap className="h-6 w-6" strokeWidth={1.5} />
               kiwatt
             </Link>
-            <p className="mt-6 text-sm font-light leading-relaxed text-gray-500">
+            <p className="mt-6 text-sm leading-relaxed font-light text-gray-500">
               {t("description")}
             </p>
           </div>
 
           <div className="flex gap-20">
             <div>
-              <h4 className="text-xs font-light uppercase tracking-[0.2em] text-gray-400">
+              <h4 className="text-xs font-light tracking-[0.2em] text-gray-400 uppercase">
                 Legal
               </h4>
               <ul className="mt-6 space-y-4">
                 <li>
                   <Link
-                    href="#"
+                    href="/legal"
                     className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900"
                   >
                     {t("legal")}
@@ -38,7 +40,7 @@ export function MarketingFooter() {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/privacy"
                     className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900"
                   >
                     {t("privacy")}
@@ -46,7 +48,7 @@ export function MarketingFooter() {
                 </li>
                 <li>
                   <Link
-                    href="#"
+                    href="/terms"
                     className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900"
                   >
                     {t("terms")}
@@ -56,15 +58,12 @@ export function MarketingFooter() {
             </div>
 
             <div>
-              <h4 className="text-xs font-light uppercase tracking-[0.2em] text-gray-400">
+              <h4 className="text-xs font-light tracking-[0.2em] text-gray-400 uppercase">
                 {t("contact")}
               </h4>
               <ul className="mt-6 space-y-4">
                 <li className="text-sm font-light text-gray-500">
                   info@kiwatt.ch
-                </li>
-                <li className="text-sm font-light text-gray-500">
-                  +41 21 000 00 00
                 </li>
               </ul>
             </div>

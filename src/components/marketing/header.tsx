@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link } from "~/i18n/navigation";
 import { LanguageSwitcher } from "~/components/marketing/language-switcher";
+import { DatabaseZap } from "lucide-react";
 
 export function MarketingHeader() {
   const t = useTranslations("nav");
@@ -28,7 +29,8 @@ export function MarketingHeader() {
       }`}
     >
       <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-6 lg:px-12">
-        <Link href="/" className="text-2xl font-light tracking-tight text-gray-900">
+        <Link href="/" className="flex items-center gap-2 text-2xl font-light tracking-tight text-gray-900">
+          <DatabaseZap className="h-6 w-6" strokeWidth={1.5} />
           kiwatt
         </Link>
 

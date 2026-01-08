@@ -685,7 +685,10 @@
       "paid": "Payée",
       "overdue": "En retard",
       "cancelled": "Annulée"
-    }
+    },
+    "dataPrivacy": "Protection des données",
+    "dataPrivacyDescription": "Conformément à la nLPD, vous avez le droit d'exporter vos données personnelles à tout moment.",
+    "downloadMyData": "Télécharger mes données"
   },
   "components": {
     "addressAutocomplete": {

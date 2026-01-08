@@ -1,7 +1,7 @@
 import { Link } from "~/i18n/navigation";
 import { LanguageSwitcher } from "~/components/marketing/language-switcher";
 import { getTranslations } from "next-intl/server";
-import { Zap } from "lucide-react";
+import { DatabaseZap } from "lucide-react";
 
 export default async function AuthLayout({
   children,
@@ -16,14 +16,15 @@ export default async function AuthLayout({
       <div className="hidden w-1/2 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 lg:flex lg:flex-col lg:justify-between lg:p-16">
         <Link
           href="/"
-          className="text-2xl font-light tracking-tight text-white"
+          className="flex items-center gap-2 text-2xl font-light tracking-tight text-white"
         >
+          <DatabaseZap className="h-6 w-6" strokeWidth={1.5} />
           kiwatt
         </Link>
 
         <div className="max-w-lg">
           <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 to-sky-500">
-            <Zap className="h-8 w-8 text-white" />
+            <DatabaseZap className="h-8 w-8 text-white" />
           </div>
           <h1 className="text-4xl font-light leading-tight tracking-tight text-white lg:text-5xl">
             {t("title")}
@@ -49,8 +50,9 @@ export default async function AuthLayout({
           <div className="mb-12 lg:hidden">
             <Link
               href="/"
-              className="text-2xl font-light tracking-tight text-gray-900"
+              className="flex items-center gap-2 text-2xl font-light tracking-tight text-gray-900"
             >
+              <DatabaseZap className="h-6 w-6" strokeWidth={1.5} />
               kiwatt
             </Link>
           </div>

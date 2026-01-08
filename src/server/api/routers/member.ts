@@ -998,4 +998,104 @@ export const memberRouter = createTRPCRouter({
           : null,
       };
     }),
+
+  // ============================================================================
+  // Data Export (GDPR/nLPD compliance)
+  // ============================================================================
+
+  // Export all member data for GDPR/nLPD data portability
+  exportMyData: protectedProcedure
+    .input(z.object({ orgSlug: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      // Find organization
+      const org = await ctx.db.query.organization.findFirst({
+        where: eq(organization.slug, input.orgSlug),
+      });
+
+      if (!org) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Organization not found",
+        });
+      }
+
+      // Find membership
+      const membership = await ctx.db.query.organizationMember.findFirst({
+        where: and(
+          eq(organizationMember.organizationId, org.id),
+          eq(organizationMember.userId, ctx.session.user.id)
+        ),
+      });
+
+      if (!membership) {
+        throw new TRPCError({
+          code: "FORBIDDEN",
+          message: "You are not a member of this organization",
+        });
+      }
+
+      // Get all invoices
+      const memberInvoices = await ctx.db.query.invoice.findMany({
+        where: eq(invoice.memberId, membership.id),
+        orderBy: [desc(invoice.createdAt)],
+      });
+
+      // Get energy data (monthly aggregations)
+      const energyData = await ctx.db.query.monthlyAggregation.findMany({
+        where: eq(monthlyAggregation.memberId, membership.id),
+        orderBy: [desc(monthlyAggregation.year), desc(monthlyAggregation.month)],
+      });
+
+      // Compile export data
+      const exportData = {
+        exportedAt: new Date().toISOString(),
+        organization: {
+          name: org.name,
+          address: org.address,
+          postalCode: org.postalCode,
+          city: org.city,
+        },
+        personalData: {
+          firstname: membership.firstname,
+          lastname: membership.lastname,
+          email: membership.email,
+          phone: membership.phone,
+          address: membership.address,
+          postalCode: membership.postalCode,
+          city: membership.city,
+          podNumber: membership.podNumber,
+          installationType: membership.installationType,
+          solarCapacityKwp: membership.solarCapacityKwp,
+          batteryCapacityKwh: membership.batteryCapacityKwh,
+          priorityLevel: membership.priorityLevel,
+          status: membership.status,
+          createdAt: membership.createdAt,
+        },
+        invoices: memberInvoices.map((inv) => ({
+          invoiceNumber: inv.invoiceNumber,
+          periodStart: inv.periodStart,
+          periodEnd: inv.periodEnd,
+          subtotalChf: inv.subtotalChf,
+          vatAmountChf: inv.vatAmountChf,
+          totalChf: inv.totalChf,
+          status: inv.status,
+          dueDate: inv.dueDate,
+          paidAt: inv.paidAt,
+          createdAt: inv.createdAt,
+        })),
+        energyData: energyData.map((e) => ({
+          year: e.year,
+          month: e.month,
+          totalConsumptionKwh: e.totalConsumptionKwh,
+          totalProductionKwh: e.totalProductionKwh,
+          selfConsumptionKwh: e.selfConsumptionKwh,
+          communityConsumptionKwh: e.communityConsumptionKwh,
+          gridConsumptionKwh: e.gridConsumptionKwh,
+          exportedToCommunityKwh: e.exportedToCommunityKwh,
+          exportedToGridKwh: e.exportedToGridKwh,
+        })),
+      };
+
+      return exportData;
+    }),
 });

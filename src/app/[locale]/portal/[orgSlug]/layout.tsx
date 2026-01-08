@@ -16,6 +16,7 @@ import {
   Menu,
   X,
   Home,
+  DatabaseZap,
 } from "lucide-react";
 import { api } from "~/trpc/react";
 import { authClient } from "~/server/better-auth/client";
@@ -50,7 +51,8 @@ function SidebarContent({
     <>
       {/* Logo */}
       <div className="flex h-16 items-center px-8">
-        <span className="text-xl font-normal tracking-tight text-gray-900">
+        <span className="flex items-center gap-2 text-xl font-normal tracking-tight text-gray-900">
+          <DatabaseZap className="h-5 w-5" strokeWidth={1.5} />
           kiwatt
         </span>
         <span className="ml-2 rounded-full bg-pelorous-50 px-2 py-0.5 text-xs text-pelorous-600">

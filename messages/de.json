@@ -670,7 +670,10 @@
       "paid": "Bezahlt",
       "overdue": "Überfällig",
       "cancelled": "Storniert"
-    }
+    },
+    "dataPrivacy": "Datenschutz",
+    "dataPrivacyDescription": "Gemäss Datenschutzgesetz haben Sie das Recht, Ihre persönlichen Daten jederzeit zu exportieren.",
+    "downloadMyData": "Meine Daten herunterladen"
   },
   "components": {
     "addressAutocomplete": {

@@ -670,7 +670,10 @@
       "paid": "Pagata",
       "overdue": "Scaduta",
       "cancelled": "Annullata"
-    }
+    },
+    "dataPrivacy": "Privacy dei dati",
+    "dataPrivacyDescription": "In conformità con le leggi sulla protezione dei dati, hai il diritto di esportare i tuoi dati personali in qualsiasi momento.",
+    "downloadMyData": "Scarica i miei dati"
   },
   "components": {
     "addressAutocomplete": {

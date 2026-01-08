@@ -685,7 +685,10 @@
       "paid": "Paid",
       "overdue": "Overdue",
       "cancelled": "Cancelled"
-    }
+    },
+    "dataPrivacy": "Data Privacy",
+    "dataPrivacyDescription": "In accordance with data protection laws, you have the right to export your personal data at any time.",
+    "downloadMyData": "Download my data"
   },
   "components": {
     "addressAutocomplete": {
