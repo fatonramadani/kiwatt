@@ -5,10 +5,219 @@ import { createId } from "@paralleldrive/cuid2";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
 import {
+  organization,
   organizationMember,
   loadCurve,
   monthlyAggregation,
 } from "~/server/db/schema";
+
+// Types for distribution calculation
+type DataPoint = {
+  timestamp: string;
+  consumptionKwh: number;
+  productionKwh: number;
+};
+
+type MemberInterval = {
+  memberId: string;
+  consumption: number;
+  production: number;
+  selfConsumption: number;
+  net: number; // positive = surplus, negative = deficit
+  priorityLevel: number;
+};
+
+type DistributionResult = {
+  memberId: string;
+  totalConsumption: number;
+  totalProduction: number;
+  selfConsumption: number;
+  communityConsumption: number;
+  gridConsumption: number;
+  exportedToCommunity: number;
+  exportedToGrid: number;
+};
+
+/**
+ * Distributes community energy surplus among members based on strategy
+ *
+ * @param strategy - "prorata" | "equal" | "priority"
+ * @param memberIntervals - Array of member data for a single 15-min interval
+ * @returns Distribution of community energy for each member
+ */
+function distributeInterval(
+  strategy: "prorata" | "equal" | "priority",
+  memberIntervals: MemberInterval[]
+): Map<string, { fromCommunity: number; toCommunity: number; toGrid: number }> {
+  const result = new Map<string, { fromCommunity: number; toCommunity: number; toGrid: number }>();
+
+  // Initialize result for all members
+  for (const m of memberIntervals) {
+    result.set(m.memberId, { fromCommunity: 0, toCommunity: 0, toGrid: 0 });
+  }
+
+  // Calculate total surplus (from producers) and total deficit (from consumers)
+  const surplusMembers = memberIntervals.filter(m => m.net > 0);
+  const deficitMembers = memberIntervals.filter(m => m.net < 0);
+
+  const totalSurplus = surplusMembers.reduce((sum, m) => sum + m.net, 0);
+  const totalDeficit = Math.abs(deficitMembers.reduce((sum, m) => sum + m.net, 0));
+
+  if (totalSurplus === 0 || totalDeficit === 0) {
+    // No community sharing possible - all surplus goes to grid
+    for (const m of surplusMembers) {
+      const r = result.get(m.memberId)!;
+      r.toGrid = m.net;
+    }
+    return result;
+  }
+
+  // Amount that can actually be shared within community
+  const communityShared = Math.min(totalSurplus, totalDeficit);
+  const excessToGrid = Math.max(0, totalSurplus - totalDeficit);
+
+  // Distribute to deficit members based on strategy
+  let distributionShares: Map<string, number>;
+
+  switch (strategy) {
+    case "equal": {
+      // Equal distribution among all deficit members
+      const share = communityShared / deficitMembers.length;
+      distributionShares = new Map(
+        deficitMembers.map(m => [m.memberId, Math.min(share, Math.abs(m.net))])
+      );
+      break;
+    }
+
+    case "priority": {
+      // Sort by priority level (lower = higher priority), then distribute
+      const sorted = [...deficitMembers].sort((a, b) => a.priorityLevel - b.priorityLevel);
+      distributionShares = new Map();
+      let remaining = communityShared;
+
+      for (const m of sorted) {
+        const needed = Math.abs(m.net);
+        const given = Math.min(needed, remaining);
+        distributionShares.set(m.memberId, given);
+        remaining -= given;
+        if (remaining <= 0) break;
+      }
+
+      // Fill in zeros for members that didn't get anything
+      for (const m of deficitMembers) {
+        if (!distributionShares.has(m.memberId)) {
+          distributionShares.set(m.memberId, 0);
+        }
+      }
+      break;
+    }
+
+    case "prorata":
+    default: {
+      // Proportional to each member's deficit
+      distributionShares = new Map(
+        deficitMembers.map(m => {
+          const share = (Math.abs(m.net) / totalDeficit) * communityShared;
+          return [m.memberId, share];
+        })
+      );
+      break;
+    }
+  }
+
+  // Apply distribution to deficit members
+  for (const m of deficitMembers) {
+    const r = result.get(m.memberId)!;
+    r.fromCommunity = distributionShares.get(m.memberId) ?? 0;
+  }
+
+  // Calculate how much each surplus member contributes
+  // Proportional to their surplus
+  for (const m of surplusMembers) {
+    const r = result.get(m.memberId)!;
+    const shareOfSurplus = m.net / totalSurplus;
+    r.toCommunity = shareOfSurplus * communityShared;
+    r.toGrid = shareOfSurplus * excessToGrid;
+  }
+
+  return result;
+}
+
+/**
+ * Calculates energy distribution for all members over a period
+ * Processes all 15-min intervals and aggregates results
+ */
+function calculateDistribution(
+  strategy: "prorata" | "equal" | "priority",
+  memberLoadCurves: Array<{
+    memberId: string;
+    priorityLevel: number;
+    dataPoints: DataPoint[];
+  }>
+): DistributionResult[] {
+  // Group all data points by timestamp
+  const byTimestamp = new Map<string, MemberInterval[]>();
+
+  for (const member of memberLoadCurves) {
+    for (const dp of member.dataPoints) {
+      if (!byTimestamp.has(dp.timestamp)) {
+        byTimestamp.set(dp.timestamp, []);
+      }
+
+      const selfConsumption = Math.min(dp.consumptionKwh, dp.productionKwh);
+      const net = dp.productionKwh - dp.consumptionKwh;
+
+      byTimestamp.get(dp.timestamp)!.push({
+        memberId: member.memberId,
+        consumption: dp.consumptionKwh,
+        production: dp.productionKwh,
+        selfConsumption,
+        net,
+        priorityLevel: member.priorityLevel,
+      });
+    }
+  }
+
+  // Initialize results per member
+  const results = new Map<string, DistributionResult>();
+  for (const member of memberLoadCurves) {
+    results.set(member.memberId, {
+      memberId: member.memberId,
+      totalConsumption: 0,
+      totalProduction: 0,
+      selfConsumption: 0,
+      communityConsumption: 0,
+      gridConsumption: 0,
+      exportedToCommunity: 0,
+      exportedToGrid: 0,
+    });
+  }
+
+  // Process each timestamp
+  for (const [_timestamp, intervals] of byTimestamp.entries()) {
+    // Distribute community energy for this interval
+    const distribution = distributeInterval(strategy, intervals);
+
+    // Aggregate results
+    for (const interval of intervals) {
+      const r = results.get(interval.memberId)!;
+      const d = distribution.get(interval.memberId)!;
+
+      r.totalConsumption += interval.consumption;
+      r.totalProduction += interval.production;
+      r.selfConsumption += interval.selfConsumption;
+      r.communityConsumption += d.fromCommunity;
+      r.exportedToCommunity += d.toCommunity;
+      r.exportedToGrid += d.toGrid;
+
+      // Grid consumption = deficit not covered by community
+      const deficit = Math.max(0, interval.consumption - interval.production);
+      r.gridConsumption += Math.max(0, deficit - d.fromCommunity);
+    }
+  }
+
+  return Array.from(results.values());
+}
 
 // Helper to verify org membership
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return */
@@ -221,14 +430,25 @@ export const energyRouter = createTRPCRouter({
         processedCount++;
       });
 
-      // Store load curves and calculate aggregations
-      for (const [key, data] of dataByPodAndMonth.entries()) {
+      // Get organization's distribution strategy
+      const org = await ctx.db.query.organization.findFirst({
+        where: eq(organization.id, input.orgId),
+      });
+      const strategy = org?.distributionStrategy ?? "prorata";
+
+      // Get all members with their priority levels
+      const memberPriorities = new Map(
+        members.map((m) => [m.id, m.priorityLevel ?? 5])
+      );
+
+      // Store load curves first
+      for (const [_key, data] of dataByPodAndMonth.entries()) {
         // Sort data points by timestamp
         data.dataPoints.sort(
           (a, b) => new Date(a.timestamp).getTime() - new Date(b.timestamp).getTime()
         );
 
-        // Calculate totals
+        // Calculate totals for load curve record
         const totalConsumption = data.dataPoints.reduce(
           (sum, dp) => sum + dp.consumptionKwh,
           0
@@ -257,69 +477,90 @@ export const energyRouter = createTRPCRouter({
           totalProductionKwh: totalProduction.toFixed(4),
           sourceFile: input.sourceFile,
         });
+      }
 
-        // Calculate self-consumption (min of production and consumption at each interval)
-        let selfConsumption = 0;
-        for (const dp of data.dataPoints) {
-          selfConsumption += Math.min(dp.consumptionKwh, dp.productionKwh);
+      // Group data by year-month for community-wide distribution calculation
+      const periodGroups = new Map<string, Array<{
+        memberId: string;
+        year: number;
+        month: number;
+        priorityLevel: number;
+        dataPoints: DataPoint[];
+      }>>();
+
+      for (const [_key, data] of dataByPodAndMonth.entries()) {
+        const periodKey = `${data.year}-${data.month}`;
+        if (!periodGroups.has(periodKey)) {
+          periodGroups.set(periodKey, []);
         }
-
-        // For now, use simplified distribution (can be enhanced with actual algorithm)
-        const gridConsumption = Math.max(0, totalConsumption - totalProduction);
-        const communityConsumption = Math.max(0, totalConsumption - selfConsumption - gridConsumption);
-        const exportedToCommunity = Math.max(0, totalProduction - selfConsumption);
-        const exportedToGrid = Math.max(0, exportedToCommunity * 0.1); // Simplified
-
-        // Upsert monthly aggregation
-        const existingAgg = await ctx.db.query.monthlyAggregation.findFirst({
-          where: and(
-            eq(monthlyAggregation.memberId, data.memberId),
-            eq(monthlyAggregation.year, data.year),
-            eq(monthlyAggregation.month, data.month)
-          ),
+        periodGroups.get(periodKey)!.push({
+          memberId: data.memberId,
+          year: data.year,
+          month: data.month,
+          priorityLevel: memberPriorities.get(data.memberId) ?? 5,
+          dataPoints: data.dataPoints,
         });
+      }
 
-        if (existingAgg) {
-          await ctx.db
-            .update(monthlyAggregation)
-            .set({
-              totalConsumptionKwh: totalConsumption.toFixed(4),
-              totalProductionKwh: totalProduction.toFixed(4),
-              selfConsumptionKwh: selfConsumption.toFixed(4),
-              communityConsumptionKwh: communityConsumption.toFixed(4),
-              gridConsumptionKwh: gridConsumption.toFixed(4),
-              exportedToCommunityKwh: exportedToCommunity.toFixed(4),
-              exportedToGridKwh: exportedToGrid.toFixed(4),
-              calculatedAt: new Date(),
-            })
-            .where(eq(monthlyAggregation.id, existingAgg.id));
-        } else {
-          await ctx.db.insert(monthlyAggregation).values({
-            id: createId(),
-            organizationId: input.orgId,
-            memberId: data.memberId,
-            year: data.year,
-            month: data.month,
-            totalConsumptionKwh: totalConsumption.toFixed(4),
-            totalProductionKwh: totalProduction.toFixed(4),
-            selfConsumptionKwh: selfConsumption.toFixed(4),
-            communityConsumptionKwh: communityConsumption.toFixed(4),
-            gridConsumptionKwh: gridConsumption.toFixed(4),
-            exportedToCommunityKwh: exportedToCommunity.toFixed(4),
-            exportedToGridKwh: exportedToGrid.toFixed(4),
+      // Calculate distribution for each period (all members together)
+      for (const [_periodKey, periodMembers] of periodGroups.entries()) {
+        const year = periodMembers[0]!.year;
+        const month = periodMembers[0]!.month;
+
+        // Calculate community-wide distribution using the selected strategy
+        const distributions = calculateDistribution(
+          strategy as "prorata" | "equal" | "priority",
+          periodMembers
+        );
+
+        // Update monthly aggregations with proper distribution
+        for (const dist of distributions) {
+          const existingAgg = await ctx.db.query.monthlyAggregation.findFirst({
+            where: and(
+              eq(monthlyAggregation.memberId, dist.memberId),
+              eq(monthlyAggregation.year, year),
+              eq(monthlyAggregation.month, month)
+            ),
           });
+
+          const aggData = {
+            totalConsumptionKwh: dist.totalConsumption.toFixed(4),
+            totalProductionKwh: dist.totalProduction.toFixed(4),
+            selfConsumptionKwh: dist.selfConsumption.toFixed(4),
+            communityConsumptionKwh: dist.communityConsumption.toFixed(4),
+            gridConsumptionKwh: dist.gridConsumption.toFixed(4),
+            exportedToCommunityKwh: dist.exportedToCommunity.toFixed(4),
+            exportedToGridKwh: dist.exportedToGrid.toFixed(4),
+            calculatedAt: new Date(),
+          };
+
+          if (existingAgg) {
+            await ctx.db
+              .update(monthlyAggregation)
+              .set(aggData)
+              .where(eq(monthlyAggregation.id, existingAgg.id));
+          } else {
+            await ctx.db.insert(monthlyAggregation).values({
+              id: createId(),
+              organizationId: input.orgId,
+              memberId: dist.memberId,
+              year,
+              month,
+              ...aggData,
+            });
+          }
         }
       }
 
       return {
         processed: processedCount,
-        periods: dataByPodAndMonth.size,
+        periods: periodGroups.size,
         errors,
         total: input.data.length,
       };
     }),
 
-  // Recalculate monthly aggregations
+  // Recalculate monthly aggregations with proper distribution
   recalculateAggregations: protectedProcedure
     .input(
       z.object({
@@ -330,6 +571,12 @@ export const energyRouter = createTRPCRouter({
     )
     .mutation(async ({ ctx, input }) => {
       await verifyMembership(ctx, input.orgId, true);
+
+      // Get organization's distribution strategy
+      const org = await ctx.db.query.organization.findFirst({
+        where: eq(organization.id, input.orgId),
+      });
+      const strategy = org?.distributionStrategy ?? "prorata";
 
       // Get all load curves for this period
       const startDate = new Date(input.year, input.month - 1, 1);
@@ -346,52 +593,92 @@ export const energyRouter = createTRPCRouter({
         },
       });
 
-      // Group by member and recalculate
-      const memberData = new Map<string, { consumption: number; production: number }>();
-
-      for (const lc of loadCurves) {
-        if (!memberData.has(lc.memberId)) {
-          memberData.set(lc.memberId, { consumption: 0, production: 0 });
-        }
-        const data = memberData.get(lc.memberId)!;
-        data.consumption += parseFloat(lc.totalConsumptionKwh);
-        data.production += parseFloat(lc.totalProductionKwh);
+      if (loadCurves.length === 0) {
+        return { updated: 0, total: 0 };
       }
 
-      let updated = 0;
-      for (const [memberId, data] of memberData.entries()) {
-        const selfConsumption = Math.min(data.consumption, data.production);
-        const gridConsumption = Math.max(0, data.consumption - data.production);
-        const communityConsumption = Math.max(0, data.consumption - selfConsumption - gridConsumption);
-        const exportedToCommunity = Math.max(0, data.production - selfConsumption);
-        const exportedToGrid = Math.max(0, exportedToCommunity * 0.1);
+      // Collect all data points per member with their priority levels
+      const memberLoadCurves: Array<{
+        memberId: string;
+        priorityLevel: number;
+        dataPoints: DataPoint[];
+      }> = [];
 
+      // Group load curves by member and collect all data points
+      const memberDataMap = new Map<string, {
+        priorityLevel: number;
+        dataPoints: DataPoint[];
+      }>();
+
+      for (const lc of loadCurves) {
+        if (!memberDataMap.has(lc.memberId)) {
+          memberDataMap.set(lc.memberId, {
+            priorityLevel: lc.member.priorityLevel ?? 5,
+            dataPoints: [],
+          });
+        }
+        // Add all data points from this load curve
+        const points = lc.dataPoints as DataPoint[];
+        memberDataMap.get(lc.memberId)!.dataPoints.push(...points);
+      }
+
+      // Convert to array format for distribution calculation
+      for (const [memberId, data] of memberDataMap.entries()) {
+        memberLoadCurves.push({
+          memberId,
+          priorityLevel: data.priorityLevel,
+          dataPoints: data.dataPoints,
+        });
+      }
+
+      // Calculate community-wide distribution using the selected strategy
+      const distributions = calculateDistribution(
+        strategy as "prorata" | "equal" | "priority",
+        memberLoadCurves
+      );
+
+      // Update monthly aggregations
+      let updated = 0;
+      for (const dist of distributions) {
         const existingAgg = await ctx.db.query.monthlyAggregation.findFirst({
           where: and(
-            eq(monthlyAggregation.memberId, memberId),
+            eq(monthlyAggregation.memberId, dist.memberId),
             eq(monthlyAggregation.year, input.year),
             eq(monthlyAggregation.month, input.month)
           ),
         });
 
+        const aggData = {
+          totalConsumptionKwh: dist.totalConsumption.toFixed(4),
+          totalProductionKwh: dist.totalProduction.toFixed(4),
+          selfConsumptionKwh: dist.selfConsumption.toFixed(4),
+          communityConsumptionKwh: dist.communityConsumption.toFixed(4),
+          gridConsumptionKwh: dist.gridConsumption.toFixed(4),
+          exportedToCommunityKwh: dist.exportedToCommunity.toFixed(4),
+          exportedToGridKwh: dist.exportedToGrid.toFixed(4),
+          calculatedAt: new Date(),
+        };
+
         if (existingAgg) {
           await ctx.db
             .update(monthlyAggregation)
-            .set({
-              totalConsumptionKwh: data.consumption.toFixed(4),
-              totalProductionKwh: data.production.toFixed(4),
-              selfConsumptionKwh: selfConsumption.toFixed(4),
-              communityConsumptionKwh: communityConsumption.toFixed(4),
-              gridConsumptionKwh: gridConsumption.toFixed(4),
-              exportedToCommunityKwh: exportedToCommunity.toFixed(4),
-              exportedToGridKwh: exportedToGrid.toFixed(4),
-              calculatedAt: new Date(),
-            })
+            .set(aggData)
             .where(eq(monthlyAggregation.id, existingAgg.id));
+          updated++;
+        } else {
+          // Create new aggregation if it doesn't exist
+          await ctx.db.insert(monthlyAggregation).values({
+            id: createId(),
+            organizationId: input.orgId,
+            memberId: dist.memberId,
+            year: input.year,
+            month: input.month,
+            ...aggData,
+          });
           updated++;
         }
       }
 
-      return { updated, total: memberData.size };
+      return { updated, total: memberLoadCurves.length };
     }),
 });
