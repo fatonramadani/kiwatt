@@ -41,7 +41,8 @@
     "settings": "Settings",
     "logout": "Logout",
     "login": "Login",
-    "register": "Sign up"
+    "register": "Sign up",
+    "joinAlpha": "Join Alpha"
   },
   "landing": {
     "nav": {
@@ -53,9 +54,10 @@
       "tagline": "For LEC Managers in Switzerland",
       "title": "Stop wasting hours on spreadsheets. Automate your LEC.",
       "subtitle": "Import load curves, calculate distribution, generate invoices — all in one place.",
-      "cta": "Get started free",
+      "cta": "Join Alpha Program",
       "ctaSecondary": "Learn more",
-      "noCreditCard": "No credit card required"
+      "noCreditCard": "No credit card required",
+      "alphaNotice": "Limited spots — Contact us to join"
     },
     "problem": {
       "label": "The challenge",
@@ -101,6 +103,87 @@
       "multiLanguage": {
         "title": "Works in your language",
         "description": "Full interface in French, German, Italian and English. Members see their language."
+      }
+    },
+    "allFeatures": {
+      "label": "Features",
+      "title": "Everything you need to manage your LEC",
+      "subtitle": "A complete platform designed specifically for Swiss local energy communities.",
+      "items": {
+        "memberManagement": {
+          "title": "Member Management",
+          "description": "Import members via CSV, manage their meters and contact info."
+        },
+        "energyTracking": {
+          "title": "Energy Tracking",
+          "description": "Visualize production, consumption and self-consumption in real-time."
+        },
+        "autoInvoicing": {
+          "title": "Automatic Invoicing",
+          "description": "Generate QR invoices for all members in one click."
+        },
+        "dashboard": {
+          "title": "Dashboards",
+          "description": "Overview of your community's performance and savings."
+        },
+        "distribution": {
+          "title": "Smart Distribution",
+          "description": "3 distribution strategies: pro-rata, equal, or priority-based."
+        },
+        "multiLanguage": {
+          "title": "Multilingual",
+          "description": "Interface available in French, German, Italian and English."
+        },
+        "memberPortal": {
+          "title": "Member Portal",
+          "description": "Each member accesses their own dashboard and invoices."
+        },
+        "smartHome": {
+          "title": "Smart Home API",
+          "description": "Home Assistant integration to optimize consumption."
+        },
+        "reports": {
+          "title": "Detailed Reports",
+          "description": "Financial, energy and environmental reports."
+        },
+        "carbon": {
+          "title": "Carbon Footprint",
+          "description": "Track your community's CO2 savings."
+        },
+        "dataExport": {
+          "title": "Data Export",
+          "description": "Export all your data to CSV at any time."
+        },
+        "qrBill": {
+          "title": "Swiss QR-Bill",
+          "description": "Invoices compliant with Swiss payment standard."
+        },
+        "security": {
+          "title": "Data Security",
+          "description": "Encrypted data, GDPR and Swiss DPA compliant."
+        },
+        "automation": {
+          "title": "Automation",
+          "description": "Automatic calculations based on load curves."
+        },
+        "notifications": {
+          "title": "Notifications",
+          "description": "Alerts for overdue invoices and important events."
+        },
+        "responsive": {
+          "title": "Mobile Friendly",
+          "description": "Access the platform from any device."
+        }
+      },
+      "stats": {
+        "members": "Unlimited",
+        "membersLabel": "Number of members",
+        "languages": "4",
+        "languagesLabel": "Languages supported",
+        "uptime": "99.9%",
+        "uptimeLabel": "Availability",
+        "support": "24h",
+        "supportLabel": "Response time"
       }
     },
     "stats": {
@@ -250,10 +333,54 @@
         }
       }
     },
+    "services": {
+      "label": "Services",
+      "title": "Personalized support",
+      "subtitle": "Experts by your side for every step of your LEC project.",
+      "feasibility": {
+        "title": "Feasibility study",
+        "description": "Complete analysis of your LEC potential with savings simulation.",
+        "features": [
+          "Scope and participant analysis",
+          "Energy flow simulation",
+          "10-year savings estimate",
+          "Detailed report with recommendations"
+        ],
+        "cta": "Request a study",
+        "emailSubject": "LEC Feasibility Study Request"
+      },
+      "turnkey": {
+        "title": "Turnkey Package",
+        "description": "From study to launch, we handle everything.",
+        "features": [
+          "Complete feasibility study",
+          "Platform configuration",
+          "Data and member import",
+          "Manager training",
+          "3-month support"
+        ],
+        "cta": "Request a quote",
+        "emailSubject": "Turnkey Package Quote Request"
+      },
+      "support": {
+        "title": "Annual support",
+        "description": "Priority support and continuous optimization of your LEC.",
+        "features": [
+          "Priority email and phone support",
+          "Quarterly performance reports",
+          "Distribution optimization",
+          "Regulatory updates"
+        ],
+        "cta": "Subscribe",
+        "emailSubject": "Annual Support Subscription"
+      },
+      "customNote": "Need a custom solution? We adapt our services to your specific needs.",
+      "contactUs": "Contact us"
+    },
     "cta": {
-      "title": "Start managing your LEC in minutes",
-      "subtitle": "Free to try. No credit card required. Cancel anytime.",
-      "button": "Create your community"
+      "title": "Ready to simplify your LEC management?",
+      "subtitle": "Join our alpha program and get personalized support.",
+      "button": "Contact us"
     },
     "footer": {
       "description": "The management platform for local energy communities in Switzerland. Built by energy professionals, for energy professionals.",
@@ -290,7 +417,11 @@
       "confirmPassword": "Confirm password",
       "submit": "Sign up",
       "hasAccount": "Already have an account?",
-      "login": "Sign in"
+      "login": "Sign in",
+      "alphaTagline": "Alpha Program",
+      "alphaTitle": "Join the early adopters",
+      "alphaDescription": "Kiwatt is currently in private alpha. We're accepting a limited number of communities to ensure personalized support.",
+      "alphaContact": "Contact us to join the program:"
     }
   },
   "dashboard": {

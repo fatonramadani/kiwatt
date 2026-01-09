@@ -41,7 +41,8 @@
     "settings": "Einstellungen",
     "logout": "Abmelden",
     "login": "Anmelden",
-    "register": "Registrieren"
+    "register": "Registrieren",
+    "joinAlpha": "Alpha beitreten"
   },
   "landing": {
     "nav": {
@@ -53,9 +54,10 @@
       "tagline": "Für LEG-Verwalter in der Schweiz",
       "title": "Schluss mit Tabellenkalkulationen. Automatisieren Sie Ihre LEG.",
       "subtitle": "Lastgänge importieren, Verteilung berechnen, Rechnungen erstellen — alles an einem Ort.",
-      "cta": "Kostenlos starten",
+      "cta": "Alpha-Programm beitreten",
       "ctaSecondary": "Mehr erfahren",
-      "noCreditCard": "Keine Kreditkarte erforderlich"
+      "noCreditCard": "Keine Kreditkarte erforderlich",
+      "alphaNotice": "Begrenzte Plätze — Kontaktieren Sie uns"
     },
     "problem": {
       "label": "Die Herausforderung",
@@ -89,6 +91,87 @@
       "autoInvoicing": {
         "title": "Rechnungen mit 2 Klicks",
         "description": "Erstellen Sie Schweizer QR-Rechnungen für alle Mitglieder. PDF bereit zum Versenden oder Drucken."
+      }
+    },
+    "allFeatures": {
+      "label": "Funktionen",
+      "title": "Alles, was Sie für Ihre LEG brauchen",
+      "subtitle": "Eine komplette Plattform, speziell für Schweizer lokale Energiegemeinschaften entwickelt.",
+      "items": {
+        "memberManagement": {
+          "title": "Mitgliederverwaltung",
+          "description": "Mitglieder per CSV importieren, Zähler und Kontaktdaten verwalten."
+        },
+        "energyTracking": {
+          "title": "Energieverfolgung",
+          "description": "Produktion, Verbrauch und Eigenverbrauch in Echtzeit visualisieren."
+        },
+        "autoInvoicing": {
+          "title": "Automatische Rechnungsstellung",
+          "description": "QR-Rechnungen für alle Mitglieder mit einem Klick erstellen."
+        },
+        "dashboard": {
+          "title": "Dashboards",
+          "description": "Überblick über Leistung und Einsparungen Ihrer Gemeinschaft."
+        },
+        "distribution": {
+          "title": "Intelligente Verteilung",
+          "description": "3 Verteilungsstrategien: anteilig, gleich oder prioritätsbasiert."
+        },
+        "multiLanguage": {
+          "title": "Mehrsprachig",
+          "description": "Oberfläche in Französisch, Deutsch, Italienisch und Englisch verfügbar."
+        },
+        "memberPortal": {
+          "title": "Mitgliederportal",
+          "description": "Jedes Mitglied hat Zugriff auf eigenes Dashboard und Rechnungen."
+        },
+        "smartHome": {
+          "title": "Smart Home API",
+          "description": "Home Assistant Integration zur Verbrauchsoptimierung."
+        },
+        "reports": {
+          "title": "Detaillierte Berichte",
+          "description": "Finanz-, Energie- und Umweltberichte."
+        },
+        "carbon": {
+          "title": "CO2-Bilanz",
+          "description": "Verfolgen Sie die CO2-Einsparungen Ihrer Gemeinschaft."
+        },
+        "dataExport": {
+          "title": "Datenexport",
+          "description": "Exportieren Sie alle Daten jederzeit als CSV."
+        },
+        "qrBill": {
+          "title": "Schweizer QR-Rechnung",
+          "description": "Rechnungen konform mit Schweizer Zahlungsstandard."
+        },
+        "security": {
+          "title": "Datensicherheit",
+          "description": "Verschlüsselte Daten, DSGVO- und DSG-konform."
+        },
+        "automation": {
+          "title": "Automatisierung",
+          "description": "Automatische Berechnungen basierend auf Lastgängen."
+        },
+        "notifications": {
+          "title": "Benachrichtigungen",
+          "description": "Warnungen bei überfälligen Rechnungen und wichtigen Ereignissen."
+        },
+        "responsive": {
+          "title": "Mobilfreundlich",
+          "description": "Zugriff auf die Plattform von jedem Gerät."
+        }
+      },
+      "stats": {
+        "members": "Unbegrenzt",
+        "membersLabel": "Anzahl Mitglieder",
+        "languages": "4",
+        "languagesLabel": "Unterstützte Sprachen",
+        "uptime": "99.9%",
+        "uptimeLabel": "Verfügbarkeit",
+        "support": "24h",
+        "supportLabel": "Antwortzeit"
       }
     },
     "stats": {
@@ -235,10 +318,54 @@
         }
       }
     },
+    "services": {
+      "label": "Dienstleistungen",
+      "title": "Persönliche Betreuung",
+      "subtitle": "Experten an Ihrer Seite für jeden Schritt Ihres LEG-Projekts.",
+      "feasibility": {
+        "title": "Machbarkeitsstudie",
+        "description": "Vollständige Analyse des Potenzials Ihrer LEG mit Einsparungssimulation.",
+        "features": [
+          "Umfang- und Teilnehmeranalyse",
+          "Energieflusssimulation",
+          "10-Jahres-Einsparungsschätzung",
+          "Detaillierter Bericht mit Empfehlungen"
+        ],
+        "cta": "Studie anfordern",
+        "emailSubject": "Anfrage LEG-Machbarkeitsstudie"
+      },
+      "turnkey": {
+        "title": "Schlüsselfertiges Paket",
+        "description": "Von der Studie bis zum Start - wir kümmern uns um alles.",
+        "features": [
+          "Vollständige Machbarkeitsstudie",
+          "Plattformkonfiguration",
+          "Daten- und Mitgliederimport",
+          "Schulung des Verwalters",
+          "3 Monate Support"
+        ],
+        "cta": "Angebot anfordern",
+        "emailSubject": "Anfrage Schlüsselfertiges Paket"
+      },
+      "support": {
+        "title": "Jährliche Betreuung",
+        "description": "Prioritärer Support und kontinuierliche Optimierung Ihrer LEG.",
+        "features": [
+          "Prioritärer E-Mail- und Telefonsupport",
+          "Vierteljährliche Leistungsberichte",
+          "Verteilungsoptimierung",
+          "Regulatorische Updates"
+        ],
+        "cta": "Abonnieren",
+        "emailSubject": "Abonnement Jährliche Betreuung"
+      },
+      "customNote": "Brauchen Sie eine massgeschneiderte Lösung? Wir passen unsere Dienstleistungen an Ihre spezifischen Bedürfnisse an.",
+      "contactUs": "Kontaktieren Sie uns"
+    },
     "cta": {
-      "title": "Starten Sie Ihre LEG-Verwaltung in Minuten",
-      "subtitle": "Kostenlos testen. Keine Kreditkarte erforderlich. Jederzeit kündbar.",
-      "button": "Gemeinschaft erstellen"
+      "title": "Bereit, Ihre LEG-Verwaltung zu vereinfachen?",
+      "subtitle": "Treten Sie unserem Alpha-Programm bei und erhalten Sie persönliche Unterstützung.",
+      "button": "Kontaktieren Sie uns"
     },
     "footer": {
       "description": "Die Verwaltungslösung für lokale Energiegemeinschaften in der Schweiz.",
@@ -275,7 +402,11 @@
       "confirmPassword": "Passwort bestatigen",
       "submit": "Registrieren",
       "hasAccount": "Bereits ein Konto?",
-      "login": "Anmelden"
+      "login": "Anmelden",
+      "alphaTagline": "Alpha-Programm",
+      "alphaTitle": "Werden Sie Early Adopter",
+      "alphaDescription": "Kiwatt befindet sich derzeit in der privaten Alpha-Phase. Wir nehmen eine begrenzte Anzahl von Gemeinschaften auf, um persönliche Betreuung zu gewährleisten.",
+      "alphaContact": "Kontaktieren Sie uns, um am Programm teilzunehmen:"
     }
   },
   "dashboard": {

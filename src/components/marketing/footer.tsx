@@ -70,9 +70,12 @@ export function MarketingFooter() {
           </div>
         </div>
 
-        <div className="mt-16 border-t border-gray-100 pt-8">
+        <div className="mt-16 flex flex-col gap-2 border-t border-gray-100 pt-8 sm:flex-row sm:items-center sm:justify-between">
           <p className="text-xs font-light text-gray-400">
             &copy; {new Date().getFullYear()} Kiwatt. {t("copyright")}
+          </p>
+          <p className="text-xs font-light text-gray-400">
+            Made with ❤️ in Switzerland 🇨🇭
           </p>
         </div>
       </div>

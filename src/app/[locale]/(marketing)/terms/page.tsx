@@ -28,7 +28,7 @@ export default async function TermsPage({
           Conditions générales d&apos;utilisation
         </h1>
         <p className="mt-4 text-gray-500">
-          Dernière mise à jour : Janvier 2025
+          Dernière mise à jour : Janvier 2026
         </p>
 
         <div className="mt-12 space-y-10 text-gray-600">
@@ -94,12 +94,16 @@ export default async function TermsPage({
               </li>
               <li>Tableau de bord pour les gestionnaires et les membres</li>
               <li>Portail membre pour la consultation des données</li>
-              <li>Support multilingue (français, allemand, italien, anglais)</li>
+              <li>
+                Support multilingue (français, allemand, italien, anglais)
+              </li>
             </ul>
           </section>
 
           <section>
-            <h2 className="text-xl font-medium text-gray-900">4. Tarification</h2>
+            <h2 className="text-xl font-medium text-gray-900">
+              4. Tarification
+            </h2>
             <p className="mt-4">
               L&apos;utilisation de Kiwatt est facturée selon les modalités
               suivantes :
@@ -111,7 +115,9 @@ export default async function TermsPage({
               <p className="mt-2 text-sm">
                 Minimum : CHF 49 par mois (hors TVA)
               </p>
-              <p className="mt-2 text-sm">TVA : 8.1% (taux suisse en vigueur)</p>
+              <p className="mt-2 text-sm">
+                TVA : 8.1% (taux suisse en vigueur)
+              </p>
             </div>
             <p className="mt-4">
               Les factures sont émises mensuellement et payables dans un délai
@@ -127,9 +133,7 @@ export default async function TermsPage({
             <h2 className="text-xl font-medium text-gray-900">
               5. Obligations de l&apos;utilisateur
             </h2>
-            <p className="mt-4">
-              En utilisant Kiwatt, vous vous engagez à :
-            </p>
+            <p className="mt-4">En utilisant Kiwatt, vous vous engagez à :</p>
             <ul className="mt-4 list-disc space-y-2 pl-6">
               <li>Utiliser le service conformément à sa destination</li>
               <li>
@@ -215,7 +219,9 @@ export default async function TermsPage({
           </section>
 
           <section>
-            <h2 className="text-xl font-medium text-gray-900">9. Résiliation</h2>
+            <h2 className="text-xl font-medium text-gray-900">
+              9. Résiliation
+            </h2>
             <p className="mt-4">
               <strong>Par l&apos;utilisateur :</strong> vous pouvez résilier
               votre compte à tout moment. La résiliation prend effet à la fin du
@@ -256,9 +262,9 @@ export default async function TermsPage({
               Les présentes CGU sont régies par le droit suisse.
             </p>
             <p className="mt-4">
-              Tout litige relatif à l&apos;interprétation ou à
-              l&apos;exécution des présentes CGU sera soumis à la compétence
-              exclusive des tribunaux de Lausanne, Suisse.
+              Tout litige relatif à l&apos;interprétation ou à l&apos;exécution
+              des présentes CGU sera soumis à la compétence exclusive des
+              tribunaux de Lausanne, Suisse.
             </p>
           </section>
 

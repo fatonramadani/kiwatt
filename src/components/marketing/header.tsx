@@ -52,12 +52,12 @@ export function MarketingHeader() {
           <Link href="/login" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
             {t("login")}
           </Link>
-          <Link
-            href="/register"
+          <a
+            href="mailto:info@kiwatt.ch?subject=Demande d'accès au programme Alpha Kiwatt"
             className="rounded-xl bg-gray-900 px-6 py-2.5 text-sm font-light text-white transition-colors hover:bg-gray-800"
           >
-            {t("register")}
-          </Link>
+            {t("joinAlpha")}
+          </a>
         </div>
       </div>
     </header>

@@ -28,7 +28,7 @@ export default async function PrivacyPage({
           Politique de confidentialité
         </h1>
         <p className="mt-4 text-gray-500">
-          Dernière mise à jour : Janvier 2025
+          Dernière mise à jour : Janvier 2026
         </p>
 
         <div className="mt-12 space-y-10 text-gray-600">
@@ -294,7 +294,9 @@ export default async function PrivacyPage({
               à la protection des données et à la transparence (PFPDT) :
             </p>
             <div className="mt-4 space-y-2">
-              <p>Préposé fédéral à la protection des données et à la transparence</p>
+              <p>
+                Préposé fédéral à la protection des données et à la transparence
+              </p>
               <p>Feldeggweg 1</p>
               <p>3003 Berne, Suisse</p>
               <p>www.edoeb.admin.ch</p>

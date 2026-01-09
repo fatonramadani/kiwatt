@@ -41,7 +41,8 @@
     "settings": "Paramètres",
     "logout": "Déconnexion",
     "login": "Connexion",
-    "register": "Inscription"
+    "register": "Inscription",
+    "joinAlpha": "Rejoindre l'Alpha"
   },
   "landing": {
     "nav": {
@@ -53,9 +54,10 @@
       "tagline": "Pour les gestionnaires de CEL en Suisse",
       "title": "Arrêtez de perdre des heures sur Excel. Automatisez votre CEL.",
       "subtitle": "Importez les courbes de charge, calculez la répartition, générez les factures — tout en un seul endroit.",
-      "cta": "Commencer gratuitement",
+      "cta": "Rejoindre le programme Alpha",
       "ctaSecondary": "En savoir plus",
-      "noCreditCard": "Sans carte de crédit"
+      "noCreditCard": "Sans carte de crédit",
+      "alphaNotice": "Places limitées — Contactez-nous pour rejoindre"
     },
     "problem": {
       "label": "Le défi",
@@ -101,6 +103,87 @@
       "multiLanguage": {
         "title": "Fonctionne dans votre langue",
         "description": "Interface complète en français, allemand, italien et anglais. Les membres voient leur langue."
+      }
+    },
+    "allFeatures": {
+      "label": "Fonctionnalités",
+      "title": "Tout ce dont vous avez besoin pour gérer votre CEL",
+      "subtitle": "Une plateforme complète conçue spécifiquement pour les communautés électriques locales suisses.",
+      "items": {
+        "memberManagement": {
+          "title": "Gestion des membres",
+          "description": "Importez vos membres par CSV, gérez leurs compteurs et coordonnées."
+        },
+        "energyTracking": {
+          "title": "Suivi énergétique",
+          "description": "Visualisez production, consommation et autoconsommation en temps réel."
+        },
+        "autoInvoicing": {
+          "title": "Facturation automatique",
+          "description": "Générez des factures QR pour tous les membres en un clic."
+        },
+        "dashboard": {
+          "title": "Tableaux de bord",
+          "description": "Vue d'ensemble des performances et économies de votre communauté."
+        },
+        "distribution": {
+          "title": "Répartition intelligente",
+          "description": "3 stratégies de distribution: prorata, égale ou prioritaire."
+        },
+        "multiLanguage": {
+          "title": "Multilingue",
+          "description": "Interface disponible en français, allemand, italien et anglais."
+        },
+        "memberPortal": {
+          "title": "Portail membre",
+          "description": "Chaque membre accède à son propre tableau de bord et factures."
+        },
+        "smartHome": {
+          "title": "API Smart Home",
+          "description": "Intégration Home Assistant pour optimiser la consommation."
+        },
+        "reports": {
+          "title": "Rapports détaillés",
+          "description": "Rapports financiers, énergétiques et environnementaux."
+        },
+        "carbon": {
+          "title": "Bilan carbone",
+          "description": "Suivez les économies de CO2 de votre communauté."
+        },
+        "dataExport": {
+          "title": "Export de données",
+          "description": "Exportez toutes vos données en CSV à tout moment."
+        },
+        "qrBill": {
+          "title": "QR-facture suisse",
+          "description": "Factures conformes au standard de paiement suisse."
+        },
+        "security": {
+          "title": "Sécurité des données",
+          "description": "Données chiffrées, conforme RGPD et nLPD."
+        },
+        "automation": {
+          "title": "Automatisation",
+          "description": "Calculs automatiques basés sur les courbes de charge."
+        },
+        "notifications": {
+          "title": "Notifications",
+          "description": "Alertes pour factures en retard et événements importants."
+        },
+        "responsive": {
+          "title": "Mobile friendly",
+          "description": "Accédez à la plateforme depuis n'importe quel appareil."
+        }
+      },
+      "stats": {
+        "members": "Illimité",
+        "membersLabel": "Nombre de membres",
+        "languages": "4",
+        "languagesLabel": "Langues supportées",
+        "uptime": "99.9%",
+        "uptimeLabel": "Disponibilité",
+        "support": "24h",
+        "supportLabel": "Temps de réponse"
       }
     },
     "stats": {
@@ -250,10 +333,54 @@
         }
       }
     },
+    "services": {
+      "label": "Services",
+      "title": "Accompagnement personnalisé",
+      "subtitle": "Des experts à vos côtés pour chaque étape de votre projet CEL.",
+      "feasibility": {
+        "title": "Étude de faisabilité",
+        "description": "Analyse complète du potentiel de votre CEL avec simulation des économies.",
+        "features": [
+          "Analyse du périmètre et des participants",
+          "Simulation des flux énergétiques",
+          "Estimation des économies sur 10 ans",
+          "Rapport détaillé avec recommandations"
+        ],
+        "cta": "Demander une étude",
+        "emailSubject": "Demande d'étude de faisabilité CEL"
+      },
+      "turnkey": {
+        "title": "Pack Clé en Main",
+        "description": "De l'étude à la mise en service, on s'occupe de tout.",
+        "features": [
+          "Étude de faisabilité complète",
+          "Configuration de la plateforme",
+          "Import des données et membres",
+          "Formation du gestionnaire",
+          "Support pendant 3 mois"
+        ],
+        "cta": "Demander un devis",
+        "emailSubject": "Demande de devis Pack Clé en Main"
+      },
+      "support": {
+        "title": "Accompagnement annuel",
+        "description": "Support prioritaire et optimisation continue de votre CEL.",
+        "features": [
+          "Support prioritaire par email et téléphone",
+          "Rapports trimestriels de performance",
+          "Optimisation de la répartition",
+          "Mises à jour réglementaires"
+        ],
+        "cta": "Souscrire",
+        "emailSubject": "Souscription accompagnement annuel"
+      },
+      "customNote": "Besoin d'une solution sur mesure ? Nous adaptons nos services à vos besoins spécifiques.",
+      "contactUs": "Contactez-nous"
+    },
     "cta": {
-      "title": "Commencez à gérer votre CEL en quelques minutes",
-      "subtitle": "Essai gratuit. Sans carte de crédit. Annulez quand vous voulez.",
-      "button": "Créer votre communauté"
+      "title": "Prêt à simplifier la gestion de votre CEL ?",
+      "subtitle": "Rejoignez notre programme alpha et bénéficiez d'un accompagnement personnalisé.",
+      "button": "Nous contacter"
     },
     "footer": {
       "description": "La plateforme de gestion pour les communautés électriques locales en Suisse. Créée par des professionnels de l'énergie, pour des professionnels de l'énergie.",
@@ -290,7 +417,11 @@
       "confirmPassword": "Confirmer le mot de passe",
       "submit": "S'inscrire",
       "hasAccount": "Déjà un compte?",
-      "login": "Se connecter"
+      "login": "Se connecter",
+      "alphaTagline": "Programme Alpha",
+      "alphaTitle": "Rejoignez les premiers utilisateurs",
+      "alphaDescription": "Kiwatt est actuellement en phase alpha privée. Nous acceptons un nombre limité de communautés pour garantir un accompagnement personnalisé.",
+      "alphaContact": "Contactez-nous pour rejoindre le programme :"
     }
   },
   "dashboard": {

@@ -28,7 +28,7 @@ export default async function LegalPage({
           Mentions légales
         </h1>
         <p className="mt-4 text-gray-500">
-          Dernière mise à jour : Janvier 2025
+          Dernière mise à jour : Janvier 2026
         </p>
 
         <div className="mt-12 space-y-10 text-gray-600">
@@ -68,7 +68,9 @@ export default async function LegalPage({
           </section>
 
           <section>
-            <h2 className="text-xl font-medium text-gray-900">3. Hébergement</h2>
+            <h2 className="text-xl font-medium text-gray-900">
+              3. Hébergement
+            </h2>
             <div className="mt-4 space-y-4">
               <div>
                 <p>
@@ -116,8 +118,8 @@ export default async function LegalPage({
               5. Limitation de responsabilité
             </h2>
             <p className="mt-4">
-              Flathunters Sàrl s&apos;efforce d&apos;assurer l&apos;exactitude et
-              la mise à jour des informations diffusées sur ce site.
+              Flathunters Sàrl s&apos;efforce d&apos;assurer l&apos;exactitude
+              et la mise à jour des informations diffusées sur ce site.
               Flathunters Sàrl se réserve le droit de corriger le contenu à tout
               moment et sans préavis.
             </p>

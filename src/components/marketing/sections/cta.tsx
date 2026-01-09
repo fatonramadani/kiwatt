@@ -1,7 +1,6 @@
 "use client";
 
 import { useTranslations } from "next-intl";
-import { Link } from "~/i18n/navigation";
 import { ArrowRight } from "lucide-react";
 
 export function CTASection() {
@@ -16,13 +15,13 @@ export function CTASection() {
         <p className="mx-auto mt-6 max-w-xl text-lg font-light text-gray-500">
           {t("subtitle")}
         </p>
-        <Link
-          href="/register"
+        <a
+          href="mailto:info@kiwatt.ch?subject=Demande d'accès au programme Alpha Kiwatt"
           className="group mt-12 inline-flex items-center gap-2 rounded-xl bg-gray-900 px-12 py-4 text-sm font-light tracking-wide text-white transition-colors hover:bg-gray-800"
         >
           {t("button")}
           <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-        </Link>
+        </a>
       </div>
     </section>
   );
