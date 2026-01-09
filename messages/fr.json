@@ -180,10 +180,10 @@
         "membersLabel": "Nombre de membres",
         "languages": "4",
         "languagesLabel": "Langues supportées",
-        "uptime": "99.9%",
-        "uptimeLabel": "Disponibilité",
-        "support": "24h",
-        "supportLabel": "Temps de réponse"
+        "uptime": "Suisse",
+        "uptimeLabel": "Hébergement",
+        "support": "Email",
+        "supportLabel": "Support inclus"
       }
     },
     "stats": {

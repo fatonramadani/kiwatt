@@ -22,7 +22,6 @@ export default async function HomePage({
     <>
       <HeroSection />
       <ProblemSection />
-      <FeaturesSection />
       <AllFeaturesSection />
       <HowItWorksSection />
       <PricingSection />

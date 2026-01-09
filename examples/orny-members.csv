@@ -1,0 +1,13 @@
+firstname,lastname,email,phone,address,postalCode,city,podNumber,installationType,solarCapacityKwp,batteryCapacityKwh,priorityLevel
+Jean-Pierre,Rochat,jp.rochat@bluewin.ch,079 123 45 67,Route de Cossonay 12,1317,Orny,CH1008400000000000000000000012345,prosumer,8.5,10.0,1
+Marie-Claire,Bonvin,mc.bonvin@gmail.com,079 234 56 78,Chemin des Vignes 3,1317,Orny,CH1008400000000000000000000012346,prosumer,6.2,,2
+André,Pittet,andre.pittet@sunrise.ch,078 345 67 89,Route du Village 25,1317,Orny,CH1008400000000000000000000012347,consumer,,,5
+Françoise,Muller,f.muller@bluewin.ch,076 456 78 90,Chemin de la Gare 8,1317,Orny,CH1008400000000000000000000012348,prosumer,12.0,13.5,1
+Pascal,Ducommun,p.ducommun@gmail.com,079 567 89 01,Route de Cossonay 45,1317,Orny,CH1008400000000000000000000012349,consumer,,,5
+Sylvie,Reymond,s.reymond@bluewin.ch,078 678 90 12,Chemin des Prés 6,1317,Orny,CH1008400000000000000000000012350,prosumer,5.4,,3
+Michel,Croisier,m.croisier@sunrise.ch,076 789 01 23,Route du Village 18,1317,Orny,CH1008400000000000000000000012351,consumer,,,5
+Nathalie,Golay,n.golay@gmail.com,079 890 12 34,Chemin de la Fontaine 2,1317,Orny,CH1008400000000000000000000012352,consumer,,,5
+Pierre-Alain,Bovet,pa.bovet@bluewin.ch,078 901 23 45,Route de Cossonay 67,1317,Orny,CH1008400000000000000000000012353,prosumer,9.8,10.0,2
+Catherine,Monnier,c.monnier@gmail.com,076 012 34 56,Chemin des Vignes 15,1317,Orny,CH1008400000000000000000000012354,consumer,,,5
+Bernard,Jaccard,b.jaccard@sunrise.ch,079 123 45 68,Route du Village 42,1317,Orny,CH1008400000000000000000000012355,prosumer,7.2,,3
+Isabelle,Blanc,i.blanc@bluewin.ch,078 234 56 79,Chemin de l'Eglise 4,1317,Orny,CH1008400000000000000000000012356,consumer,,,5
