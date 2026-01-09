@@ -48,7 +48,7 @@
     "hero": {
       "tagline": "Pour les gestionnaires de CEL en Suisse",
       "title": "Arrêtez de perdre des heures sur Excel. Automatisez votre CEL.",
-      "subtitle": "Importez les courbes de charge, calculez la répartition, générez les factures — tout en un seul endroit. Rejoignez 50+ communautés qui gagnent déjà du temps.",
+      "subtitle": "Importez les courbes de charge, calculez la répartition, générez les factures — tout en un seul endroit.",
       "cta": "Commencer gratuitement",
       "ctaSecondary": "En savoir plus",
       "noCreditCard": "Sans carte de crédit"
@@ -100,13 +100,13 @@
       }
     },
     "stats": {
-      "title": "La confiance des communautés énergétiques suisses",
+      "title": "Conçu pour simplifier votre quotidien",
       "communities": {
-        "value": "50+",
-        "label": "Communautés"
+        "value": "Simple",
+        "label": "Prise en main"
       },
       "energy": {
-        "value": "2.5M+",
+        "value": "Illimité",
         "label": "kWh gérés"
       },
       "time": {
@@ -114,8 +114,8 @@
         "label": "gagnées par mois"
       },
       "hosting": {
-        "value": "100%",
-        "label": "Hébergé en Suisse"
+        "value": "Sécurisé",
+        "label": "Données chiffrées"
       }
     },
     "howItWorks": {
@@ -222,15 +222,15 @@
       },
       "q6": {
         "question": "Mes données sont-elles sécurisées?",
-        "answer": "Oui. Toutes les données sont hébergées en Suisse sur des serveurs sécurisés. Nous sommes conformes au RGPD et ne partageons jamais vos données avec des tiers. Vos données énergétiques et informations membres sont chiffrées au repos et en transit."
+        "answer": "Oui. Nous sommes conformes au RGPD et nLPD et ne partageons jamais vos données avec des tiers. Vos données énergétiques et informations membres sont chiffrées au repos et en transit."
       }
     },
     "trust": {
       "title": "Conçu pour les communautés énergétiques suisses",
       "items": {
         "swiss": {
-          "title": "Hébergé en Suisse",
-          "description": "Les données restent en Suisse"
+          "title": "Sécurité",
+          "description": "Données chiffrées"
         },
         "gdpr": {
           "title": "Conforme RGPD",
@@ -256,7 +256,8 @@
       "legal": "Mentions légales",
       "privacy": "Confidentialité",
       "terms": "Conditions d'utilisation",
-      "contact": "Contact"
+      "contact": "Contact",
+      "copyright": "Tous droits réservés."
     }
   },
   "auth": {
@@ -413,6 +414,16 @@
       "exportedToCommunity": "Exporté vers la communauté",
       "exportedToGrid": "Exporté vers le réseau"
     },
+    "selfSufficiencyRate": "Taux d'autarcie",
+    "memberBreakdown": "Détail par membre",
+    "table": {
+      "member": "Membre",
+      "consumption": "Consommation",
+      "production": "Production",
+      "selfConsumption": "Autoconsommation",
+      "community": "Communauté",
+      "grid": "Réseau"
+    },
     "distribution": {
       "title": "Stratégie de répartition",
       "description": "Choisissez comment la production solaire excédentaire est répartie entre les membres",
@@ -489,6 +500,10 @@
       "currency": "Devise",
       "vatRate": "Taux TVA (%)",
       "paymentTerms": "Délai de paiement (jours)",
+      "legalIdentifiers": "Identifiants légaux",
+      "legalIdentifiersDescription": "Numéros d'identification de l'entreprise affichés sur les factures",
+      "uid": "IDE (Identifiant des entreprises)",
+      "vatNumber": "Numéro TVA (MWST)",
       "qrBill": {
         "title": "QR-facture suisse",
         "description": "Configurer les informations de paiement pour les factures avec code QR",
@@ -603,19 +618,40 @@
     "noEnergyData": "Aucune donnée énergétique disponible",
     "financial": "Financier",
     "energy": "Énergie",
+    "carbon": "Carbone",
     "export": "Exporter CSV",
     "totalBilled": "Total facturé",
     "totalPaid": "Total payé",
     "outstanding": "En attente",
     "collectionRate": "Taux de recouvrement",
+    "totalProduction": "Production totale",
+    "totalConsumption": "Consommation totale",
     "selfSufficiency": "Autosuffisance",
+    "communityShare": "Part communautaire",
     "monthlyBilling": "Facturation mensuelle",
     "invoiceStatus": "Répartition par statut",
     "monthlyBreakdown": "Détail mensuel",
     "productionVsConsumption": "Production vs Consommation",
     "consumptionBreakdown": "Répartition consommation",
     "energySources": "Sources d'énergie mensuelles",
-    "memberSummary": "Résumé par membre"
+    "memberSummary": "Résumé par membre",
+    "table": {
+      "month": "Mois",
+      "billed": "Facturé",
+      "paid": "Payé",
+      "invoices": "Factures",
+      "member": "Membre",
+      "consumption": "Consommation",
+      "production": "Production",
+      "net": "Net"
+    },
+    "chart": {
+      "self": "Propre",
+      "community": "Communauté",
+      "grid": "Réseau",
+      "production": "Production",
+      "consumption": "Consommation"
+    }
   },
   "portal": {
     "dashboard": "Tableau de bord",
@@ -767,5 +803,11 @@
       "delay": "Reporter",
       "startNow": "Démarrer maintenant"
     }
+  },
+  "cookieBanner": {
+    "message": "Ce site utilise uniquement des cookies essentiels pour le fonctionnement du service (authentification, préférences de langue). Aucun cookie publicitaire ou de tracking.",
+    "learnMore": "En savoir plus",
+    "accept": "Accepter",
+    "close": "Fermer"
   }
 }

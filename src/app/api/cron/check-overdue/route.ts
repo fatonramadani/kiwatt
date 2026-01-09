@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { eq, and, lt } from "drizzle-orm";
 import { db } from "~/server/db";
-import { invoice, organization } from "~/server/db/schema";
+import { invoice } from "~/server/db/schema";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -11,11 +11,11 @@ export const dynamic = "force-dynamic";
  * This runs daily at 8:00 AM (configured in vercel.json)
  */
 export async function GET(request: NextRequest) {
-  // Verify cron secret (if set)
+  // Verify cron secret (required)
   const authHeader = request.headers.get("authorization");
   const cronSecret = process.env.CRON_SECRET;
 
-  if (cronSecret && authHeader !== `Bearer ${cronSecret}`) {
+  if (!cronSecret || authHeader !== `Bearer ${cronSecret}`) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
@@ -43,35 +43,10 @@ export async function GET(request: NextRequest) {
         memberId: invoice.memberId,
       });
 
-    console.log(`[Cron] Marked ${overdueInvoices.length} invoices as overdue`);
-
-    // Get organization details for each overdue invoice (for logging/notifications)
-    const orgIds = [...new Set(overdueInvoices.map((inv) => inv.organizationId))];
-    const organizations = await Promise.all(
-      orgIds.map(async (orgId) => {
-        const org = await db.query.organization.findFirst({
-          where: eq(organization.id, orgId),
-        });
-        return org;
-      })
-    );
-
-    const orgMap = new Map(organizations.filter(Boolean).map((o) => [o!.id, o!.name]));
-
-    // Log details
-    for (const inv of overdueInvoices) {
-      const orgName = orgMap.get(inv.organizationId) ?? "Unknown";
-      console.log(`[Cron] Invoice ${inv.invoiceNumber} (${orgName}) marked as overdue`);
-    }
-
     return NextResponse.json({
       success: true,
       overdueCount: overdueInvoices.length,
-      details: overdueInvoices.map((inv) => ({
-        id: inv.id,
-        invoiceNumber: inv.invoiceNumber,
-        organization: orgMap.get(inv.organizationId),
-      })),
+      invoiceIds: overdueInvoices.map((inv) => inv.id),
     });
   } catch (error) {
     console.error("[Cron] Error checking overdue invoices:", error);

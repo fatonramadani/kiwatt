@@ -3,9 +3,11 @@
 import { useState, useEffect } from "react";
 import { X } from "lucide-react";
 import { Link } from "~/i18n/navigation";
+import { useTranslations } from "next-intl";
 
 export function CookieBanner() {
   const [isVisible, setIsVisible] = useState(false);
+  const t = useTranslations("cookieBanner");
 
   useEffect(() => {
     const consent = localStorage.getItem("cookie-consent");
@@ -34,14 +36,12 @@ export function CookieBanner() {
         <div className="flex items-start justify-between gap-4">
           <div className="flex-1">
             <p className="text-sm text-gray-600">
-              Ce site utilise uniquement des cookies essentiels pour le
-              fonctionnement du service (authentification, préférences de
-              langue). Aucun cookie publicitaire ou de tracking.{" "}
+              {t("message")}{" "}
               <Link
                 href="/privacy"
                 className="text-pelorous-600 underline hover:text-pelorous-700"
               >
-                En savoir plus
+                {t("learnMore")}
               </Link>
             </p>
           </div>
@@ -50,12 +50,12 @@ export function CookieBanner() {
               onClick={handleAccept}
               className="rounded-lg bg-gray-900 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-gray-800"
             >
-              Accepter
+              {t("accept")}
             </button>
             <button
               onClick={handleDismiss}
               className="rounded-lg p-2 text-gray-400 transition-colors hover:bg-gray-100 hover:text-gray-600"
-              aria-label="Fermer"
+              aria-label={t("close")}
             >
               <X className="h-5 w-5" />
             </button>

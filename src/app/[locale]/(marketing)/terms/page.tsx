@@ -1,4 +1,17 @@
 import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Conditions générales d'utilisation | Kiwatt",
+  description:
+    "Conditions générales d'utilisation de Kiwatt, plateforme de gestion pour les communautés électriques locales en Suisse.",
+  openGraph: {
+    title: "Conditions générales d'utilisation | Kiwatt",
+    description:
+      "Conditions générales d'utilisation de Kiwatt pour la gestion des CEL en Suisse.",
+    type: "website",
+  },
+};
 
 export default async function TermsPage({
   params,

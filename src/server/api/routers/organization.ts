@@ -379,6 +379,8 @@ export const organizationRouter = createTRPCRouter({
         orgId: z.string(),
         vatRate: z.number().min(0).max(100).optional(),
         paymentTermDays: z.number().min(1).max(365).optional(),
+        vatNumber: z.string().optional(),
+        uid: z.string().optional(),
         iban: z.string().optional(),
         qrIban: z.string().optional(),
         payeeName: z.string().optional(),
@@ -419,7 +421,7 @@ export const organizationRouter = createTRPCRouter({
 
       const currentSettings = org.billingSettings ?? {
         currency: "CHF",
-        vatRate: 7.7,
+        vatRate: 8.1,
         paymentTermDays: 30,
       };
 

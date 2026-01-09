@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { eq, and, desc, sum } from "drizzle-orm";
+import { eq, and, desc, sum, count, sql } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -9,12 +9,13 @@ import {
   organization,
   organizationMember,
   monthlyAggregation,
+  user,
 } from "~/server/db/schema";
 
 // Pricing constants
 const RATE_PER_KWH = 0.005; // CHF per kWh
 const MINIMUM_AMOUNT = 49.0; // CHF minimum per month
-const VAT_RATE = 8.1; // Switzerland VAT rate
+const VAT_RATE = 0; // Kiwatt is not VAT registered
 
 // Helper to verify admin of organization
 async function verifyOrgAdmin(
@@ -37,6 +38,24 @@ async function verifyOrgAdmin(
   }
 
   return membership;
+}
+
+// Helper to verify super admin access
+async function verifySuperAdmin(
+  ctx: { db: any; session: { user: { id: string } } }
+) {
+  const currentUser = await ctx.db.query.user.findFirst({
+    where: eq(user.id, ctx.session.user.id),
+  });
+
+  if (!currentUser?.isSuperAdmin) {
+    throw new TRPCError({
+      code: "FORBIDDEN",
+      message: "Super admin access required",
+    });
+  }
+
+  return currentUser;
 }
 
 // Generate invoice number: KIWATT-2025-001
@@ -362,6 +381,404 @@ export const platformBillingRouter = createTRPCRouter({
         ratePerKwh: RATE_PER_KWH,
         minimumMonthly: MINIMUM_AMOUNT,
         vatRate: VAT_RATE,
+      };
+    }),
+
+  // ============================================
+  // SUPER ADMIN PROCEDURES
+  // ============================================
+
+  // Check if current user is super admin
+  isSuperAdmin: protectedProcedure.query(async ({ ctx }) => {
+    const currentUser = await ctx.db.query.user.findFirst({
+      where: eq(user.id, ctx.session.user.id),
+    });
+    return { isSuperAdmin: currentUser?.isSuperAdmin ?? false };
+  }),
+
+  // Get all organizations with billing summary (super admin only)
+  getAllOrganizations: protectedProcedure.query(async ({ ctx }) => {
+    await verifySuperAdmin(ctx);
+
+    const orgs = await ctx.db.query.organization.findMany({
+      orderBy: [desc(organization.createdAt)],
+    });
+
+    // Get billing summary for each org
+    const orgsWithBilling = await Promise.all(
+      orgs.map(async (org: typeof organization.$inferSelect) => {
+        const invoices = await ctx.db.query.platformInvoice.findMany({
+          where: eq(platformInvoice.organizationId, org.id),
+        });
+
+        let totalPaid = 0;
+        let totalOutstanding = 0;
+        let overdueCount = 0;
+        const now = new Date();
+
+        invoices.forEach((inv: typeof platformInvoice.$inferSelect) => {
+          const amount = parseFloat(inv.totalAmount);
+          if (inv.status === "paid") {
+            totalPaid += amount;
+          } else {
+            totalOutstanding += amount;
+            if (inv.dueDate && new Date(inv.dueDate) < now) {
+              overdueCount++;
+            }
+          }
+        });
+
+        return {
+          id: org.id,
+          name: org.name,
+          slug: org.slug,
+          city: org.city,
+          createdAt: org.createdAt,
+          totalPaid,
+          totalOutstanding,
+          overdueCount,
+          invoiceCount: invoices.length,
+        };
+      })
+    );
+
+    return orgsWithBilling;
+  }),
+
+  // Get all platform invoices (super admin only)
+  getAllPlatformInvoices: protectedProcedure
+    .input(
+      z.object({
+        limit: z.number().min(1).max(100).default(50),
+        offset: z.number().min(0).default(0),
+        status: z.enum(["draft", "sent", "paid"]).optional(),
+        year: z.number().optional(),
+        month: z.number().min(1).max(12).optional(),
+      })
+    )
+    .query(async ({ ctx, input }) => {
+      await verifySuperAdmin(ctx);
+
+      // Build where conditions
+      const conditions = [];
+      if (input.status) {
+        conditions.push(eq(platformInvoice.status, input.status));
+      }
+      if (input.year) {
+        conditions.push(eq(platformInvoice.year, input.year));
+      }
+      if (input.month) {
+        conditions.push(eq(platformInvoice.month, input.month));
+      }
+
+      const invoices = await ctx.db.query.platformInvoice.findMany({
+        where: conditions.length > 0 ? and(...conditions) : undefined,
+        with: { organization: true },
+        orderBy: [desc(platformInvoice.createdAt)],
+        limit: input.limit,
+        offset: input.offset,
+      });
+
+      // Get total count
+      const [countResult] = await ctx.db
+        .select({ count: count() })
+        .from(platformInvoice)
+        .where(conditions.length > 0 ? and(...conditions) : undefined);
+
+      return {
+        invoices: invoices.map((inv: typeof platformInvoice.$inferSelect & { organization: typeof organization.$inferSelect }) => ({
+          id: inv.id,
+          invoiceNumber: inv.invoiceNumber,
+          year: inv.year,
+          month: inv.month,
+          totalKwhManaged: parseFloat(inv.totalKwhManaged),
+          totalAmount: parseFloat(inv.totalAmount),
+          status: inv.status,
+          dueDate: inv.dueDate,
+          createdAt: inv.createdAt,
+          paidAt: inv.paidAt,
+          organization: {
+            id: inv.organization.id,
+            name: inv.organization.name,
+            slug: inv.organization.slug,
+          },
+        })),
+        total: countResult?.count ?? 0,
+      };
+    }),
+
+  // Get revenue overview (super admin only)
+  getRevenueOverview: protectedProcedure.query(async ({ ctx }) => {
+    await verifySuperAdmin(ctx);
+
+    const allInvoices = await ctx.db.query.platformInvoice.findMany();
+
+    let totalRevenue = 0;
+    let totalPaid = 0;
+    let totalOutstanding = 0;
+    let overdueCount = 0;
+    const now = new Date();
+    const currentMonth = now.getMonth() + 1;
+    const currentYear = now.getFullYear();
+    let thisMonthRevenue = 0;
+
+    allInvoices.forEach((inv: typeof platformInvoice.$inferSelect) => {
+      const amount = parseFloat(inv.totalAmount);
+      totalRevenue += amount;
+
+      if (inv.status === "paid") {
+        totalPaid += amount;
+      } else {
+        totalOutstanding += amount;
+        if (inv.dueDate && new Date(inv.dueDate) < now) {
+          overdueCount++;
+        }
+      }
+
+      if (inv.year === currentYear && inv.month === currentMonth) {
+        thisMonthRevenue += amount;
+      }
+    });
+
+    // Get organization count
+    const orgs = await ctx.db.query.organization.findMany({
+      columns: { id: true },
+    });
+
+    return {
+      totalRevenue,
+      totalPaid,
+      totalOutstanding,
+      overdueCount,
+      thisMonthRevenue,
+      organizationCount: orgs.length,
+      invoiceCount: allInvoices.length,
+      ratePerKwh: RATE_PER_KWH,
+      minimumMonthly: MINIMUM_AMOUNT,
+      vatRate: VAT_RATE,
+    };
+  }),
+
+  // Generate invoice for any organization (super admin only)
+  adminGenerateInvoice: protectedProcedure
+    .input(
+      z.object({
+        orgId: z.string(),
+        year: z.number().min(2024).max(2100),
+        month: z.number().min(1).max(12),
+      })
+    )
+    .mutation(async ({ ctx, input }) => {
+      await verifySuperAdmin(ctx);
+
+      // Check if invoice already exists for this period
+      const existingInvoice = await ctx.db.query.platformInvoice.findFirst({
+        where: and(
+          eq(platformInvoice.organizationId, input.orgId),
+          eq(platformInvoice.year, input.year),
+          eq(platformInvoice.month, input.month)
+        ),
+      });
+
+      if (existingInvoice) {
+        throw new TRPCError({
+          code: "CONFLICT",
+          message: `An invoice already exists for ${input.month}/${input.year}`,
+        });
+      }
+
+      // Get organization
+      const org = await ctx.db.query.organization.findFirst({
+        where: eq(organization.id, input.orgId),
+      });
+
+      if (!org) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Organization not found",
+        });
+      }
+
+      // Calculate total kWh managed for the month
+      const [aggregationResult] = await ctx.db
+        .select({
+          totalKwh: sum(monthlyAggregation.totalConsumptionKwh),
+        })
+        .from(monthlyAggregation)
+        .where(
+          and(
+            eq(monthlyAggregation.organizationId, input.orgId),
+            eq(monthlyAggregation.year, input.year),
+            eq(monthlyAggregation.month, input.month)
+          )
+        );
+
+      const totalKwhManaged = parseFloat(aggregationResult?.totalKwh ?? "0");
+
+      // Calculate amounts
+      const calculatedAmount = totalKwhManaged * RATE_PER_KWH;
+      const finalAmount = Math.max(calculatedAmount, MINIMUM_AMOUNT);
+      const vatAmount = finalAmount * (VAT_RATE / 100);
+      const totalAmount = finalAmount + vatAmount;
+
+      // Get next invoice number for the year
+      const existingInvoicesThisYear = await ctx.db.query.platformInvoice.findMany({
+        where: eq(platformInvoice.year, input.year),
+        columns: { id: true },
+      });
+      const sequence = existingInvoicesThisYear.length + 1;
+      const invoiceNumber = generateInvoiceNumber(input.year, sequence);
+
+      // Set due date to 30 days from now
+      const dueDate = new Date();
+      dueDate.setDate(dueDate.getDate() + 30);
+
+      // Create the invoice
+      const invoiceId = createId();
+      await ctx.db.insert(platformInvoice).values({
+        id: invoiceId,
+        organizationId: input.orgId,
+        invoiceNumber,
+        year: input.year,
+        month: input.month,
+        totalKwhManaged: totalKwhManaged.toFixed(2),
+        ratePerKwh: RATE_PER_KWH.toFixed(4),
+        calculatedAmount: calculatedAmount.toFixed(2),
+        minimumAmount: MINIMUM_AMOUNT.toFixed(2),
+        finalAmount: finalAmount.toFixed(2),
+        vatRate: VAT_RATE.toFixed(2),
+        vatAmount: vatAmount.toFixed(2),
+        totalAmount: totalAmount.toFixed(2),
+        status: "draft",
+        dueDate,
+        createdAt: new Date(),
+      });
+
+      return {
+        id: invoiceId,
+        invoiceNumber,
+        organizationName: org.name,
+        totalKwhManaged,
+        totalAmount,
+      };
+    }),
+
+  // Mark invoice as sent (super admin)
+  adminMarkAsSent: protectedProcedure
+    .input(z.object({ invoiceId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await verifySuperAdmin(ctx);
+
+      const invoice = await ctx.db.query.platformInvoice.findFirst({
+        where: eq(platformInvoice.id, input.invoiceId),
+      });
+
+      if (!invoice) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Platform invoice not found",
+        });
+      }
+
+      if (invoice.status !== "draft") {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Only draft invoices can be marked as sent",
+        });
+      }
+
+      await ctx.db
+        .update(platformInvoice)
+        .set({
+          status: "sent",
+          sentAt: new Date(),
+        })
+        .where(eq(platformInvoice.id, input.invoiceId));
+
+      return { success: true };
+    }),
+
+  // Mark invoice as paid (super admin)
+  adminMarkAsPaid: protectedProcedure
+    .input(z.object({ invoiceId: z.string() }))
+    .mutation(async ({ ctx, input }) => {
+      await verifySuperAdmin(ctx);
+
+      const invoice = await ctx.db.query.platformInvoice.findFirst({
+        where: eq(platformInvoice.id, input.invoiceId),
+      });
+
+      if (!invoice) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Platform invoice not found",
+        });
+      }
+
+      if (invoice.status === "paid") {
+        throw new TRPCError({
+          code: "BAD_REQUEST",
+          message: "Invoice is already marked as paid",
+        });
+      }
+
+      await ctx.db
+        .update(platformInvoice)
+        .set({
+          status: "paid",
+          paidAt: new Date(),
+        })
+        .where(eq(platformInvoice.id, input.invoiceId));
+
+      return { success: true };
+    }),
+
+  // Get single invoice details (super admin)
+  adminGetInvoice: protectedProcedure
+    .input(z.object({ invoiceId: z.string() }))
+    .query(async ({ ctx, input }) => {
+      await verifySuperAdmin(ctx);
+
+      const invoice = await ctx.db.query.platformInvoice.findFirst({
+        where: eq(platformInvoice.id, input.invoiceId),
+        with: { organization: true },
+      });
+
+      if (!invoice) {
+        throw new TRPCError({
+          code: "NOT_FOUND",
+          message: "Platform invoice not found",
+        });
+      }
+
+      return {
+        id: invoice.id,
+        invoiceNumber: invoice.invoiceNumber,
+        year: invoice.year,
+        month: invoice.month,
+        totalKwhManaged: parseFloat(invoice.totalKwhManaged),
+        ratePerKwh: parseFloat(invoice.ratePerKwh),
+        calculatedAmount: parseFloat(invoice.calculatedAmount),
+        minimumAmount: parseFloat(invoice.minimumAmount),
+        finalAmount: parseFloat(invoice.finalAmount),
+        vatRate: parseFloat(invoice.vatRate),
+        vatAmount: parseFloat(invoice.vatAmount),
+        totalAmount: parseFloat(invoice.totalAmount),
+        status: invoice.status,
+        pdfUrl: invoice.pdfUrl,
+        dueDate: invoice.dueDate,
+        createdAt: invoice.createdAt,
+        sentAt: invoice.sentAt,
+        paidAt: invoice.paidAt,
+        organization: {
+          id: invoice.organization.id,
+          name: invoice.organization.name,
+          slug: invoice.organization.slug,
+          address: invoice.organization.address,
+          postalCode: invoice.organization.postalCode,
+          city: invoice.organization.city,
+          contactEmail: invoice.organization.contactEmail,
+        },
       };
     }),
 });

@@ -72,7 +72,7 @@ export function MarketingFooter() {
 
         <div className="mt-16 border-t border-gray-100 pt-8">
           <p className="text-xs font-light text-gray-400">
-            &copy; {new Date().getFullYear()} Kiwatt. All rights reserved.
+            &copy; {new Date().getFullYear()} Kiwatt. {t("copyright")}
           </p>
         </div>
       </div>

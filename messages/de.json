@@ -48,7 +48,7 @@
     "hero": {
       "tagline": "Für LEG-Verwalter in der Schweiz",
       "title": "Schluss mit Tabellenkalkulationen. Automatisieren Sie Ihre LEG.",
-      "subtitle": "Lastgänge importieren, Verteilung berechnen, Rechnungen erstellen — alles an einem Ort. Schliessen Sie sich über 50 Gemeinschaften an, die bereits Zeit sparen.",
+      "subtitle": "Lastgänge importieren, Verteilung berechnen, Rechnungen erstellen — alles an einem Ort.",
       "cta": "Kostenlos starten",
       "ctaSecondary": "Mehr erfahren",
       "noCreditCard": "Keine Kreditkarte erforderlich"
@@ -88,22 +88,22 @@
       }
     },
     "stats": {
-      "title": "Vertraut von Schweizer Energiegemeinschaften",
+      "title": "Entwickelt für Schweizer Energiegemeinschaften",
       "communities": {
-        "value": "50+",
-        "label": "Gemeinschaften"
+        "value": "Einfach",
+        "label": "Schneller Einstieg"
       },
       "energy": {
-        "value": "2.5M+",
-        "label": "verwaltete kWh"
+        "value": "Vollständig",
+        "label": "Automatisierte Abrechnung"
       },
       "time": {
         "value": "8h",
         "label": "gespart pro Monat"
       },
       "hosting": {
-        "value": "100%",
-        "label": "Schweizer Hosting"
+        "value": "Sicher",
+        "label": "Verschlüsselte Daten"
       }
     },
     "howItWorks": {
@@ -203,16 +203,16 @@
       },
       "q6": {
         "question": "Sind meine Daten sicher?",
-        "answer": "Ja. Alle Daten werden in der Schweiz gehostet und in Ruhe und bei der Übertragung verschlüsselt. Wir entsprechen den Datenschutzvorschriften der DSGVO und des DSG."
+        "answer": "Ja. Alle Daten werden in Ruhe und bei der Übertragung verschlüsselt. Wir entsprechen den Datenschutzvorschriften der DSGVO und des DSG."
       }
     },
     "trust": {
       "title": "Entwickelt für Schweizer Energiegemeinschaften",
       "items": {
         "swiss": {
-          "icon": "flag",
-          "title": "Schweizer Hosting",
-          "description": "Alle Daten bleiben in der Schweiz"
+          "icon": "shield",
+          "title": "Sicherheit",
+          "description": "Verschlüsselte Daten"
         },
         "gdpr": {
           "icon": "shield",
@@ -241,7 +241,8 @@
       "legal": "Impressum",
       "privacy": "Datenschutz",
       "terms": "Nutzungsbedingungen",
-      "contact": "Kontakt"
+      "contact": "Kontakt",
+      "copyright": "Alle Rechte vorbehalten."
     }
   },
   "auth": {
@@ -398,6 +399,16 @@
       "exportedToCommunity": "An Gemeinschaft exportiert",
       "exportedToGrid": "Ans Netz exportiert"
     },
+    "selfSufficiencyRate": "Autarkierate",
+    "memberBreakdown": "Aufschlüsselung pro Mitglied",
+    "table": {
+      "member": "Mitglied",
+      "consumption": "Verbrauch",
+      "production": "Produktion",
+      "selfConsumption": "Eigenverbrauch",
+      "community": "Gemeinschaft",
+      "grid": "Netz"
+    },
     "distribution": {
       "title": "Verteilungsstrategie",
       "description": "Wählen Sie, wie überschüssige Solarproduktion unter den Mitgliedern verteilt wird",
@@ -474,6 +485,10 @@
       "currency": "Währung",
       "vatRate": "MwSt-Satz (%)",
       "paymentTerms": "Zahlungsfrist (Tage)",
+      "legalIdentifiers": "Rechtliche Identifikatoren",
+      "legalIdentifiersDescription": "Unternehmensidentifikationsnummern auf Rechnungen angezeigt",
+      "uid": "UID (Unternehmens-ID)",
+      "vatNumber": "MwSt-Nummer",
       "qrBill": {
         "title": "Schweizer QR-Rechnung",
         "description": "Zahlungsinformationen für Rechnungen mit QR-Code konfigurieren",
@@ -588,19 +603,40 @@
     "noEnergyData": "Keine Energiedaten verfügbar",
     "financial": "Finanzen",
     "energy": "Energie",
+    "carbon": "CO2",
     "export": "CSV exportieren",
     "totalBilled": "Gesamt fakturiert",
     "totalPaid": "Gesamt bezahlt",
     "outstanding": "Ausstehend",
     "collectionRate": "Einzugsquote",
+    "totalProduction": "Gesamtproduktion",
+    "totalConsumption": "Gesamtverbrauch",
     "selfSufficiency": "Autarkie",
+    "communityShare": "Gemeinschaftsanteil",
     "monthlyBilling": "Monatliche Abrechnung",
     "invoiceStatus": "Verteilung nach Status",
     "monthlyBreakdown": "Monatliche Aufschlüsselung",
     "productionVsConsumption": "Produktion vs Verbrauch",
     "consumptionBreakdown": "Verbrauchsaufteilung",
     "energySources": "Monatliche Energiequellen",
-    "memberSummary": "Zusammenfassung pro Mitglied"
+    "memberSummary": "Zusammenfassung pro Mitglied",
+    "table": {
+      "month": "Monat",
+      "billed": "Fakturiert",
+      "paid": "Bezahlt",
+      "invoices": "Rechnungen",
+      "member": "Mitglied",
+      "consumption": "Verbrauch",
+      "production": "Produktion",
+      "net": "Netto"
+    },
+    "chart": {
+      "self": "Eigen",
+      "community": "Gemeinschaft",
+      "grid": "Netz",
+      "production": "Produktion",
+      "consumption": "Verbrauch"
+    }
   },
   "portal": {
     "dashboard": "Dashboard",
@@ -752,5 +788,11 @@
       "delay": "Verschieben",
       "startNow": "Jetzt starten"
     }
+  },
+  "cookieBanner": {
+    "message": "Diese Website verwendet nur essenzielle Cookies für den Betrieb des Dienstes (Authentifizierung, Spracheinstellungen). Keine Werbe- oder Tracking-Cookies.",
+    "learnMore": "Mehr erfahren",
+    "accept": "Akzeptieren",
+    "close": "Schliessen"
   }
 }

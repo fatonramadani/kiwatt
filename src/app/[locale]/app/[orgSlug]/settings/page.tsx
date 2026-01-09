@@ -478,8 +478,10 @@ function BillingTab({
   const tQr = useTranslations("settings.billing.qrBill");
   const tCommon = useTranslations("common");
   const [formData, setFormData] = useState({
-    vatRate: org.billingSettings?.vatRate ?? 7.7,
+    vatRate: org.billingSettings?.vatRate ?? 8.1,
     paymentTermDays: org.billingSettings?.paymentTermDays ?? 30,
+    vatNumber: org.billingSettings?.vatNumber ?? "",
+    uid: org.billingSettings?.uid ?? "",
     iban: org.billingSettings?.iban ?? "",
     qrIban: org.billingSettings?.qrIban ?? "",
     payeeName: org.billingSettings?.payeeName ?? "",
@@ -545,6 +547,36 @@ function BillingTab({
                 onChange={(e) => setFormData({ ...formData, paymentTermDays: parseInt(e.target.value) })}
                 className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               />
+            </div>
+          </div>
+
+          {/* Legal Identifiers */}
+          <div className="border-t border-gray-100 pt-6">
+            <h3 className="text-sm font-medium text-gray-900">{t("legalIdentifiers")}</h3>
+            <p className="mt-1 text-xs text-gray-400">
+              {t("legalIdentifiersDescription")}
+            </p>
+            <div className="mt-4 grid gap-5 sm:grid-cols-2">
+              <div>
+                <label className="block text-sm text-gray-500">{t("uid")}</label>
+                <input
+                  type="text"
+                  placeholder="CHE-123.456.789"
+                  value={formData.uid}
+                  onChange={(e) => setFormData({ ...formData, uid: e.target.value })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 font-mono text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
+              <div>
+                <label className="block text-sm text-gray-500">{t("vatNumber")}</label>
+                <input
+                  type="text"
+                  placeholder="CHE-123.456.789 MWST"
+                  value={formData.vatNumber}
+                  onChange={(e) => setFormData({ ...formData, vatNumber: e.target.value })}
+                  className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 font-mono text-sm focus:border-gray-200 focus:outline-none"
+                />
+              </div>
             </div>
           </div>
 
@@ -802,7 +834,7 @@ function TariffForm({
     gridRateChfKwh: 0.25,
     injectionRateChfKwh: 0.08,
     monthlyFeeChf: 0,
-    vatRate: 7.7,
+    vatRate: 8.1,
     validFrom: new Date().toISOString().split("T")[0] ?? "",
     validTo: "",
     isDefault: false,

@@ -1,4 +1,17 @@
 import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Politique de confidentialité | Kiwatt",
+  description:
+    "Politique de confidentialité de Kiwatt. Découvrez comment nous protégeons vos données personnelles conformément au RGPD et à la nLPD suisse.",
+  openGraph: {
+    title: "Politique de confidentialité | Kiwatt",
+    description:
+      "Politique de confidentialité de Kiwatt. Protection des données conformément au RGPD et à la nLPD suisse.",
+    type: "website",
+  },
+};
 
 export default async function PrivacyPage({
   params,

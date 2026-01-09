@@ -230,10 +230,9 @@ export function AddressAutocomplete({
               )}
             >
               <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-gray-400" />
-              <span
-                className="text-gray-700"
-                dangerouslySetInnerHTML={{ __html: result.attrs.label }}
-              />
+              <span className="text-gray-700">
+                {result.attrs.label.replace(/<[^>]*>/g, "")}
+              </span>
             </button>
           ))}
         </div>

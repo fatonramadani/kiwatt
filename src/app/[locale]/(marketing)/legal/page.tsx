@@ -1,4 +1,17 @@
 import { setRequestLocale } from "next-intl/server";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Mentions légales | Kiwatt",
+  description:
+    "Mentions légales de Kiwatt, plateforme de gestion pour les communautés électriques locales en Suisse. Editée par Flathunters Sàrl, Lausanne.",
+  openGraph: {
+    title: "Mentions légales | Kiwatt",
+    description:
+      "Mentions légales de Kiwatt, plateforme de gestion pour les communautés électriques locales en Suisse.",
+    type: "website",
+  },
+};
 
 export default async function LegalPage({
   params,

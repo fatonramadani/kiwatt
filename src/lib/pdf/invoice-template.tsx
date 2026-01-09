@@ -209,6 +209,8 @@ export interface InvoiceData {
     contactPhone?: string | null;
     billingSettings?: {
       vatRate?: number;
+      vatNumber?: string;
+      uid?: string;
       iban?: string;
       payeeName?: string;
       payeeAddress?: string;
@@ -267,7 +269,7 @@ function formatPeriod(start: Date, end: Date): string {
 }
 
 export function InvoiceDocument({ invoice }: { invoice: InvoiceData }) {
-  const vatRate = invoice.organization.billingSettings?.vatRate ?? 7.7;
+  const vatRate = invoice.organization.billingSettings?.vatRate ?? 8.1;
 
   return (
     <Document>
@@ -292,6 +294,16 @@ export function InvoiceDocument({ invoice }: { invoice: InvoiceData }) {
               )}
               {invoice.organization.contactPhone && (
                 <Text>{invoice.organization.contactPhone}</Text>
+              )}
+              {invoice.organization.billingSettings?.uid && (
+                <Text style={{ marginTop: 4 }}>
+                  IDE: {invoice.organization.billingSettings.uid}
+                </Text>
+              )}
+              {invoice.organization.billingSettings?.vatNumber && (
+                <Text>
+                  TVA: {invoice.organization.billingSettings.vatNumber}
+                </Text>
               )}
             </View>
           </View>

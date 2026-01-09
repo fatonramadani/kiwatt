@@ -48,7 +48,7 @@
     "hero": {
       "tagline": "For LEC Managers in Switzerland",
       "title": "Stop wasting hours on spreadsheets. Automate your LEC.",
-      "subtitle": "Import load curves, calculate distribution, generate invoices — all in one place. Join 50+ communities already saving time.",
+      "subtitle": "Import load curves, calculate distribution, generate invoices — all in one place.",
       "cta": "Get started free",
       "ctaSecondary": "Learn more",
       "noCreditCard": "No credit card required"
@@ -100,13 +100,13 @@
       }
     },
     "stats": {
-      "title": "Trusted by Swiss energy communities",
+      "title": "Built to simplify your workflow",
       "communities": {
-        "value": "50+",
-        "label": "Communities"
+        "value": "Simple",
+        "label": "Setup"
       },
       "energy": {
-        "value": "2.5M+",
+        "value": "Unlimited",
         "label": "kWh managed"
       },
       "time": {
@@ -114,8 +114,8 @@
         "label": "saved per month"
       },
       "hosting": {
-        "value": "100%",
-        "label": "Swiss-hosted"
+        "value": "Secure",
+        "label": "Encrypted data"
       }
     },
     "howItWorks": {
@@ -222,15 +222,15 @@
       },
       "q6": {
         "question": "Is my data secure?",
-        "answer": "Yes. All data is hosted in Switzerland on secure servers. We're GDPR compliant and never share your data with third parties. Your energy data and member information are encrypted at rest and in transit."
+        "answer": "Yes. We're GDPR and nLPD compliant and never share your data with third parties. Your energy data and member information are encrypted at rest and in transit."
       }
     },
     "trust": {
       "title": "Built for Swiss energy communities",
       "items": {
         "swiss": {
-          "title": "Swiss-hosted",
-          "description": "Data stays in Switzerland"
+          "title": "Security",
+          "description": "Encrypted data"
         },
         "gdpr": {
           "title": "GDPR compliant",
@@ -256,7 +256,8 @@
       "legal": "Legal notice",
       "privacy": "Privacy",
       "terms": "Terms of use",
-      "contact": "Contact"
+      "contact": "Contact",
+      "copyright": "All rights reserved."
     }
   },
   "auth": {
@@ -413,6 +414,16 @@
       "exportedToCommunity": "Exported to community",
       "exportedToGrid": "Exported to grid"
     },
+    "selfSufficiencyRate": "Self-sufficiency rate",
+    "memberBreakdown": "Member breakdown",
+    "table": {
+      "member": "Member",
+      "consumption": "Consumption",
+      "production": "Production",
+      "selfConsumption": "Self-consumption",
+      "community": "Community",
+      "grid": "Grid"
+    },
     "distribution": {
       "title": "Distribution strategy",
       "description": "Choose how excess solar production is distributed among members",
@@ -489,6 +500,10 @@
       "currency": "Currency",
       "vatRate": "VAT rate (%)",
       "paymentTerms": "Payment terms (days)",
+      "legalIdentifiers": "Legal identifiers",
+      "legalIdentifiersDescription": "Business identification numbers displayed on invoices",
+      "uid": "UID (Business ID)",
+      "vatNumber": "VAT Number",
       "qrBill": {
         "title": "Swiss QR-bill",
         "description": "Configure payment information for invoices with QR code",
@@ -603,19 +618,40 @@
     "noEnergyData": "No energy data available",
     "financial": "Financial",
     "energy": "Energy",
+    "carbon": "Carbon",
     "export": "Export CSV",
     "totalBilled": "Total Billed",
     "totalPaid": "Total Paid",
     "outstanding": "Outstanding",
     "collectionRate": "Collection Rate",
+    "totalProduction": "Total Production",
+    "totalConsumption": "Total Consumption",
     "selfSufficiency": "Self-Sufficiency",
+    "communityShare": "Community Share",
     "monthlyBilling": "Monthly Billing",
     "invoiceStatus": "Invoice Status Breakdown",
     "monthlyBreakdown": "Monthly Breakdown",
     "productionVsConsumption": "Production vs Consumption",
     "consumptionBreakdown": "Consumption Breakdown",
     "energySources": "Monthly Energy Sources",
-    "memberSummary": "Member Energy Summary"
+    "memberSummary": "Member Energy Summary",
+    "table": {
+      "month": "Month",
+      "billed": "Billed",
+      "paid": "Paid",
+      "invoices": "Invoices",
+      "member": "Member",
+      "consumption": "Consumption",
+      "production": "Production",
+      "net": "Net"
+    },
+    "chart": {
+      "self": "Self",
+      "community": "Community",
+      "grid": "Grid",
+      "production": "Production",
+      "consumption": "Consumption"
+    }
   },
   "portal": {
     "dashboard": "Dashboard",
@@ -767,5 +803,11 @@
       "delay": "Delay",
       "startNow": "Start now"
     }
+  },
+  "cookieBanner": {
+    "message": "This site only uses essential cookies for the service to function (authentication, language preferences). No advertising or tracking cookies.",
+    "learnMore": "Learn more",
+    "accept": "Accept",
+    "close": "Close"
   }
 }

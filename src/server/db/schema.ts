@@ -79,6 +79,7 @@ export const user = pgTable("user", {
   image: text("image"),
   phone: text("phone"),
   preferredLanguage: languageEnum("preferred_language").default("fr"),
+  isSuperAdmin: boolean("is_super_admin").default(false),
   createdAt: timestamp("created_at")
     .$defaultFn(() => /* @__PURE__ */ new Date())
     .notNull(),
@@ -168,6 +169,9 @@ export const organization = pgTable(
       currency: string;
       vatRate: number;
       paymentTermDays: number;
+      // Swiss legal identifiers
+      vatNumber?: string; // MWST/TVA number (e.g., CHE-123.456.789 MWST)
+      uid?: string; // UID (Unternehmens-Identifikationsnummer, e.g., CHE-123.456.789)
       // QR-bill payment information
       iban?: string;
       qrIban?: string;
@@ -373,7 +377,7 @@ export const tariffPlan = pgTable(
       scale: 2,
     }).default("0"),
     vatRate: decimal("vat_rate", { precision: 5, scale: 2 })
-      .default("7.70")
+      .default("8.10")
       .notNull(),
     validFrom: timestamp("valid_from").notNull(),
     validTo: timestamp("valid_to"),
@@ -438,6 +442,9 @@ export const invoice = pgTable(
     index("invoice_org_idx").on(t.organizationId),
     index("invoice_member_idx").on(t.memberId),
     index("invoice_status_idx").on(t.status),
+    index("invoice_due_date_idx").on(t.dueDate),
+    index("invoice_sent_at_idx").on(t.sentAt),
+    index("invoice_paid_at_idx").on(t.paidAt),
     uniqueIndex("invoice_number_org_idx").on(t.organizationId, t.invoiceNumber),
   ],
 );

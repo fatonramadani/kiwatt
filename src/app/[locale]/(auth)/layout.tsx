@@ -23,13 +23,10 @@ export default async function AuthLayout({
         </Link>
 
         <div className="max-w-lg">
-          <div className="mb-8 flex h-16 w-16 items-center justify-center rounded-2xl bg-gradient-to-br from-emerald-400 to-sky-500">
-            <DatabaseZap className="h-8 w-8 text-white" />
-          </div>
-          <h1 className="text-4xl font-light leading-tight tracking-tight text-white lg:text-5xl">
+          <h1 className="text-4xl leading-tight font-light tracking-tight text-white lg:text-5xl">
             {t("title")}
           </h1>
-          <p className="mt-8 text-lg font-light leading-relaxed text-gray-400">
+          <p className="mt-8 text-lg leading-relaxed font-light text-gray-400">
             {t("subtitle")}
           </p>
         </div>
@@ -42,7 +39,7 @@ export default async function AuthLayout({
       {/* Right side - form */}
       <div className="relative flex w-full items-center justify-center bg-gray-50 p-8 lg:w-1/2">
         {/* Language Switcher */}
-        <div className="absolute right-6 top-6">
+        <div className="absolute top-6 right-6">
           <LanguageSwitcher />
         </div>
 

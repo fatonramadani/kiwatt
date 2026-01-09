@@ -14,7 +14,7 @@ import {
 } from "lucide-react";
 
 export default function EnergyPage() {
-  const params = useParams<{ orgSlug: string }>();
+  const params = useParams<{ orgSlug: string; locale: string }>();
   const t = useTranslations("energy");
   const tCommon = useTranslations("common");
 
@@ -54,10 +54,15 @@ export default function EnergyPage() {
     refetchAggregations();
   };
 
-  const months = [
-    "January", "February", "March", "April", "May", "June",
-    "July", "August", "September", "October", "November", "December",
-  ];
+  // Generate localized month names
+  const getLocalizedMonths = () => {
+    const locale = params.locale || "fr";
+    return Array.from({ length: 12 }, (_, i) => {
+      const date = new Date(2024, i, 1);
+      return new Intl.DateTimeFormat(locale, { month: "long" }).format(date);
+    });
+  };
+  const months = getLocalizedMonths();
 
   return (
     <div className="space-y-8">
@@ -188,7 +193,7 @@ export default function EnergyPage() {
 
             <div className="flex items-center justify-between border-t border-gray-100 pt-10">
               <div>
-                <p className="text-gray-900">Self-sufficiency rate</p>
+                <p className="text-gray-900">{t("selfSufficiencyRate")}</p>
                 <p className="mt-1 text-sm text-gray-400">{t("communityEnergy")}</p>
               </div>
               <p className="text-6xl font-light text-gray-900">
@@ -212,28 +217,28 @@ export default function EnergyPage() {
       {/* Member Breakdown Table */}
       <div className="rounded-2xl border border-gray-100 bg-white">
         <div className="border-b border-gray-100 px-8 py-6">
-          <h2 className="text-xl font-light text-gray-900">Member breakdown</h2>
+          <h2 className="text-xl font-light text-gray-900">{t("memberBreakdown")}</h2>
         </div>
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-100">
               <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">
-                Member
+                {t("table.member")}
               </th>
               <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">
-                Consumption
+                {t("table.consumption")}
               </th>
               <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">
-                Production
+                {t("table.production")}
               </th>
               <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">
-                Self-consumption
+                {t("table.selfConsumption")}
               </th>
               <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">
-                Community
+                {t("table.community")}
               </th>
               <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">
-                Grid
+                {t("table.grid")}
               </th>
             </tr>
           </thead>

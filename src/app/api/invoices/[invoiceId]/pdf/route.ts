@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { eq } from "drizzle-orm";
+import { eq, and } from "drizzle-orm";
 import { db } from "~/server/db";
-import { invoice, invoiceLine, organization, organizationMember } from "~/server/db/schema";
+import { invoice, organizationMember } from "~/server/db/schema";
 import { generateInvoicePdfBuffer } from "~/lib/pdf/generate-invoice-pdf";
 import type { InvoiceData } from "~/lib/pdf/invoice-template";
+import { auth } from "~/server/better-auth";
 
 export async function GET(
   request: NextRequest,
@@ -11,6 +12,15 @@ export async function GET(
 ) {
   try {
     const { invoiceId } = await params;
+
+    // Get user session
+    const session = await auth.api.getSession({
+      headers: request.headers,
+    });
+
+    if (!session?.user?.id) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
 
     // Fetch invoice with all related data
     const inv = await db.query.invoice.findFirst({
@@ -29,6 +39,25 @@ export async function GET(
         { error: "Invoice not found" },
         { status: 404 }
       );
+    }
+
+    // Authorization: Check if user can access this invoice
+    // User must be either: the member on the invoice OR an admin of the organization
+    const isInvoiceMember = inv.member.userId === session.user.id;
+
+    let isOrgAdmin = false;
+    if (!isInvoiceMember) {
+      const membership = await db.query.organizationMember.findFirst({
+        where: and(
+          eq(organizationMember.organizationId, inv.organizationId),
+          eq(organizationMember.userId, session.user.id)
+        ),
+      });
+      isOrgAdmin = membership?.role === "admin";
+    }
+
+    if (!isInvoiceMember && !isOrgAdmin) {
+      return NextResponse.json({ error: "Forbidden" }, { status: 403 });
     }
 
     // Transform to InvoiceData format

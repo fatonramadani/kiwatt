@@ -135,7 +135,7 @@ export default function ReportsPage() {
             className="flex items-center gap-2 rounded-xl bg-gray-900 px-5 py-2.5 text-sm text-white hover:bg-gray-800"
           >
             <Download className="h-4 w-4" />
-            Export CSV
+            {t("export")}
           </button>
         </div>
       </div>
@@ -151,7 +151,7 @@ export default function ReportsPage() {
           }`}
         >
           <Wallet className="h-4 w-4" />
-          Financial
+          {t("financial")}
         </button>
         <button
           onClick={() => setActiveTab("energy")}
@@ -162,7 +162,7 @@ export default function ReportsPage() {
           }`}
         >
           <Zap className="h-4 w-4" />
-          Energy
+          {t("energy")}
         </button>
         <button
           onClick={() => setActiveTab("carbon")}
@@ -173,7 +173,7 @@ export default function ReportsPage() {
           }`}
         >
           <Leaf className="h-4 w-4" />
-          Carbon
+          {t("carbon")}
         </button>
       </div>
 
@@ -238,7 +238,7 @@ function FinancialReport({
               <Wallet className="h-5 w-5 text-pelorous-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Total Billed</p>
+              <p className="text-sm text-gray-400">{t("totalBilled")}</p>
               <p className="text-2xl font-light text-gray-900">
                 {formatCurrency(report.totalBilled)}
               </p>
@@ -252,7 +252,7 @@ function FinancialReport({
               <TrendingUp className="h-5 w-5 text-emerald-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Total Paid</p>
+              <p className="text-sm text-gray-400">{t("totalPaid")}</p>
               <p className="text-2xl font-light text-gray-900">
                 {formatCurrency(report.totalPaid)}
               </p>
@@ -266,7 +266,7 @@ function FinancialReport({
               <TrendingDown className="h-5 w-5 text-amber-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Outstanding</p>
+              <p className="text-sm text-gray-400">{t("outstanding")}</p>
               <p className="text-2xl font-light text-gray-900">
                 {formatCurrency(report.outstanding)}
               </p>
@@ -280,7 +280,7 @@ function FinancialReport({
               <Users className="h-5 w-5 text-gray-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Collection Rate</p>
+              <p className="text-sm text-gray-400">{t("collectionRate")}</p>
               <p className="text-2xl font-light text-gray-900">
                 {report.collectionRate.toFixed(1)}%
               </p>
@@ -291,7 +291,7 @@ function FinancialReport({
 
       {/* Monthly Chart */}
       <div className="rounded-2xl border border-gray-100 bg-white p-6">
-        <h3 className="mb-6 text-lg font-light text-gray-900">Monthly Billing</h3>
+        <h3 className="mb-6 text-lg font-light text-gray-900">{t("monthlyBilling")}</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={report.byMonth}>
             <XAxis dataKey="monthName" axisLine={false} tickLine={false} />
@@ -301,15 +301,15 @@ function FinancialReport({
               contentStyle={{ borderRadius: "12px", border: "1px solid #e5e7eb" }}
             />
             <Legend />
-            <Bar dataKey="billed" fill="#0ea5e9" name="Billed" radius={[4, 4, 0, 0]} />
-            <Bar dataKey="paid" fill="#22c55e" name="Paid" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="billed" fill="#0ea5e9" name={t("table.billed")} radius={[4, 4, 0, 0]} />
+            <Bar dataKey="paid" fill="#22c55e" name={t("table.paid")} radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
 
       {/* Status Breakdown */}
       <div className="rounded-2xl border border-gray-100 bg-white p-6">
-        <h3 className="mb-6 text-lg font-light text-gray-900">Invoice Status Breakdown</h3>
+        <h3 className="mb-6 text-lg font-light text-gray-900">{t("invoiceStatus")}</h3>
         <div className="grid grid-cols-5 gap-4">
           {Object.entries(report.byStatus).map(([status, data]: [string, any]) => (
             <div key={status} className="text-center">
@@ -324,16 +324,16 @@ function FinancialReport({
       {/* Monthly Breakdown Table */}
       <div className="rounded-2xl border border-gray-100 bg-white">
         <div className="border-b border-gray-100 p-6">
-          <h3 className="text-lg font-light text-gray-900">Monthly Breakdown</h3>
+          <h3 className="text-lg font-light text-gray-900">{t("monthlyBreakdown")}</h3>
         </div>
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-100">
-              <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">Month</th>
-              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">Billed</th>
-              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">Paid</th>
-              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">Outstanding</th>
-              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">Invoices</th>
+              <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">{t("table.month")}</th>
+              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">{t("table.billed")}</th>
+              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">{t("table.paid")}</th>
+              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">{t("outstanding")}</th>
+              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">{t("table.invoices")}</th>
             </tr>
           </thead>
           <tbody>
@@ -389,9 +389,9 @@ function EnergyReport({
   }
 
   const consumptionBreakdown = [
-    { name: "Self", value: report.totalSelfConsumption, color: "#22c55e" },
-    { name: "Community", value: report.totalCommunityConsumption, color: "#0ea5e9" },
-    { name: "Grid", value: report.totalGridConsumption, color: "#f59e0b" },
+    { name: t("chart.self"), value: report.totalSelfConsumption, color: "#22c55e" },
+    { name: t("chart.community"), value: report.totalCommunityConsumption, color: "#0ea5e9" },
+    { name: t("chart.grid"), value: report.totalGridConsumption, color: "#f59e0b" },
   ].filter((d) => d.value > 0);
 
   return (
@@ -404,7 +404,7 @@ function EnergyReport({
               <Sun className="h-5 w-5 text-amber-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Total Production</p>
+              <p className="text-sm text-gray-400">{t("totalProduction")}</p>
               <p className="text-2xl font-light text-gray-900">
                 {formatKwh(report.totalProduction)}
               </p>
@@ -418,7 +418,7 @@ function EnergyReport({
               <Zap className="h-5 w-5 text-pelorous-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Total Consumption</p>
+              <p className="text-sm text-gray-400">{t("totalConsumption")}</p>
               <p className="text-2xl font-light text-gray-900">
                 {formatKwh(report.totalConsumption)}
               </p>
@@ -432,7 +432,7 @@ function EnergyReport({
               <TrendingUp className="h-5 w-5 text-emerald-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Self-Sufficiency</p>
+              <p className="text-sm text-gray-400">{t("selfSufficiency")}</p>
               <p className="text-2xl font-light text-gray-900">
                 {report.selfSufficiency.toFixed(1)}%
               </p>
@@ -446,7 +446,7 @@ function EnergyReport({
               <Users className="h-5 w-5 text-gray-600" />
             </div>
             <div>
-              <p className="text-sm text-gray-400">Community Share</p>
+              <p className="text-sm text-gray-400">{t("communityShare")}</p>
               <p className="text-2xl font-light text-gray-900">
                 {formatKwh(report.totalCommunityConsumption)}
               </p>
@@ -459,7 +459,7 @@ function EnergyReport({
       <div className="grid grid-cols-2 gap-6">
         {/* Monthly Production vs Consumption */}
         <div className="rounded-2xl border border-gray-100 bg-white p-6">
-          <h3 className="mb-6 text-lg font-light text-gray-900">Production vs Consumption</h3>
+          <h3 className="mb-6 text-lg font-light text-gray-900">{t("productionVsConsumption")}</h3>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={report.byMonth}>
               <XAxis dataKey="monthName" axisLine={false} tickLine={false} />
@@ -475,7 +475,7 @@ function EnergyReport({
                 stroke="#f59e0b"
                 strokeWidth={2}
                 dot={false}
-                name="Production"
+                name={t("chart.production")}
               />
               <Line
                 type="monotone"
@@ -483,7 +483,7 @@ function EnergyReport({
                 stroke="#0ea5e9"
                 strokeWidth={2}
                 dot={false}
-                name="Consumption"
+                name={t("chart.consumption")}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -491,7 +491,7 @@ function EnergyReport({
 
         {/* Consumption Breakdown Pie */}
         <div className="rounded-2xl border border-gray-100 bg-white p-6">
-          <h3 className="mb-6 text-lg font-light text-gray-900">Consumption Breakdown</h3>
+          <h3 className="mb-6 text-lg font-light text-gray-900">{t("consumptionBreakdown")}</h3>
           <ResponsiveContainer width="100%" height={300}>
             <PieChart>
               <Pie
@@ -518,7 +518,7 @@ function EnergyReport({
 
       {/* Energy Sources Chart */}
       <div className="rounded-2xl border border-gray-100 bg-white p-6">
-        <h3 className="mb-6 text-lg font-light text-gray-900">Monthly Energy Sources</h3>
+        <h3 className="mb-6 text-lg font-light text-gray-900">{t("energySources")}</h3>
         <ResponsiveContainer width="100%" height={300}>
           <BarChart data={report.byMonth}>
             <XAxis dataKey="monthName" axisLine={false} tickLine={false} />
@@ -528,9 +528,9 @@ function EnergyReport({
               contentStyle={{ borderRadius: "12px", border: "1px solid #e5e7eb" }}
             />
             <Legend />
-            <Bar dataKey="selfConsumption" stackId="a" fill="#22c55e" name="Self" radius={[0, 0, 0, 0]} />
-            <Bar dataKey="community" stackId="a" fill="#0ea5e9" name="Community" radius={[0, 0, 0, 0]} />
-            <Bar dataKey="grid" stackId="a" fill="#f59e0b" name="Grid" radius={[4, 4, 0, 0]} />
+            <Bar dataKey="selfConsumption" stackId="a" fill="#22c55e" name={t("chart.self")} radius={[0, 0, 0, 0]} />
+            <Bar dataKey="community" stackId="a" fill="#0ea5e9" name={t("chart.community")} radius={[0, 0, 0, 0]} />
+            <Bar dataKey="grid" stackId="a" fill="#f59e0b" name={t("chart.grid")} radius={[4, 4, 0, 0]} />
           </BarChart>
         </ResponsiveContainer>
       </div>
@@ -538,15 +538,15 @@ function EnergyReport({
       {/* Member Breakdown Table */}
       <div className="rounded-2xl border border-gray-100 bg-white">
         <div className="border-b border-gray-100 p-6">
-          <h3 className="text-lg font-light text-gray-900">Member Energy Summary</h3>
+          <h3 className="text-lg font-light text-gray-900">{t("memberSummary")}</h3>
         </div>
         <table className="w-full">
           <thead>
             <tr className="border-b border-gray-100">
-              <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">Member</th>
-              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">Consumption</th>
-              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">Production</th>
-              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">Net</th>
+              <th className="px-6 py-4 text-left text-sm font-normal text-gray-400">{t("table.member")}</th>
+              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">{t("table.consumption")}</th>
+              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">{t("table.production")}</th>
+              <th className="px-6 py-4 text-right text-sm font-normal text-gray-400">{t("table.net")}</th>
             </tr>
           </thead>
           <tbody>
