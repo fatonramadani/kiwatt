@@ -13,13 +13,13 @@ export function HowItWorksSection() {
   const t = useTranslations("landing.howItWorks");
 
   return (
-    <section className="bg-gray-50 py-32 lg:py-40">
+    <section className="bg-gray-50 py-16 sm:py-24 lg:py-40">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
-        <div className="mb-20 max-w-xl">
+        <div className="mb-10 max-w-xl sm:mb-20">
           <p className="mb-4 text-sm font-light uppercase tracking-[0.3em] text-gray-400">
             Process
           </p>
-          <h2 className="text-4xl font-light leading-tight tracking-tight text-gray-900 lg:text-5xl">
+          <h2 className="text-3xl font-light leading-tight tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
             {t("title")}
           </h2>
         </div>
@@ -28,7 +28,7 @@ export function HowItWorksSection() {
           {steps.map((step, index) => (
             <div
               key={step.key}
-              className="relative rounded-2xl border border-gray-100 bg-white p-8"
+              className="relative rounded-2xl border border-gray-100 bg-white p-6 sm:p-8"
             >
               {/* Step number */}
               <div className="mb-6">

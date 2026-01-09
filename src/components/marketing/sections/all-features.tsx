@@ -62,17 +62,17 @@ export function AllFeaturesSection() {
   const t = useTranslations("landing.allFeatures");
 
   return (
-    <section className="bg-gray-50 py-32 lg:py-40">
+    <section className="bg-gray-50 py-16 sm:py-24 lg:py-40">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         {/* Header */}
-        <div className="mb-20 text-center">
-          <p className="mb-4 text-sm font-light tracking-[0.3em] text-gray-400 uppercase">
+        <div className="mb-10 text-center sm:mb-20">
+          <p className="mb-4 text-sm font-light uppercase tracking-[0.3em] text-gray-400">
             {t("label")}
           </p>
-          <h2 className="mx-auto max-w-3xl text-4xl leading-tight font-light tracking-tight text-gray-900 lg:text-5xl">
+          <h2 className="mx-auto max-w-3xl text-3xl font-light leading-tight tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
             {t("title")}
           </h2>
-          <p className="mx-auto mt-6 max-w-2xl text-lg font-light text-gray-500">
+          <p className="mx-auto mt-4 max-w-2xl text-base font-light text-gray-500 sm:mt-6 sm:text-lg">
             {t("subtitle")}
           </p>
         </div>

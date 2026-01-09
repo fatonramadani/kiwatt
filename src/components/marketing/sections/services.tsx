@@ -29,17 +29,17 @@ export function ServicesSection() {
   const t = useTranslations("landing.services");
 
   return (
-    <section id="services" className="bg-gray-50 py-32 lg:py-40">
+    <section id="services" className="bg-gray-50 py-16 sm:py-24 lg:py-40">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
-        <div className="mb-20 max-w-xl">
+        <div className="mb-10 max-w-xl sm:mb-20">
           <p className="mb-4 flex items-center gap-3 text-sm font-light uppercase tracking-[0.3em] text-gray-400">
             <span className="h-px w-8 bg-gray-300" />
             {t("label")}
           </p>
-          <h2 className="text-4xl font-light leading-tight tracking-tight text-gray-900 lg:text-5xl">
+          <h2 className="text-3xl font-light leading-tight tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
             {t("title")}
           </h2>
-          <p className="mt-4 text-lg font-light text-gray-500">
+          <p className="mt-4 text-base font-light text-gray-500 sm:text-lg">
             {t("subtitle")}
           </p>
         </div>
@@ -52,7 +52,7 @@ export function ServicesSection() {
             return (
               <div
                 key={service.key}
-                className="group flex flex-col rounded-2xl border border-gray-100 bg-white p-8 transition-all hover:border-gray-200 hover:shadow-lg"
+                className="group flex flex-col rounded-2xl border border-gray-100 bg-white p-6 transition-all hover:border-gray-200 hover:shadow-lg sm:p-8"
               >
                 {/* Icon */}
                 <div
@@ -106,7 +106,7 @@ export function ServicesSection() {
         </div>
 
         {/* Bottom note */}
-        <div className="mt-16 rounded-2xl border border-gray-100 bg-white p-8 text-center">
+        <div className="mt-10 rounded-2xl border border-gray-100 bg-white p-6 text-center sm:mt-16 sm:p-8">
           <p className="text-sm font-light text-gray-500">
             {t("customNote")}
           </p>

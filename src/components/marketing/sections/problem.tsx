@@ -13,7 +13,7 @@ export function ProblemSection() {
   const t = useTranslations("landing.problem");
 
   return (
-    <section className="bg-gray-50 py-24 lg:py-32">
+    <section className="bg-gray-50 py-16 sm:py-24 lg:py-32">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <div className="mb-16 text-center">
           <p className="mb-4 text-sm font-light uppercase tracking-[0.3em] text-gray-400">

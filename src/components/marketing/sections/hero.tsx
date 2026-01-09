@@ -27,7 +27,7 @@ export function HeroSection() {
             {t("tagline")}
           </p>
 
-          <h1 className="text-5xl font-light leading-[1.1] tracking-tight text-gray-900 md:text-6xl lg:text-7xl">
+          <h1 className="text-3xl font-light leading-[1.1] tracking-tight text-gray-900 sm:text-5xl md:text-6xl lg:text-7xl">
             {t("title")}
           </h1>
 
@@ -35,18 +35,18 @@ export function HeroSection() {
             {t("subtitle")}
           </p>
 
-          <div className="mt-12 flex flex-col gap-4">
-            <div className="flex items-center gap-8">
+          <div className="mt-8 flex flex-col gap-4 sm:mt-12">
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-8">
               <a
                 href="mailto:info@kiwatt.ch?subject=Demande d'accès au programme Alpha Kiwatt"
-                className="group flex items-center gap-2 rounded-xl bg-gray-900 px-8 py-4 text-sm font-light tracking-wide text-white transition-colors hover:bg-gray-800"
+                className="group flex items-center justify-center gap-2 rounded-xl bg-gray-900 px-8 py-4 text-sm font-light tracking-wide text-white transition-colors hover:bg-gray-800"
               >
                 {t("cta")}
                 <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
               </a>
               <a
                 href="#features"
-                className="text-sm font-light text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-900"
+                className="text-center text-sm font-light text-gray-500 underline underline-offset-4 transition-colors hover:text-gray-900 sm:text-left"
               >
                 {t("ctaSecondary")}
               </a>

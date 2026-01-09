@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
-import { Link } from "~/i18n/navigation";
 import { ArrowRight, Check, Zap } from "lucide-react";
 
 const PRICE_PER_KWH = 0.01;
@@ -34,24 +33,24 @@ export function PricingSection() {
   const features = t.raw("features") as string[];
 
   return (
-    <section id="pricing" className="bg-white py-32 lg:py-40">
+    <section id="pricing" className="bg-white py-16 sm:py-24 lg:py-40">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
-        <div className="mb-20 max-w-xl">
+        <div className="mb-10 max-w-xl sm:mb-20">
           <p className="mb-4 flex items-center gap-3 text-sm font-light uppercase tracking-[0.3em] text-gray-400">
             <span className="h-px w-8 bg-gray-300" />
             {t("label")}
           </p>
-          <h2 className="text-4xl font-light leading-tight tracking-tight text-gray-900 lg:text-5xl">
+          <h2 className="text-3xl font-light leading-tight tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
             {t("title")}
           </h2>
-          <p className="mt-4 text-lg font-light text-gray-500">
+          <p className="mt-4 text-base font-light text-gray-500 sm:text-lg">
             {t("subtitle")}
           </p>
         </div>
 
-        <div className="grid gap-16 lg:grid-cols-2">
+        <div className="grid gap-10 sm:gap-16 lg:grid-cols-2">
           {/* Pricing calculator */}
-          <div className="rounded-2xl border border-gray-100 bg-white p-10">
+          <div className="rounded-2xl border border-gray-100 bg-white p-6 sm:p-10">
             <h3 className="text-xl font-light text-gray-900">
               {t("calculator.title")}
             </h3>
@@ -104,22 +103,22 @@ export function PricingSection() {
             </div>
 
             {/* Price display */}
-            <div className="mt-10 border-t border-gray-100 pt-10">
-              <div className="flex items-end justify-between">
+            <div className="mt-8 border-t border-gray-100 pt-8 sm:mt-10 sm:pt-10">
+              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-0">
                 <div>
                   <p className="text-xs font-light uppercase tracking-[0.15em] text-gray-400">
                     {t("calculator.monthly")}
                   </p>
-                  <p className="mt-2 text-4xl font-light text-gray-900">
+                  <p className="mt-2 text-3xl font-light text-gray-900 sm:text-4xl">
                     CHF {formatNumber(Math.round(monthlyPrice))}
-                    <span className="text-lg text-gray-400">/mois</span>
+                    <span className="text-base text-gray-400 sm:text-lg">/mois</span>
                   </p>
                 </div>
-                <div className="text-right">
+                <div className="sm:text-right">
                   <p className="text-xs font-light uppercase tracking-[0.15em] text-gray-400">
                     {t("calculator.annual")}
                   </p>
-                  <p className="mt-2 text-2xl font-light text-gray-500">
+                  <p className="mt-2 text-xl font-light text-gray-500 sm:text-2xl">
                     CHF {formatNumber(Math.round(annualPrice))}/an
                   </p>
                 </div>
@@ -162,13 +161,13 @@ export function PricingSection() {
               </ul>
             </div>
 
-            <Link
-              href="/register"
+            <a
+              href="mailto:info@kiwatt.ch?subject=Demande d'accès au programme Alpha Kiwatt"
               className="group mt-12 flex items-center justify-center gap-2 rounded-xl bg-gray-900 py-4 text-sm font-light tracking-wide text-white transition-colors hover:bg-gray-800"
             >
               {t("cta")}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            </a>
           </div>
         </div>
 

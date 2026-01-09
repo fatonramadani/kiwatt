@@ -8,14 +8,14 @@ export function FAQSection() {
   const t = useTranslations("landing.faq");
 
   return (
-    <section id="faq" className="bg-gray-50 py-32 lg:py-40">
+    <section id="faq" className="bg-gray-50 py-16 sm:py-24 lg:py-40">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
-        <div className="grid gap-20 lg:grid-cols-2">
+        <div className="grid gap-10 sm:gap-20 lg:grid-cols-2">
           <div>
             <p className="mb-4 text-sm font-light uppercase tracking-[0.3em] text-gray-400">
               FAQ
             </p>
-            <h2 className="text-4xl font-light leading-tight tracking-tight text-gray-900 lg:text-5xl">
+            <h2 className="text-3xl font-light leading-tight tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
               {t("title")}
             </h2>
           </div>
@@ -24,7 +24,7 @@ export function FAQSection() {
             {faqs.map((faq, index) => (
               <div
                 key={faq}
-                className="rounded-2xl border border-gray-100 bg-white p-8"
+                className="rounded-2xl border border-gray-100 bg-white p-6 sm:p-8"
               >
                 <h3 className="flex items-start gap-4 text-lg font-light text-gray-900">
                   <span className="text-sm font-light text-gray-400">

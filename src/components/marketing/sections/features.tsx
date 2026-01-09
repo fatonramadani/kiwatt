@@ -14,16 +14,16 @@ export function FeaturesSection() {
   const t = useTranslations("landing.features");
 
   return (
-    <section id="features" className="bg-white py-32 lg:py-40">
+    <section id="features" className="bg-white py-16 sm:py-24 lg:py-40">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
-        <div className="mb-20 max-w-xl">
+        <div className="mb-10 max-w-xl sm:mb-20">
           <p className="mb-4 text-sm font-light uppercase tracking-[0.3em] text-gray-400">
             Features
           </p>
-          <h2 className="text-4xl font-light leading-tight tracking-tight text-gray-900 lg:text-5xl">
+          <h2 className="text-3xl font-light leading-tight tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
             {t("title")}
           </h2>
-          <p className="mt-6 text-lg font-light text-gray-500">
+          <p className="mt-4 text-base font-light text-gray-500 sm:mt-6 sm:text-lg">
             {t("subtitle")}
           </p>
         </div>
@@ -34,7 +34,7 @@ export function FeaturesSection() {
             return (
               <div
                 key={feature.key}
-                className="group relative rounded-2xl border border-gray-100 bg-white p-10 transition-all hover:border-gray-200 hover:shadow-sm"
+                className="group relative rounded-2xl border border-gray-100 bg-white p-6 transition-all hover:border-gray-200 hover:shadow-sm sm:p-10"
               >
                 <div className={`mb-6 flex h-12 w-12 items-center justify-center rounded-xl ${feature.color.split(" ")[0]}`}>
                   <Icon className={`h-6 w-6 ${feature.color.split(" ")[1]}`} />
