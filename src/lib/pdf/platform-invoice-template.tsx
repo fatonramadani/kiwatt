@@ -379,8 +379,8 @@ export function PlatformInvoiceDocument({ invoice }: { invoice: PlatformInvoiceD
         <View style={styles.note}>
           <Text style={styles.noteText}>
             Cette facture concerne les frais de gestion de la plateforme Kiwatt pour votre
-            Communauté Électrique Locale (CEL). Le tarif est de CHF 0.005 par kWh géré,
-            avec un minimum de CHF 49.00 par mois.
+            Communauté Électrique Locale (CEL). Le tarif est de CHF 0.01 par kWh géré,
+            avec un minimum de CHF 79.00 par mois.
           </Text>
         </View>
 

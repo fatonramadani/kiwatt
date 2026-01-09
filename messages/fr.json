@@ -145,7 +145,7 @@
       "label": "Tarification",
       "title": "Un prix qui s'adapte à votre volume",
       "subtitle": "Tarification simple et transparente basée sur l'énergie gérée par votre CEL. Pas de frais cachés.",
-      "formula": "CHF 0.005 par kWh géré (minimum CHF 49/mois)",
+      "formula": "CHF 0.01 par kWh géré (minimum CHF 79/mois)",
       "cta": "Commencer maintenant",
       "calculator": {
         "title": "Calculez votre tarif",

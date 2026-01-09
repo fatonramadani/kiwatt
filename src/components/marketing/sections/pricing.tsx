@@ -5,8 +5,8 @@ import { useTranslations } from "next-intl";
 import { Link } from "~/i18n/navigation";
 import { ArrowRight, Check, Zap } from "lucide-react";
 
-const PRICE_PER_KWH = 0.005;
-const MIN_PRICE = 49;
+const PRICE_PER_KWH = 0.01;
+const MIN_PRICE = 79;
 
 function calculatePrice(volumeKwh: number): number {
   const calculated = volumeKwh * PRICE_PER_KWH;

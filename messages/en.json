@@ -145,7 +145,7 @@
       "label": "Pricing",
       "title": "A price that scales with your volume",
       "subtitle": "Simple, transparent pricing based on energy managed by your LEC. No hidden fees.",
-      "formula": "CHF 0.005 per kWh managed (minimum CHF 49/month)",
+      "formula": "CHF 0.01 per kWh managed (minimum CHF 79/month)",
       "cta": "Start now",
       "calculator": {
         "title": "Calculate your rate",

@@ -14,8 +14,8 @@ import {
 import { type db as DbType } from "~/server/db";
 
 // Pricing constants
-const RATE_PER_KWH = 0.005; // CHF per kWh
-const MINIMUM_AMOUNT = 49.0; // CHF minimum per month
+const RATE_PER_KWH = 0.01; // CHF per kWh
+const MINIMUM_AMOUNT = 79.0; // CHF minimum per month
 const VAT_RATE = 0; // Kiwatt is not VAT registered
 
 // Helper to verify admin of organization

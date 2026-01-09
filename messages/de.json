@@ -133,7 +133,7 @@
       "label": "Preise",
       "title": "Ein Preis, der sich Ihrem Volumen anpasst",
       "subtitle": "Einfache, transparente Preisgestaltung basierend auf der von Ihrer LEG verwalteten Energie. Keine versteckten Kosten.",
-      "formula": "CHF 0.005 pro kWh verwaltet (Minimum CHF 49/Monat)",
+      "formula": "CHF 0.01 pro kWh verwaltet (Minimum CHF 79/Monat)",
       "cta": "Jetzt starten",
       "calculator": {
         "title": "Berechnen Sie Ihren Tarif",
