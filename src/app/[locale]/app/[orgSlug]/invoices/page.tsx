@@ -66,20 +66,13 @@ export default function InvoicesPage() {
   const sendBatchMutation = api.invoice.sendBatch.useMutation({
     onSuccess: (result) => {
       setSelectedIds(new Set());
-      refetch();
+      void refetch();
       if (result.errors.length > 0) {
         alert(`Sent ${result.sent} invoice(s). ${result.errors.length} error(s).`);
       }
     },
   });
 
-  const markPaidBatchMutation = api.invoice.markPaidBatch.useMutation({
-    onSuccess: () => {
-      setSelectedIds(new Set());
-      setShowPaymentModal(false);
-      refetch();
-    },
-  });
 
   const formatCurrency = (amount: number) => {
     return new Intl.NumberFormat(`${locale}-CH`, {
@@ -179,7 +172,7 @@ export default function InvoicesPage() {
           onClose={() => setShowGenerate(false)}
           onSuccess={() => {
             setShowGenerate(false);
-            refetch();
+            void refetch();
           }}
         />
       )}
@@ -201,7 +194,7 @@ export default function InvoicesPage() {
             setShowPaymentModal(false);
             setPaymentInvoiceId(null);
             setSelectedIds(new Set());
-            refetch();
+            void refetch();
           }}
         />
       )}
@@ -675,7 +668,7 @@ function PaymentModal({
 
           {(markAsPaidMutation.isError || markPaidBatchMutation.isError) && (
             <div className="rounded-xl bg-red-50 p-4 text-sm text-red-600">
-              {markAsPaidMutation.error?.message || markPaidBatchMutation.error?.message}
+              {markAsPaidMutation.error?.message ?? markPaidBatchMutation.error?.message}
             </div>
           )}
         </div>

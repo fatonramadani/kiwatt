@@ -63,22 +63,25 @@ export function AddressAutocomplete({
       return;
     }
 
-    debounceRef.current = setTimeout(async () => {
-      setIsLoading(true);
-      try {
-        const response = await fetch(
-          `https://api3.geo.admin.ch/rest/services/api/SearchServer?searchText=${encodeURIComponent(value)}&type=locations&origins=address&limit=8`
-        );
-        const data = await response.json();
-        setResults(data.results || []);
-        setIsOpen(true);
-        setSelectedIndex(-1);
-      } catch (error) {
-        console.error("Address search failed:", error);
-        setResults([]);
-      } finally {
-        setIsLoading(false);
-      }
+    debounceRef.current = setTimeout(() => {
+      const fetchAddresses = async () => {
+        setIsLoading(true);
+        try {
+          const response = await fetch(
+            `https://api3.geo.admin.ch/rest/services/api/SearchServer?searchText=${encodeURIComponent(value)}&type=locations&origins=address&limit=8`
+          );
+          const data = (await response.json()) as { results?: GeoAdminResult[] };
+          setResults(data.results ?? []);
+          setIsOpen(true);
+          setSelectedIndex(-1);
+        } catch (error) {
+          console.error("Address search failed:", error);
+          setResults([]);
+        } finally {
+          setIsLoading(false);
+        }
+      };
+      void fetchAddresses();
     }, 300);
 
     return () => {
@@ -121,8 +124,9 @@ export function AddressAutocomplete({
       const city = parts.slice(postalCodeIndex + 1).join(" ");
 
       // Try to extract canton from detail
-      const detail = result.attrs.detail || "";
-      const cantonMatch = detail.match(/\b([A-Z]{2})\s*$/);
+      const detail = result.attrs.detail ?? "";
+      const cantonRegex = /\b([A-Z]{2})\s*$/;
+      const cantonMatch = cantonRegex.exec(detail);
       const canton = cantonMatch ? cantonMatch[1] : undefined;
 
       return {

@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { TRPCError } from "@trpc/server";
-import { eq, and, desc, sum, count, sql } from "drizzle-orm";
+import { eq, and, desc, sum, count } from "drizzle-orm";
 import { createId } from "@paralleldrive/cuid2";
 
 import { createTRPCRouter, protectedProcedure } from "~/server/api/trpc";
@@ -11,6 +11,7 @@ import {
   monthlyAggregation,
   user,
 } from "~/server/db/schema";
+import { type db as DbType } from "~/server/db";
 
 // Pricing constants
 const RATE_PER_KWH = 0.005; // CHF per kWh
@@ -19,14 +20,14 @@ const VAT_RATE = 0; // Kiwatt is not VAT registered
 
 // Helper to verify admin of organization
 async function verifyOrgAdmin(
-  ctx: { db: any; session: { user: { id: string } } },
-  orgId: string
+  ctx: { db: typeof DbType; session: { user: { id: string } } },
+  orgId: string,
 ) {
   const membership = await ctx.db.query.organizationMember.findFirst({
     where: and(
       eq(organizationMember.organizationId, orgId),
       eq(organizationMember.userId, ctx.session.user.id),
-      eq(organizationMember.role, "admin")
+      eq(organizationMember.role, "admin"),
     ),
   });
 
@@ -41,9 +42,10 @@ async function verifyOrgAdmin(
 }
 
 // Helper to verify super admin access
-async function verifySuperAdmin(
-  ctx: { db: any; session: { user: { id: string } } }
-) {
+async function verifySuperAdmin(ctx: {
+  db: typeof DbType;
+  session: { user: { id: string } };
+}) {
   const currentUser = await ctx.db.query.user.findFirst({
     where: eq(user.id, ctx.session.user.id),
   });
@@ -71,7 +73,7 @@ export const platformBillingRouter = createTRPCRouter({
         orgId: z.string(),
         limit: z.number().min(1).max(100).default(20),
         offset: z.number().min(0).default(0),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       await verifyOrgAdmin(ctx, input.orgId);
@@ -161,7 +163,7 @@ export const platformBillingRouter = createTRPCRouter({
         orgId: z.string(),
         year: z.number().min(2024).max(2100),
         month: z.number().min(1).max(12),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       await verifyOrgAdmin(ctx, input.orgId);
@@ -171,7 +173,7 @@ export const platformBillingRouter = createTRPCRouter({
         where: and(
           eq(platformInvoice.organizationId, input.orgId),
           eq(platformInvoice.year, input.year),
-          eq(platformInvoice.month, input.month)
+          eq(platformInvoice.month, input.month),
         ),
       });
 
@@ -205,8 +207,8 @@ export const platformBillingRouter = createTRPCRouter({
           and(
             eq(monthlyAggregation.organizationId, input.orgId),
             eq(monthlyAggregation.year, input.year),
-            eq(monthlyAggregation.month, input.month)
-          )
+            eq(monthlyAggregation.month, input.month),
+          ),
         );
 
       const totalKwhManaged = parseFloat(aggregationResult?.totalKwh ?? "0");
@@ -218,10 +220,11 @@ export const platformBillingRouter = createTRPCRouter({
       const totalAmount = finalAmount + vatAmount;
 
       // Get next invoice number for the year
-      const existingInvoicesThisYear = await ctx.db.query.platformInvoice.findMany({
-        where: eq(platformInvoice.year, input.year),
-        columns: { id: true },
-      });
+      const existingInvoicesThisYear =
+        await ctx.db.query.platformInvoice.findMany({
+          where: eq(platformInvoice.year, input.year),
+          columns: { id: true },
+        });
       const sequence = existingInvoicesThisYear.length + 1;
       const invoiceNumber = generateInvoiceNumber(input.year, sequence);
 
@@ -439,7 +442,7 @@ export const platformBillingRouter = createTRPCRouter({
           overdueCount,
           invoiceCount: invoices.length,
         };
-      })
+      }),
     );
 
     return orgsWithBilling;
@@ -454,7 +457,7 @@ export const platformBillingRouter = createTRPCRouter({
         status: z.enum(["draft", "sent", "paid"]).optional(),
         year: z.number().optional(),
         month: z.number().min(1).max(12).optional(),
-      })
+      }),
     )
     .query(async ({ ctx, input }) => {
       await verifySuperAdmin(ctx);
@@ -486,23 +489,29 @@ export const platformBillingRouter = createTRPCRouter({
         .where(conditions.length > 0 ? and(...conditions) : undefined);
 
       return {
-        invoices: invoices.map((inv: typeof platformInvoice.$inferSelect & { organization: typeof organization.$inferSelect }) => ({
-          id: inv.id,
-          invoiceNumber: inv.invoiceNumber,
-          year: inv.year,
-          month: inv.month,
-          totalKwhManaged: parseFloat(inv.totalKwhManaged),
-          totalAmount: parseFloat(inv.totalAmount),
-          status: inv.status,
-          dueDate: inv.dueDate,
-          createdAt: inv.createdAt,
-          paidAt: inv.paidAt,
-          organization: {
-            id: inv.organization.id,
-            name: inv.organization.name,
-            slug: inv.organization.slug,
-          },
-        })),
+        invoices: invoices.map(
+          (
+            inv: typeof platformInvoice.$inferSelect & {
+              organization: typeof organization.$inferSelect;
+            },
+          ) => ({
+            id: inv.id,
+            invoiceNumber: inv.invoiceNumber,
+            year: inv.year,
+            month: inv.month,
+            totalKwhManaged: parseFloat(inv.totalKwhManaged),
+            totalAmount: parseFloat(inv.totalAmount),
+            status: inv.status,
+            dueDate: inv.dueDate,
+            createdAt: inv.createdAt,
+            paidAt: inv.paidAt,
+            organization: {
+              id: inv.organization.id,
+              name: inv.organization.name,
+              slug: inv.organization.slug,
+            },
+          }),
+        ),
         total: countResult?.count ?? 0,
       };
     }),
@@ -566,7 +575,7 @@ export const platformBillingRouter = createTRPCRouter({
         orgId: z.string(),
         year: z.number().min(2024).max(2100),
         month: z.number().min(1).max(12),
-      })
+      }),
     )
     .mutation(async ({ ctx, input }) => {
       await verifySuperAdmin(ctx);
@@ -576,7 +585,7 @@ export const platformBillingRouter = createTRPCRouter({
         where: and(
           eq(platformInvoice.organizationId, input.orgId),
           eq(platformInvoice.year, input.year),
-          eq(platformInvoice.month, input.month)
+          eq(platformInvoice.month, input.month),
         ),
       });
 
@@ -609,8 +618,8 @@ export const platformBillingRouter = createTRPCRouter({
           and(
             eq(monthlyAggregation.organizationId, input.orgId),
             eq(monthlyAggregation.year, input.year),
-            eq(monthlyAggregation.month, input.month)
-          )
+            eq(monthlyAggregation.month, input.month),
+          ),
         );
 
       const totalKwhManaged = parseFloat(aggregationResult?.totalKwh ?? "0");
@@ -622,10 +631,11 @@ export const platformBillingRouter = createTRPCRouter({
       const totalAmount = finalAmount + vatAmount;
 
       // Get next invoice number for the year
-      const existingInvoicesThisYear = await ctx.db.query.platformInvoice.findMany({
-        where: eq(platformInvoice.year, input.year),
-        columns: { id: true },
-      });
+      const existingInvoicesThisYear =
+        await ctx.db.query.platformInvoice.findMany({
+          where: eq(platformInvoice.year, input.year),
+          columns: { id: true },
+        });
       const sequence = existingInvoicesThisYear.length + 1;
       const invoiceNumber = generateInvoiceNumber(input.year, sequence);
 

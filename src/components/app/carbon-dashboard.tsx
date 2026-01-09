@@ -35,7 +35,7 @@ export function CarbonDashboard({
   if (isLoading) {
     return (
       <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        {[...Array(4)].map((_, i) => (
+        {Array.from({ length: 4 }).map((_, i) => (
           <div
             key={i}
             className="h-32 animate-pulse rounded-2xl border border-gray-100 bg-gray-50"

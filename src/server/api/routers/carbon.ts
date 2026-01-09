@@ -56,13 +56,16 @@ export const carbonRouter = createTRPCRouter({
       })
     )
     .query(async ({ ctx, input }) => {
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
       const membership = await verifyMembership(ctx, input.orgId);
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-member-access
+      const memberId = membership.id as string;
       const currentYear = input.year ?? new Date().getFullYear();
 
       // Get all monthly aggregations for this member in the specified year
       const aggregations = await ctx.db.query.monthlyAggregation.findMany({
         where: and(
-          eq(monthlyAggregation.memberId, membership.id),
+          eq(monthlyAggregation.memberId, memberId),
           eq(monthlyAggregation.year, currentYear)
         ),
         orderBy: [desc(monthlyAggregation.month)],

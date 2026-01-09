@@ -30,6 +30,47 @@ import {
 } from "lucide-react";
 import { CarbonDashboard } from "~/components/app/carbon-dashboard";
 
+// Type definitions for report data
+interface FinancialReportData {
+  totalBilled: number;
+  totalPaid: number;
+  outstanding: number;
+  collectionRate: number;
+  byMonth: Array<{
+    month: number;
+    monthName: string;
+    billed: number;
+    paid: number;
+    outstanding: number;
+    count: number;
+  }>;
+  byStatus: Record<string, { count: number; total: number }>;
+}
+
+interface EnergyReportData {
+  totalProduction: number;
+  totalConsumption: number;
+  totalSelfConsumption: number;
+  totalCommunityConsumption: number;
+  totalGridConsumption: number;
+  selfSufficiency: number;
+  byMonth: Array<{
+    month: number;
+    monthName: string;
+    production: number;
+    consumption: number;
+    selfConsumption: number;
+    community: number;
+    grid: number;
+  }>;
+  byMember: Array<{
+    memberId: string;
+    memberName: string;
+    production: number;
+    consumption: number;
+  }>;
+}
+
 export default function ReportsPage() {
   const params = useParams<{ orgSlug: string }>();
   const t = useTranslations("reports");
@@ -206,7 +247,7 @@ function FinancialReport({
   isLoading,
   formatCurrency,
 }: {
-  report: any;
+  report: FinancialReportData | null | undefined;
   isLoading: boolean;
   formatCurrency: (n: number) => string;
 }) {
@@ -311,7 +352,7 @@ function FinancialReport({
       <div className="rounded-2xl border border-gray-100 bg-white p-6">
         <h3 className="mb-6 text-lg font-light text-gray-900">{t("invoiceStatus")}</h3>
         <div className="grid grid-cols-5 gap-4">
-          {Object.entries(report.byStatus).map(([status, data]: [string, any]) => (
+          {Object.entries(report.byStatus).map(([status, data]) => (
             <div key={status} className="text-center">
               <p className="text-2xl font-light text-gray-900">{data.count}</p>
               <p className="text-sm text-gray-400 capitalize">{status}</p>
@@ -337,7 +378,7 @@ function FinancialReport({
             </tr>
           </thead>
           <tbody>
-            {report.byMonth.map((month: any) => (
+            {report.byMonth.map((month) => (
               <tr key={month.month} className="border-b border-gray-50 last:border-0">
                 <td className="px-6 py-4 text-sm text-gray-900">{month.monthName}</td>
                 <td className="px-6 py-4 text-right text-sm text-gray-900">
@@ -363,9 +404,9 @@ function EnergyReport({
   report,
   isLoading,
   formatKwh,
-  colors,
+  colors: _colors,
 }: {
-  report: any;
+  report: EnergyReportData | null | undefined;
   isLoading: boolean;
   formatKwh: (n: number) => string;
   colors: string[];
@@ -550,7 +591,7 @@ function EnergyReport({
             </tr>
           </thead>
           <tbody>
-            {report.byMember.slice(0, 10).map((member: any) => (
+            {report.byMember.slice(0, 10).map((member) => (
               <tr key={member.memberId} className="border-b border-gray-50 last:border-0">
                 <td className="px-6 py-4 text-sm text-gray-900">{member.memberName}</td>
                 <td className="px-6 py-4 text-right text-sm text-gray-900">

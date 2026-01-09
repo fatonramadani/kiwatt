@@ -509,7 +509,7 @@ export const energyRouter = createTRPCRouter({
 
         // Calculate community-wide distribution using the selected strategy
         const distributions = calculateDistribution(
-          strategy as "prorata" | "equal" | "priority",
+          strategy,
           periodMembers
         );
 
@@ -633,7 +633,7 @@ export const energyRouter = createTRPCRouter({
 
       // Calculate community-wide distribution using the selected strategy
       const distributions = calculateDistribution(
-        strategy as "prorata" | "equal" | "priority",
+        strategy,
         memberLoadCurves
       );
 

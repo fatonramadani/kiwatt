@@ -149,13 +149,9 @@ function findOptimalWindows(forecast: HourlyForecast[]): OptimalWindow[] {
 
   const SURPLUS_THRESHOLD = 1.0; // kW
 
-  for (let i = 0; i < forecast.length; i++) {
-    const entry = forecast[i]!;
-
+  for (const entry of forecast) {
     if (entry.expectedSurplusKw >= SURPLUS_THRESHOLD) {
-      if (windowStart === null) {
-        windowStart = entry.hour;
-      }
+      windowStart ??= entry.hour;
       windowSurplus.push(entry.expectedSurplusKw);
     } else {
       if (windowStart !== null && windowSurplus.length >= 2) {

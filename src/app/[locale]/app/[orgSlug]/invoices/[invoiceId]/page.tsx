@@ -3,13 +3,12 @@
 import { useState } from "react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Link, useRouter } from "~/i18n/navigation";
+import { Link } from "~/i18n/navigation";
 import { api } from "~/trpc/react";
 import { ArrowLeft, Send, Check, FileText, Download, Loader2 } from "lucide-react";
 
 export default function InvoiceDetailPage() {
   const params = useParams<{ orgSlug: string; invoiceId: string }>();
-  const router = useRouter();
   const t = useTranslations("invoices");
   const tCommon = useTranslations("common");
   const [isDownloading, setIsDownloading] = useState(false);
@@ -169,7 +168,7 @@ export default function InvoiceDetailPage() {
             {invoice.organization.address && (
               <p className="text-sm text-gray-500">{invoice.organization.address}</p>
             )}
-            {(invoice.organization.postalCode || invoice.organization.city) && (
+            {(invoice.organization.postalCode ?? invoice.organization.city) && (
               <p className="text-sm text-gray-500">
                 {invoice.organization.postalCode} {invoice.organization.city}
               </p>
@@ -186,7 +185,7 @@ export default function InvoiceDetailPage() {
             {invoice.member.address && (
               <p className="text-sm text-gray-500">{invoice.member.address}</p>
             )}
-            {(invoice.member.postalCode || invoice.member.city) && (
+            {(invoice.member.postalCode ?? invoice.member.city) && (
               <p className="text-sm text-gray-500">
                 {invoice.member.postalCode} {invoice.member.city}
               </p>

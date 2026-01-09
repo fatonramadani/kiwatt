@@ -4,17 +4,46 @@ import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { api } from "~/trpc/react";
-import { Settings, CreditCard, Tag, Share2, Check, Plus, Trash2, Receipt, Download, ExternalLink, Info } from "lucide-react";
+import { Settings, CreditCard, Tag, Share2, Check, Plus, Trash2, Receipt, Download, ExternalLink } from "lucide-react";
 import { AddressAutocomplete, type AddressData } from "~/components/app/address-autocomplete";
 import { PricingGuide } from "~/components/app/pricing-guide";
 import { cn } from "~/lib/utils";
 
 type TabId = "general" | "billing" | "tariffs" | "distribution";
 
+// Organization data type from API
+interface OrganizationData {
+  id: string;
+  name: string;
+  slug: string;
+  address: string | null;
+  postalCode: string | null;
+  city: string | null;
+  commune: string | null;
+  canton: string | null;
+  contactEmail: string | null;
+  contactPhone: string | null;
+  timbreReduction: "20" | "40" | null;
+  distributionStrategy: "prorata" | "equal" | "priority" | null;
+  billingSettings?: {
+    currency?: string;
+    vatRate: number;
+    paymentTermDays: number;
+    vatNumber?: string;
+    uid?: string;
+    iban?: string;
+    qrIban?: string;
+    payeeName?: string;
+    payeeAddress?: string;
+    payeeZip?: string;
+    payeeCity?: string;
+    payeeCountry?: string;
+  } | null;
+}
+
 export default function SettingsPage() {
   const params = useParams<{ orgSlug: string }>();
   const t = useTranslations("settings");
-  const tCommon = useTranslations("common");
   const [activeTab, setActiveTab] = useState<TabId>("general");
 
   const { data: org, refetch: refetchOrg } = api.organization.getBySlug.useQuery({
@@ -64,7 +93,7 @@ export default function SettingsPage() {
           {activeTab === "billing" && org && (
             <BillingTab org={org} onUpdate={refetchOrg} />
           )}
-          {activeTab === "tariffs" && org && <TariffsTab orgId={org.id} timbreReduction={(org.timbreReduction ?? "20") as "20" | "40"} />}
+          {activeTab === "tariffs" && org && <TariffsTab orgId={org.id} timbreReduction={org.timbreReduction ?? "20"} />}
           {activeTab === "distribution" && org && (
             <DistributionTab org={org} onUpdate={refetchOrg} />
           )}
@@ -79,7 +108,7 @@ function GeneralTab({
   org,
   onUpdate,
 }: {
-  org: any;
+  org: OrganizationData;
   onUpdate: () => void;
 }) {
   const t = useTranslations("settings.organization");
@@ -94,7 +123,7 @@ function GeneralTab({
     canton: org.canton ?? "",
     contactEmail: org.contactEmail ?? "",
     contactPhone: org.contactPhone ?? "",
-    timbreReduction: (org.timbreReduction ?? "20") as "20" | "40",
+    timbreReduction: org.timbreReduction ?? "20",
   });
 
   const updateMutation = api.organization.update.useMutation({
@@ -471,7 +500,7 @@ function BillingTab({
   org,
   onUpdate,
 }: {
-  org: any;
+  org: OrganizationData;
   onUpdate: () => void;
 }) {
   const t = useTranslations("settings.billing");
@@ -726,7 +755,7 @@ function TariffsTab({ orgId, timbreReduction }: { orgId: string; timbreReduction
           onSuccess={() => {
             setShowForm(false);
             setEditingId(null);
-            refetch();
+            void refetch();
           }}
         />
       )}
@@ -810,7 +839,7 @@ function TariffsTab({ orgId, timbreReduction }: { orgId: string; timbreReduction
 function TariffForm({
   orgId,
   tariffId,
-  timbreReduction,
+  timbreReduction: _timbreReduction,
   onClose,
   onSuccess,
 }: {
@@ -1008,7 +1037,7 @@ function DistributionTab({
   org,
   onUpdate,
 }: {
-  org: any;
+  org: OrganizationData;
   onUpdate: () => void;
 }) {
   const t = useTranslations("energy.distribution");
@@ -1028,7 +1057,7 @@ function DistributionTab({
   const handleSave = () => {
     updateMutation.mutate({
       orgId: org.id,
-      distributionStrategy: selected as "prorata" | "equal" | "priority",
+      distributionStrategy: selected,
     });
   };
 

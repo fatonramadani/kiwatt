@@ -16,7 +16,6 @@ import {
 export default function EnergyPage() {
   const params = useParams<{ orgSlug: string; locale: string }>();
   const t = useTranslations("energy");
-  const tCommon = useTranslations("common");
 
   const now = new Date();
   const [year, setYear] = useState(now.getFullYear());
@@ -26,11 +25,6 @@ export default function EnergyPage() {
   const { data: org } = api.organization.getBySlug.useQuery({
     slug: params.orgSlug,
   });
-
-  const { data: periods } = api.energy.getAvailablePeriods.useQuery(
-    { orgId: org?.id ?? "" },
-    { enabled: !!org?.id }
-  );
 
   const { data: overview, refetch: refetchOverview } = api.energy.getOverview.useQuery(
     { orgId: org?.id ?? "", year, month },
@@ -50,8 +44,8 @@ export default function EnergyPage() {
   };
 
   const handleRefetch = () => {
-    refetchOverview();
-    refetchAggregations();
+    void refetchOverview();
+    void refetchAggregations();
   };
 
   // Generate localized month names
@@ -283,6 +277,21 @@ export default function EnergyPage() {
   );
 }
 
+// CSV row type for energy import
+interface CsvRow {
+  podnumber?: string;
+  "pod number"?: string;
+  pod?: string;
+  timestamp?: string;
+  datetime?: string;
+  date?: string;
+  consumptionkwh?: string;
+  consumption?: string;
+  productionkwh?: string;
+  production?: string;
+  [key: string]: string | undefined;
+}
+
 // Import Energy Modal
 function ImportEnergyModal({
   orgId,
@@ -296,7 +305,7 @@ function ImportEnergyModal({
   const t = useTranslations("energy.import");
   const tCommon = useTranslations("common");
   const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<any[]>([]);
+  const [preview, setPreview] = useState<CsvRow[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
 
   const importMutation = api.energy.importLoadCurve.useMutation({
@@ -330,7 +339,7 @@ function ImportEnergyModal({
         .slice(0, 5)
         .map((line) => {
           const values = line.split(",").map((v) => v.trim());
-          const row: any = {};
+          const row: CsvRow = {};
           headers.forEach((header, i) => {
             row[header] = values[i] ?? "";
           });
@@ -358,15 +367,15 @@ function ImportEnergyModal({
         .filter((line) => line.trim())
         .map((line) => {
           const values = line.split(",").map((v) => v.trim());
-          const row: any = {};
+          const row: CsvRow = {};
           headers.forEach((header, i) => {
             row[header] = values[i] ?? "";
           });
           return {
-            podNumber: row.podnumber || row["pod number"] || row.pod || "",
-            timestamp: row.timestamp || row.datetime || row.date || "",
-            consumptionKwh: parseFloat(row.consumptionkwh || row.consumption || "0"),
-            productionKwh: parseFloat(row.productionkwh || row.production || "0"),
+            podNumber: row.podnumber ?? row["pod number"] ?? row.pod ?? "",
+            timestamp: row.timestamp ?? row.datetime ?? row.date ?? "",
+            consumptionKwh: parseFloat(row.consumptionkwh ?? row.consumption ?? "0"),
+            productionKwh: parseFloat(row.productionkwh ?? row.production ?? "0"),
           };
         })
         .filter((d) => d.podNumber && d.timestamp);
@@ -427,10 +436,10 @@ function ImportEnergyModal({
                   <tbody>
                     {preview.map((row, i) => (
                       <tr key={i} className="border-b border-gray-50">
-                        <td className="px-3 py-2 font-mono text-gray-600">{row.podnumber || row.pod}</td>
-                        <td className="px-3 py-2 text-gray-500">{row.timestamp || row.datetime}</td>
-                        <td className="px-3 py-2 text-right text-gray-600">{row.consumptionkwh || row.consumption}</td>
-                        <td className="px-3 py-2 text-right text-gray-600">{row.productionkwh || row.production}</td>
+                        <td className="px-3 py-2 font-mono text-gray-600">{row.podnumber ?? row.pod}</td>
+                        <td className="px-3 py-2 text-gray-500">{row.timestamp ?? row.datetime}</td>
+                        <td className="px-3 py-2 text-right text-gray-600">{row.consumptionkwh ?? row.consumption}</td>
+                        <td className="px-3 py-2 text-right text-gray-600">{row.productionkwh ?? row.production}</td>
                       </tr>
                     ))}
                   </tbody>

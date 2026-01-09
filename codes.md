@@ -1,0 +1,8 @@
+kBJ9bD9ZtrhSVbaI
+kiwatt
+
+DATABASE_URL=postgresql://postgres:kBJ9bD9ZtrhSVbaI@db.nxgqiuwtxjubzsfzgwqs.supabase.co:5432/postgres
+BETTER_AUTH_SECRET=ls1k1FBxQcBCqZIoVRLGxO8AbyC5dzJ+ZpT1pdMMoCQ=
+NEXT_PUBLIC_APP_URL=https://kiwatt.ch
+RESEND_API_KEY=re_6xjyrBvK_93t3Lbof43JAKHh4HccQPxjG
+CRON_SECRET=P2phDxkVFpq0IcIjL/gOVRvvw6b1kuius7lQBrihlFQ=

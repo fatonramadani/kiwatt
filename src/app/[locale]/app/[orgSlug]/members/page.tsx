@@ -18,6 +18,47 @@ import {
 } from "lucide-react";
 import { AddressAutocomplete, type AddressData } from "~/components/app/address-autocomplete";
 
+// Type for member data used in edit form
+interface MemberData {
+  id: string;
+  firstname: string;
+  lastname: string;
+  email: string;
+  phone: string | null;
+  address: string | null;
+  postalCode: string | null;
+  city: string | null;
+  podNumber: string;
+  installationType: "consumer" | "producer" | "prosumer";
+  solarCapacityKwp: string | number | null;
+  batteryCapacityKwh: string | number | null;
+  status: "active" | "inactive" | "pending";
+  userId?: string | null;
+  inviteStatus?: string | null;
+}
+
+// Type for CSV row data
+interface MemberCsvRow {
+  firstname?: string;
+  "first name"?: string;
+  lastname?: string;
+  "last name"?: string;
+  email?: string;
+  phone?: string;
+  address?: string;
+  postalcode?: string;
+  "postal code"?: string;
+  city?: string;
+  podnumber?: string;
+  "pod number"?: string;
+  pod?: string;
+  installationtype?: string;
+  type?: string;
+  solarcapacitykwp?: string;
+  batterycapacitykwh?: string;
+  [key: string]: string | undefined;
+}
+
 export default function MembersPage() {
   const params = useParams<{ orgSlug: string }>();
   const t = useTranslations("members");
@@ -27,7 +68,7 @@ export default function MembersPage() {
   const [statusFilter, setStatusFilter] = useState<string>("");
   const [typeFilter, setTypeFilter] = useState<string>("");
   const [showAddForm, setShowAddForm] = useState(false);
-  const [editingMember, setEditingMember] = useState<any>(null);
+  const [editingMember, setEditingMember] = useState<MemberData | null>(null);
   const [showImport, setShowImport] = useState(false);
 
   const { data: org } = api.organization.getBySlug.useQuery({
@@ -41,9 +82,9 @@ export default function MembersPage() {
   } = api.member.list.useQuery(
     {
       orgId: org?.id ?? "",
-      search: search || undefined,
-      status: statusFilter as any || undefined,
-      installationType: typeFilter as any || undefined,
+      search: search ? search : undefined,
+      status: (statusFilter as "active" | "inactive" | "pending") || undefined,
+      installationType: (typeFilter as "consumer" | "producer" | "prosumer") || undefined,
     },
     { enabled: !!org?.id }
   );
@@ -145,7 +186,7 @@ export default function MembersPage() {
           onSuccess={() => {
             setShowAddForm(false);
             setEditingMember(null);
-            refetch();
+            void refetch();
           }}
         />
       )}
@@ -157,7 +198,7 @@ export default function MembersPage() {
           onClose={() => setShowImport(false)}
           onSuccess={() => {
             setShowImport(false);
-            refetch();
+            void refetch();
           }}
         />
       )}
@@ -277,7 +318,7 @@ export default function MembersPage() {
                   <td className="px-6 py-4">
                     <div className="flex items-center justify-end gap-1">
                       <button
-                        onClick={() => setEditingMember(member)}
+                        onClick={() => setEditingMember(member as MemberData)}
                         className="rounded-lg p-2 text-gray-400 hover:bg-gray-50 hover:text-gray-600"
                       >
                         <Edit className="h-4 w-4" />
@@ -314,7 +355,7 @@ function MemberForm({
   onSuccess,
 }: {
   orgId: string;
-  member: any | null;
+  member: MemberData | null;
   onClose: () => void;
   onSuccess: () => void;
 }) {
@@ -323,7 +364,20 @@ function MemberForm({
   const tStatus = useTranslations("members.status");
   const tCommon = useTranslations("common");
 
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<{
+    firstname: string;
+    lastname: string;
+    email: string;
+    phone: string;
+    address: string;
+    postalCode: string;
+    city: string;
+    podNumber: string;
+    installationType: "consumer" | "producer" | "prosumer";
+    solarCapacityKwp: number | undefined;
+    batteryCapacityKwh: number | undefined;
+    status: "active" | "inactive" | "pending";
+  }>({
     firstname: member?.firstname ?? "",
     lastname: member?.lastname ?? "",
     email: member?.email ?? "",
@@ -333,8 +387,8 @@ function MemberForm({
     city: member?.city ?? "",
     podNumber: member?.podNumber ?? "",
     installationType: member?.installationType ?? "consumer",
-    solarCapacityKwp: member?.solarCapacityKwp ? parseFloat(member.solarCapacityKwp) : undefined,
-    batteryCapacityKwh: member?.batteryCapacityKwh ? parseFloat(member.batteryCapacityKwh) : undefined,
+    solarCapacityKwp: member?.solarCapacityKwp ? parseFloat(String(member.solarCapacityKwp)) : undefined,
+    batteryCapacityKwh: member?.batteryCapacityKwh ? parseFloat(String(member.batteryCapacityKwh)) : undefined,
     status: member?.status ?? "pending",
   });
 
@@ -355,17 +409,15 @@ function MemberForm({
       updateMutation.mutate({
         memberId: member.id,
         ...formData,
-        solarCapacityKwp: formData.solarCapacityKwp || undefined,
-        batteryCapacityKwh: formData.batteryCapacityKwh || undefined,
+        solarCapacityKwp: formData.solarCapacityKwp ?? undefined,
+        batteryCapacityKwh: formData.batteryCapacityKwh ?? undefined,
       });
     } else {
       createMutation.mutate({
         orgId,
         ...formData,
-        installationType: formData.installationType as "consumer" | "producer" | "prosumer",
-        status: formData.status as "active" | "inactive" | "pending",
-        solarCapacityKwp: formData.solarCapacityKwp || undefined,
-        batteryCapacityKwh: formData.batteryCapacityKwh || undefined,
+        solarCapacityKwp: formData.solarCapacityKwp ?? undefined,
+        batteryCapacityKwh: formData.batteryCapacityKwh ?? undefined,
       });
     }
   };
@@ -466,7 +518,7 @@ function MemberForm({
               <label className="block text-sm text-gray-500">{t("installationType")}</label>
               <select
                 value={formData.installationType}
-                onChange={(e) => setFormData({ ...formData, installationType: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, installationType: e.target.value as "consumer" | "producer" | "prosumer" })}
                 className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               >
                 <option value="consumer">{tTypes("consumer")}</option>
@@ -502,7 +554,7 @@ function MemberForm({
               <label className="block text-sm text-gray-500">{tCommon("status")}</label>
               <select
                 value={formData.status}
-                onChange={(e) => setFormData({ ...formData, status: e.target.value })}
+                onChange={(e) => setFormData({ ...formData, status: e.target.value as "active" | "inactive" | "pending" })}
                 className="mt-2 w-full rounded-xl border border-gray-100 px-4 py-3 text-sm focus:border-gray-200 focus:outline-none"
               >
                 <option value="pending">{tStatus("pending")}</option>
@@ -547,7 +599,7 @@ function ImportModal({
   const t = useTranslations("members");
   const tCommon = useTranslations("common");
   const [file, setFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<any[]>([]);
+  const [preview, setPreview] = useState<MemberCsvRow[]>([]);
   const [errors, setErrors] = useState<string[]>([]);
 
   const bulkCreateMutation = api.member.bulkCreate.useMutation({
@@ -580,7 +632,7 @@ function ImportModal({
         .filter((line) => line.trim())
         .map((line) => {
           const values = line.split(",").map((v) => v.trim());
-          const row: any = {};
+          const row: MemberCsvRow = {};
           headers.forEach((header, i) => {
             row[header] = values[i] ?? "";
           });
@@ -608,20 +660,20 @@ function ImportModal({
         .filter((line) => line.trim())
         .map((line) => {
           const values = line.split(",").map((v) => v.trim());
-          const row: any = {};
+          const row: MemberCsvRow = {};
           headers.forEach((header, i) => {
             row[header] = values[i] ?? "";
           });
           return {
-            firstname: row.firstname || row["first name"] || "",
-            lastname: row.lastname || row["last name"] || "",
-            email: row.email || "",
-            phone: row.phone || "",
-            address: row.address || "",
-            postalCode: row.postalcode || row["postal code"] || "",
-            city: row.city || "",
-            podNumber: row.podnumber || row["pod number"] || row.pod || "",
-            installationType: (row.installationtype || row.type || "consumer") as
+            firstname: row.firstname ?? row["first name"] ?? "",
+            lastname: row.lastname ?? row["last name"] ?? "",
+            email: row.email ?? "",
+            phone: row.phone ?? "",
+            address: row.address ?? "",
+            postalCode: row.postalcode ?? row["postal code"] ?? "",
+            city: row.city ?? "",
+            podNumber: row.podnumber ?? row["pod number"] ?? row.pod ?? "",
+            installationType: (row.installationtype ?? row.type ?? "consumer") as
               | "consumer"
               | "producer"
               | "prosumer",
@@ -678,7 +730,7 @@ function ImportModal({
                         <td className="px-3 py-2 text-gray-600">{row.firstname}</td>
                         <td className="px-3 py-2 text-gray-600">{row.lastname}</td>
                         <td className="px-3 py-2 text-gray-500">{row.email}</td>
-                        <td className="px-3 py-2 font-mono text-gray-400">{row.podnumber || row.pod}</td>
+                        <td className="px-3 py-2 font-mono text-gray-400">{row.podnumber ?? row.pod}</td>
                       </tr>
                     ))}
                   </tbody>

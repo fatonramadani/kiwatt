@@ -36,8 +36,8 @@ export default function AdminInvoicesPage() {
   const generateMutation = api.platformBilling.adminGenerateInvoice.useMutation(
     {
       onSuccess: () => {
-        utils.platformBilling.getAllPlatformInvoices.invalidate();
-        utils.platformBilling.getRevenueOverview.invalidate();
+        void utils.platformBilling.getAllPlatformInvoices.invalidate();
+        void utils.platformBilling.getRevenueOverview.invalidate();
         setShowGenerateModal(false);
         setSelectedOrgId("");
       },
@@ -46,14 +46,14 @@ export default function AdminInvoicesPage() {
 
   const markSentMutation = api.platformBilling.adminMarkAsSent.useMutation({
     onSuccess: () => {
-      utils.platformBilling.getAllPlatformInvoices.invalidate();
+      void utils.platformBilling.getAllPlatformInvoices.invalidate();
     },
   });
 
   const markPaidMutation = api.platformBilling.adminMarkAsPaid.useMutation({
     onSuccess: () => {
-      utils.platformBilling.getAllPlatformInvoices.invalidate();
-      utils.platformBilling.getRevenueOverview.invalidate();
+      void utils.platformBilling.getAllPlatformInvoices.invalidate();
+      void utils.platformBilling.getRevenueOverview.invalidate();
     },
   });
 
@@ -115,7 +115,7 @@ export default function AdminInvoicesPage() {
           <p className="mt-2 text-gray-500">Manage platform billing invoices</p>
         </div>
         <div className="space-y-4">
-          {[...Array(5)].map((_, i) => (
+          {Array.from({ length: 5 }).map((_, i) => (
             <div key={i} className="h-20 animate-pulse rounded-2xl bg-gray-100" />
           ))}
         </div>

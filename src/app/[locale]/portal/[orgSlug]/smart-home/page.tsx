@@ -10,7 +10,6 @@ import {
   Check,
   RefreshCw,
   Trash2,
-  ExternalLink,
   Home,
   Zap,
   Battery,
@@ -39,14 +38,14 @@ export default function SmartHomePage() {
   const generateMutation = api.member.generateApiKey.useMutation({
     onSuccess: (data) => {
       setNewApiKey(data.apiKey);
-      refetch();
+      void refetch();
     },
   });
 
   const revokeMutation = api.member.revokeApiKey.useMutation({
     onSuccess: () => {
       setNewApiKey(null);
-      refetch();
+      void refetch();
     },
   });
 

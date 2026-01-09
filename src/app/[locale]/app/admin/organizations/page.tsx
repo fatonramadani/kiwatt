@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Building2, AlertTriangle, Search, ExternalLink } from "lucide-react";
+import { Building2, AlertTriangle, Search } from "lucide-react";
 import { api } from "~/trpc/react";
 
 export default function AdminOrganizationsPage() {
@@ -16,11 +16,6 @@ export default function AdminOrganizationsPage() {
       style: "currency",
       currency: "CHF",
     }).format(amount);
-
-  const formatDate = (date: Date | string | null) => {
-    if (!date) return "-";
-    return new Date(date).toLocaleDateString("fr-CH");
-  };
 
   // Filter organizations
   const filteredOrgs = organizations?.filter((org) => {
@@ -51,7 +46,7 @@ export default function AdminOrganizationsPage() {
           <p className="mt-2 text-gray-500">Manage all CEL organizations</p>
         </div>
         <div className="space-y-4">
-          {[...Array(5)].map((_, i) => (
+          {Array.from({ length: 5 }).map((_, i) => (
             <div key={i} className="h-20 animate-pulse rounded-2xl bg-gray-100" />
           ))}
         </div>

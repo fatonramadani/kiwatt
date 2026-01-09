@@ -61,7 +61,7 @@ export default function AdminDashboard() {
           <p className="mt-2 text-gray-500">Platform overview and billing management</p>
         </div>
         <div className="grid grid-cols-4 gap-6">
-          {[...Array(4)].map((_, i) => (
+          {Array.from({ length: 4 }).map((_, i) => (
             <div key={i} className="h-32 animate-pulse rounded-2xl bg-gray-100" />
           ))}
         </div>

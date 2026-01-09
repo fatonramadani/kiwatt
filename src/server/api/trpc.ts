@@ -98,7 +98,6 @@ const timingMiddleware = t.middleware(async ({ next, path }) => {
 
   const end = Date.now();
   if (process.env.NODE_ENV === "development") {
-    // eslint-disable-next-line no-console
     console.log(`[TRPC] ${path} took ${end - start}ms to execute`);
   }
 

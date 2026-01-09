@@ -3,7 +3,7 @@
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { api } from "~/trpc/react";
-import { User, Mail, Phone, MapPin, Zap, Download, Loader2 } from "lucide-react";
+import { Mail, Phone, MapPin, Zap, Download, Loader2 } from "lucide-react";
 
 export default function PortalProfilePage() {
   const params = useParams<{ orgSlug: string }>();
@@ -88,7 +88,7 @@ export default function PortalProfilePage() {
                 </div>
               )}
 
-              {(member?.address || member?.city) && (
+              {(member?.address ?? member?.city) && (
                 <div className="flex items-center gap-3">
                   <div className="rounded-lg bg-gray-50 p-2">
                     <MapPin className="h-4 w-4 text-gray-400" />
@@ -155,7 +155,7 @@ export default function PortalProfilePage() {
             <p className="mt-1 text-gray-900">{org?.name}</p>
           </div>
 
-          {(org?.address || org?.city) && (
+          {(org?.address ?? org?.city) && (
             <div>
               <p className="text-sm text-gray-400">{t("address")}</p>
               <p className="mt-1 text-gray-900">
