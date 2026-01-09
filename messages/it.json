@@ -586,11 +586,11 @@
       "city": "Città",
       "commune": "Comune",
       "canton": "Cantone",
-      "timbreReduction": "Riduzione tasse di rete",
-      "timbreReductionHelp": "Utilizzato per calcolare e visualizzare i risparmi ottenuti dai membri della tua CEL.",
-      "timbre20": "CEL standard",
-      "timbre40": "CEL ad alto autoconsumo",
-      "timbreInfo": "La riduzione del 40% si applica alle CEL in cui la maggior parte dell'energia viene consumata localmente all'interno della comunità."
+      "timbreReduction": "Sconto tasse di rete",
+      "timbreReductionHelp": "Sconto sull'utilizzo della rete per l'energia scambiata all'interno della CEL.",
+      "timbre20": "Più trasformatori",
+      "timbre40": "Stesso trasformatore",
+      "timbreInfo": "40% di sconto se i partecipanti sono alimentati dallo stesso trasformatore. 20% se sono necessari più trasformatori."
     }
   },
   "validation": {

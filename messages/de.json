@@ -586,11 +586,11 @@
       "city": "Stadt",
       "commune": "Gemeinde",
       "canton": "Kanton",
-      "timbreReduction": "Netzgebührenreduktion",
-      "timbreReductionHelp": "Wird verwendet, um die Einsparungen Ihrer LEG-Mitglieder zu berechnen und anzuzeigen.",
-      "timbre20": "Standard-LEG",
-      "timbre40": "LEG mit hohem Eigenverbrauch",
-      "timbreInfo": "Die 40%-Reduktion gilt für LEGs, bei denen der Grossteil der Energie lokal innerhalb der Gemeinschaft verbraucht wird."
+      "timbreReduction": "Netzgebührenrabatt",
+      "timbreReductionHelp": "Rabatt auf Netznutzung für innerhalb der LEG ausgetauschte Energie.",
+      "timbre20": "Mehrere Transformatoren",
+      "timbre40": "Gleicher Transformator",
+      "timbreInfo": "40% Rabatt wenn Teilnehmer vom gleichen Transformator versorgt werden. 20% wenn mehrere Transformatoren benötigt werden."
     }
   },
   "validation": {

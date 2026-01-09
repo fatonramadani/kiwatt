@@ -601,11 +601,11 @@
       "city": "City",
       "commune": "Commune",
       "canton": "Canton",
-      "timbreReduction": "Timbre Reduction",
-      "timbreReductionHelp": "Used to calculate and display the savings achieved by your CEL members.",
-      "timbre20": "Standard CEL",
-      "timbre40": "High self-consumption CEL",
-      "timbreInfo": "The 40% reduction applies to CELs where most energy is consumed locally within the community."
+      "timbreReduction": "Network Fee Discount",
+      "timbreReductionHelp": "Discount on network usage for energy exchanged within the CEL.",
+      "timbre20": "Multiple transformers",
+      "timbre40": "Same transformer",
+      "timbreInfo": "40% discount if participants are fed from the same transformer. 20% if multiple transformers are needed."
     }
   },
   "validation": {

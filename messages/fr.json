@@ -602,10 +602,10 @@
       "commune": "Commune",
       "canton": "Canton",
       "timbreReduction": "Réduction timbre",
-      "timbreReductionHelp": "Utilisé pour calculer et afficher les économies réalisées par les membres de votre CEL.",
-      "timbre20": "CEL standard",
-      "timbre40": "CEL haute autoconsommation",
-      "timbreInfo": "La réduction de 40% s'applique aux CEL où la majorité de l'énergie est consommée localement au sein de la communauté."
+      "timbreReductionHelp": "Rabais sur l'utilisation du réseau pour l'énergie échangée au sein de la CEL.",
+      "timbre20": "Plusieurs transformateurs",
+      "timbre40": "Même transformateur",
+      "timbreInfo": "40% de rabais si les participants sont alimentés depuis le même transformateur. 20% si plusieurs transformateurs sont nécessaires."
     }
   },
   "validation": {
