@@ -36,11 +36,11 @@ export function PricingSection() {
     <section id="pricing" className="bg-white py-16 sm:py-24 lg:py-40">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         <div className="mb-10 max-w-xl sm:mb-20">
-          <p className="mb-4 flex items-center gap-3 text-sm font-light uppercase tracking-[0.3em] text-gray-400">
+          <p className="mb-4 flex items-center gap-3 text-sm font-light tracking-[0.3em] text-gray-400 uppercase">
             <span className="h-px w-8 bg-gray-300" />
             {t("label")}
           </p>
-          <h2 className="text-3xl font-light leading-tight tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
+          <h2 className="text-3xl leading-tight font-light tracking-tight text-gray-900 sm:text-4xl lg:text-5xl">
             {t("title")}
           </h2>
           <p className="mt-4 text-base font-light text-gray-500 sm:text-lg">
@@ -61,11 +61,12 @@ export function PricingSection() {
             {/* Volume slider */}
             <div className="mt-10">
               <div className="flex items-center justify-between">
-                <label className="text-xs font-light uppercase tracking-[0.15em] text-gray-500">
+                <label className="text-xs font-light tracking-[0.15em] text-gray-500 uppercase">
                   {t("calculator.volume")}
                 </label>
                 <span className="text-lg font-light text-gray-900">
-                  {formatNumber(volume)} <span className="text-gray-400">kWh/mois</span>
+                  {formatNumber(volume)}{" "}
+                  <span className="text-gray-400">kWh/mois</span>
                 </span>
               </div>
               <input
@@ -106,16 +107,18 @@ export function PricingSection() {
             <div className="mt-8 border-t border-gray-100 pt-8 sm:mt-10 sm:pt-10">
               <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between sm:gap-0">
                 <div>
-                  <p className="text-xs font-light uppercase tracking-[0.15em] text-gray-400">
+                  <p className="text-xs font-light tracking-[0.15em] text-gray-400 uppercase">
                     {t("calculator.monthly")}
                   </p>
                   <p className="mt-2 text-3xl font-light text-gray-900 sm:text-4xl">
                     CHF {formatNumber(Math.round(monthlyPrice))}
-                    <span className="text-base text-gray-400 sm:text-lg">/mois</span>
+                    <span className="text-base text-gray-400 sm:text-lg">
+                      /mois
+                    </span>
                   </p>
                 </div>
                 <div className="sm:text-right">
-                  <p className="text-xs font-light uppercase tracking-[0.15em] text-gray-400">
+                  <p className="text-xs font-light tracking-[0.15em] text-gray-400 uppercase">
                     {t("calculator.annual")}
                   </p>
                   <p className="mt-2 text-xl font-light text-gray-500 sm:text-2xl">
@@ -168,34 +171,6 @@ export function PricingSection() {
               {t("cta")}
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
             </a>
-          </div>
-        </div>
-
-        {/* Example tiers */}
-        <div className="mt-20 border-t border-gray-100 pt-12">
-          <p className="text-sm font-light uppercase tracking-[0.2em] text-gray-400">
-            {t("examples.title")}
-          </p>
-          <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-            {tiers.map((tier) => {
-              const price = calculatePrice(tier.volume);
-              return (
-                <div
-                  key={tier.volume}
-                  className="rounded-2xl border border-gray-100 p-6 transition-colors hover:border-gray-200"
-                >
-                  <p className="text-xs font-light uppercase tracking-wider text-gray-400">
-                    {tier.example}
-                  </p>
-                  <p className="mt-2 text-2xl font-light text-gray-900">
-                    {formatNumber(tier.volume)} <span className="text-sm text-gray-400">kWh</span>
-                  </p>
-                  <p className="mt-4 text-lg font-light text-gray-600">
-                    CHF {formatNumber(Math.round(price))}<span className="text-sm">/mois</span>
-                  </p>
-                </div>
-              );
-            })}
           </div>
         </div>
       </div>
