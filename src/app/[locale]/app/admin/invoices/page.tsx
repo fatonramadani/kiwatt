@@ -265,12 +265,14 @@ export default function AdminInvoicesPage() {
                         <CheckCircle className="h-4 w-4" />
                       </button>
                     )}
-                    <button
+                    <a
+                      href={`/api/platform-invoices/${invoice.id}/pdf`}
+                      download
                       className="rounded-lg p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-600"
                       title="Download PDF"
                     >
                       <Download className="h-4 w-4" />
-                    </button>
+                    </a>
                   </div>
                 </td>
               </tr>

@@ -18,6 +18,13 @@ export const env = createEnv({
     NODE_ENV: z
       .enum(["development", "test", "production"])
       .default("development"),
+    // Kiwatt platform billing info
+    KIWATT_COMPANY_NAME: z.string().default("Flathunters Sàrl"),
+    KIWATT_ADDRESS: z.string().default("Rue Sainte-Beuve 4"),
+    KIWATT_POSTAL_CODE: z.string().default("1005"),
+    KIWATT_CITY: z.string().default("Lausanne"),
+    KIWATT_EMAIL: z.string().default("info@kiwatt.ch"),
+    KIWATT_IBAN: z.string().optional(),
   },
 
   /**
@@ -44,6 +51,13 @@ export const env = createEnv({
     CRON_SECRET: process.env.CRON_SECRET,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     NODE_ENV: process.env.NODE_ENV,
+    // Kiwatt platform billing
+    KIWATT_COMPANY_NAME: process.env.KIWATT_COMPANY_NAME,
+    KIWATT_ADDRESS: process.env.KIWATT_ADDRESS,
+    KIWATT_POSTAL_CODE: process.env.KIWATT_POSTAL_CODE,
+    KIWATT_CITY: process.env.KIWATT_CITY,
+    KIWATT_EMAIL: process.env.KIWATT_EMAIL,
+    KIWATT_IBAN: process.env.KIWATT_IBAN,
   },
   /**
    * Run `build` or `dev` with `SKIP_ENV_VALIDATION` to skip env validation. This is especially

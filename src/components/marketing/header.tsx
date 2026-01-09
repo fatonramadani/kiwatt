@@ -22,7 +22,8 @@ export function MarketingHeader() {
 
   return (
     <header
-      className={`fixed top-0 z-50 w-full transition-all duration-300 ${
+      style={{ top: "var(--announcement-height, 0px)" }}
+      className={`fixed z-50 w-full transition-all duration-300 ${
         scrolled
           ? "bg-white/95 shadow-sm backdrop-blur-md"
           : "bg-transparent"

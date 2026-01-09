@@ -1,4 +1,8 @@
 {
+  "announcement": {
+    "alpha": "Version Alpha",
+    "alphaDescription": "Kiwatt est actuellement en alpha. Les fonctionnalités peuvent changer."
+  },
   "common": {
     "appName": "kiwatt",
     "loading": "Chargement...",
