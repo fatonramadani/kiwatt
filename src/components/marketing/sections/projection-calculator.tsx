@@ -14,16 +14,21 @@ import {
 
 // Constants for calculations
 const AVG_SOLAR_PRODUCTION = 1000; // kWh per kWp per year (Swiss average)
-const SELF_CONSUMPTION_RATE = 0.6; // 60% consumed locally
+const SELF_CONSUMPTION_RATE = 0.6; // 60% consumed locally (annual average)
 const TIMBRE_RATE = 0.08; // 8 ct/kWh network fee
 const ENERGY_SAVINGS_RATE = 0.10; // 10 ct/kWh price differential
 const CO2_PER_KWH = 0.00012; // tonnes CO2 per kWh
 
-// Pricing tiers
-const PRICING_TIERS = {
-  starter: { ratePerKwh: 0.010, minimum: 79, label: "Starter" },
-  standard: { ratePerKwh: 0.015, minimum: 149, label: "Standard" },
-  premium: { ratePerKwh: 0.020, minimum: 249, label: "Premium" },
+// Simplified pricing (single tier)
+const PRICE_PER_KWH = 0.01; // 1 ct/kWh
+const MIN_MONTHLY_PRICE = 79; // CHF minimum per month
+
+// Seasonal factors for Switzerland
+const SEASONS = {
+  spring: { productionShare: 0.25, selfConsumption: 0.55 }, // Mar-May
+  summer: { productionShare: 0.40, selfConsumption: 0.45 }, // Jun-Aug (high production, low consumption)
+  autumn: { productionShare: 0.20, selfConsumption: 0.65 }, // Sep-Nov
+  winter: { productionShare: 0.15, selfConsumption: 0.80 }, // Dec-Feb (low production, high consumption)
 } as const;
 
 function formatCurrency(amount: number): string {
@@ -50,10 +55,35 @@ interface ProjectionResult {
   roi: number;
 }
 
+interface SeasonalResult {
+  season: keyof typeof SEASONS;
+  production: number;
+  energyExchanged: number;
+  savings: number;
+}
+
+function calculateSeasonalBreakdown(
+  solarCapacity: number,
+  sameTransformer: boolean
+): SeasonalResult[] {
+  const annualProduction = solarCapacity * AVG_SOLAR_PRODUCTION;
+  const timbreDiscount = sameTransformer ? 0.40 : 0.20;
+
+  return (Object.keys(SEASONS) as Array<keyof typeof SEASONS>).map((season) => {
+    const { productionShare, selfConsumption } = SEASONS[season];
+    const production = annualProduction * productionShare;
+    const energyExchanged = production * selfConsumption;
+    const timbreSavings = energyExchanged * TIMBRE_RATE * timbreDiscount;
+    const energySavings = energyExchanged * ENERGY_SAVINGS_RATE;
+    const savings = timbreSavings + energySavings;
+
+    return { season, production, energyExchanged, savings };
+  });
+}
+
 function calculateProjection(
   solarCapacity: number,
-  sameTransformer: boolean,
-  tier: keyof typeof PRICING_TIERS
+  sameTransformer: boolean
 ): ProjectionResult {
   const annualProduction = solarCapacity * AVG_SOLAR_PRODUCTION;
   const energyExchanged = annualProduction * SELF_CONSUMPTION_RATE;
@@ -63,10 +93,9 @@ function calculateProjection(
   const totalSavings = timbreSavings + energySavings;
   const co2Avoided = energyExchanged * CO2_PER_KWH;
 
+  // Simplified single-tier pricing: 1 ct/kWh with CHF 79/month minimum
   const monthlyKwh = energyExchanged / 12;
-  const tierPricing = PRICING_TIERS[tier];
-  const kiwattCost =
-    Math.max(monthlyKwh * tierPricing.ratePerKwh, tierPricing.minimum) * 12;
+  const kiwattCost = Math.max(monthlyKwh * PRICE_PER_KWH, MIN_MONTHLY_PRICE) * 12;
   const netBenefit = totalSavings - kiwattCost;
   const roi = kiwattCost > 0 ? (netBenefit / kiwattCost) * 100 : 0;
 
@@ -91,11 +120,10 @@ export function ProjectionCalculator() {
   const [consumers, setConsumers] = useState(10);
   const [solarCapacity, setSolarCapacity] = useState(100);
   const [sameTransformer, setSameTransformer] = useState(true);
-  const [selectedTier, setSelectedTier] =
-    useState<keyof typeof PRICING_TIERS>("starter");
 
   // Calculate results
-  const results = calculateProjection(solarCapacity, sameTransformer, selectedTier);
+  const results = calculateProjection(solarCapacity, sameTransformer);
+  const seasonalResults = calculateSeasonalBreakdown(solarCapacity, sameTransformer);
 
   return (
     <div className="mx-auto max-w-7xl px-6 lg:px-12">
@@ -217,34 +245,6 @@ export function ProjectionCalculator() {
               </div>
             </div>
 
-            {/* Pricing Tier */}
-            <div>
-              <label className="text-sm font-light text-gray-600">
-                {t("pricingTier")}
-              </label>
-              <div className="mt-3 grid grid-cols-3 gap-3">
-                {(Object.keys(PRICING_TIERS) as Array<keyof typeof PRICING_TIERS>).map(
-                  (tier) => (
-                    <button
-                      key={tier}
-                      onClick={() => setSelectedTier(tier)}
-                      className={`rounded-xl border-2 px-3 py-3 text-center transition-all ${
-                        selectedTier === tier
-                          ? "border-gray-900 bg-gray-50"
-                          : "border-gray-200 hover:border-gray-300"
-                      }`}
-                    >
-                      <p className="text-sm font-medium text-gray-900 capitalize">
-                        {tier}
-                      </p>
-                      <p className="mt-1 text-xs font-light text-gray-500">
-                        {PRICING_TIERS[tier].ratePerKwh * 100} ct/kWh
-                      </p>
-                    </button>
-                  )
-                )}
-              </div>
-            </div>
           </div>
         </div>
 
@@ -319,6 +319,41 @@ export function ProjectionCalculator() {
                   {formatCurrency(results.netBenefit)}/an
                 </span>
               </div>
+            </div>
+          </div>
+
+          {/* Seasonal Breakdown */}
+          <div className="rounded-2xl border border-gray-100 bg-white p-6">
+            <h3 className="text-sm font-light text-gray-500 mb-4">
+              {t("seasonalBreakdown")}
+            </h3>
+            <div className="overflow-x-auto">
+              <table className="w-full text-sm">
+                <thead>
+                  <tr className="border-b border-gray-100">
+                    <th className="pb-3 text-left font-light text-gray-400">{t("season")}</th>
+                    <th className="pb-3 text-right font-light text-gray-400">{t("production")}</th>
+                    <th className="pb-3 text-right font-light text-gray-400">{t("shared")}</th>
+                    <th className="pb-3 text-right font-light text-gray-400">{t("savings")}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {seasonalResults.map((result) => (
+                    <tr key={result.season} className="border-b border-gray-50 last:border-0">
+                      <td className="py-3 font-light text-gray-900">{t(`seasons.${result.season}`)}</td>
+                      <td className="py-3 text-right font-light text-gray-600">
+                        {formatNumber(Math.round(result.production))} kWh
+                      </td>
+                      <td className="py-3 text-right font-light text-gray-600">
+                        {formatNumber(Math.round(result.energyExchanged))} kWh
+                      </td>
+                      <td className="py-3 text-right font-light text-emerald-600">
+                        +{formatCurrency(result.savings)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             </div>
           </div>
 

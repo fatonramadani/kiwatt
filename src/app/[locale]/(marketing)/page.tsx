@@ -1,7 +1,6 @@
 import { setRequestLocale } from "next-intl/server";
 import { HeroSection } from "~/components/marketing/sections/hero";
 import { ProblemSection } from "~/components/marketing/sections/problem";
-import { FeaturesSection } from "~/components/marketing/sections/features";
 import { AllFeaturesSection } from "~/components/marketing/sections/all-features";
 import { HowItWorksSection } from "~/components/marketing/sections/how-it-works";
 import { PricingSection } from "~/components/marketing/sections/pricing";

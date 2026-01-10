@@ -40,16 +40,19 @@ export function MarketingHeader() {
         </Link>
 
         {/* Desktop navigation */}
-        <nav className="hidden items-center gap-12 md:flex">
-          <a href="#features" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
+        <nav className="hidden items-center gap-8 md:flex lg:gap-12">
+          <Link href="/#features" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
             {tLanding("features")}
-          </a>
-          <a href="#pricing" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
+          </Link>
+          <Link href="/#pricing" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
             {tLanding("pricing")}
-          </a>
-          <a href="#faq" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
-            {tLanding("faq")}
-          </a>
+          </Link>
+          <Link href="/calculateur" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
+            Calculateur
+          </Link>
+          <Link href="/blog" className="text-sm font-light text-gray-500 transition-colors hover:text-gray-900">
+            Blog
+          </Link>
         </nav>
 
         {/* Desktop actions */}
@@ -80,27 +83,34 @@ export function MarketingHeader() {
       {mobileMenuOpen && (
         <div className="border-t border-gray-100 bg-white px-4 pb-6 pt-4 md:hidden">
           <nav className="flex flex-col gap-4">
-            <a
-              href="#features"
+            <Link
+              href="/#features"
               onClick={closeMobileMenu}
               className="rounded-lg px-3 py-2 text-base font-light text-gray-600 hover:bg-gray-50"
             >
               {tLanding("features")}
-            </a>
-            <a
-              href="#pricing"
+            </Link>
+            <Link
+              href="/#pricing"
               onClick={closeMobileMenu}
               className="rounded-lg px-3 py-2 text-base font-light text-gray-600 hover:bg-gray-50"
             >
               {tLanding("pricing")}
-            </a>
-            <a
-              href="#faq"
+            </Link>
+            <Link
+              href="/calculateur"
               onClick={closeMobileMenu}
               className="rounded-lg px-3 py-2 text-base font-light text-gray-600 hover:bg-gray-50"
             >
-              {tLanding("faq")}
-            </a>
+              Calculateur
+            </Link>
+            <Link
+              href="/blog"
+              onClick={closeMobileMenu}
+              className="rounded-lg px-3 py-2 text-base font-light text-gray-600 hover:bg-gray-50"
+            >
+              Blog
+            </Link>
           </nav>
 
           <div className="mt-6 flex flex-col gap-3 border-t border-gray-100 pt-6">

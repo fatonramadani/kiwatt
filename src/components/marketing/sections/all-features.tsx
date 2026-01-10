@@ -62,7 +62,7 @@ export function AllFeaturesSection() {
   const t = useTranslations("landing.allFeatures");
 
   return (
-    <section className="bg-gray-50 py-16 sm:py-24 lg:py-40">
+    <section id="features" className="bg-gray-50 py-16 sm:py-24 lg:py-40">
       <div className="mx-auto max-w-7xl px-6 lg:px-12">
         {/* Header */}
         <div className="mb-10 text-center sm:mb-20">
